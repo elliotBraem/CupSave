@@ -1,0 +1,35 @@
+Feature:
+
+user accounts
+  login- username and password
+  sharing options- social media integration, post to twitter about saving
+  gamification- leaderboard + points for using cup
+  adding batches/achievements/tiers
+  
+
+map
+  has coffee shops that support CupShare
+  local map
+  
+Camera/QR-scanner
+  scan the QR code
+  
+Personal statistics tracker
+
+
+Security
+  Firebase handles alot of security
+    further research
+  
+Use Cases:
+  scan a QR code
+  find a local cafe
+  view personal statistics
+  login to my account
+  change their settings
+  share with friends
+  save one cup
+  
+  
+Start with a default cup when calculating statistics
+
