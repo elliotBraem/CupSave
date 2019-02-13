@@ -7,16 +7,13 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "web": "webpack-dev-server --content-base build/ --config webpack/web.dev.config.js --mode development --port 3001 --inline --hot --colors --historyApiFallback",
-    "web-bundle": "webpack --config webpack/web.prod.config.js --progress --colors --mode production",
-    "lint": "eslint -c ./.eslintrc ./src",
-    "lint:fix": "npm run lint -- --fix",
     "format": "prettier --config ./.prettierrc --write \"src/**/*.{js,json,md,scss}\""
   },
-  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "dependencies": {
+    "@expo/vector-icons": "^9.0.0",
     "expo": "^32.0.5",
     "firebase": "^5.8.2",
+    "native-base": "^2.11.0",
     "prop-types": "^15.7.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
@@ -28,17 +25,7 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^10.0.1",
-    "babel-loader": "^8.0.5",
-    "babel-plugin-react-transform": "^3.0.0",
-    "babel-preset-airbnb": "^3.2.0",
     "expo-cli": "^2.10.1",
-    "prettier": "^1.16.4",
-    "webpack": "^4.29.3",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.1.14",
-    "webpack-hot-middleware": "^2.24.3"
+    "prettier": "^1.16.4"
   }
 }
