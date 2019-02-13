@@ -7,7 +7,7 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "format": "prettier --config ./.prettierrc --write \"src/**/*.{js,json,md,scss}\""
+    "format": "prettier --config ./.prettierrc.json --write \"src/**/*.{js,json,md,scss}\""
   },
   "dependencies": {
     "@expo/vector-icons": "^9.0.0",
