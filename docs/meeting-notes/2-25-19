@@ -1,0 +1,35 @@
+// Meetings notes for February 25th, 2019
+
+Application pillars:
+React native will be our official framework moving forward.
+Firebase will be our official database service moving forward.
+We might need a library like 'React Persist' to keep user data on the phone even if the app gets shut off.
+
+Style options:
+Considering using: https://nativebase.io/
+
+Component kit ideas:
+https://blog.bitsrc.io/11-react-native-component-libraries-you-should-know-in-2018-71d2a8e33312
+
+Advanced features to add to the app:
+Facebook integration
+Friends list (with the ability to search from FB or just strict usernames)
+Expand on global consumption/use
+Users have ability to add a description below the 'consume drink' button to share what they're drinking
+
+Design & Planning Document:
+-4 Tasks to add to document
+-Implementation plan probably needs to be done as a group
+-System architecture should be completed by at least two people
+-Design details shouldn't take too long, but will include equations/algorithms for tracking all users waste
+ research on cup waste/plastic should start being conducted by this person
+ -
+ 
+ Statistic ideas:
+ -Global consumption
+ -User consumption
+ -User consumption as a fraction of global consumption
+ -Average consumption per week
+ -Times drinks are consumed by our users
+
+
