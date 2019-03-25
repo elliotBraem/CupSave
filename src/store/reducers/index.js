@@ -1,4 +1,5 @@
-import status from './status';
+import statusReducer from './status';
+import {combineReducers} from 'redux';
 
 const rehydrated = (state = false, action) => {
   switch (action.type) {
@@ -9,7 +10,10 @@ const rehydrated = (state = false, action) => {
   }
 };
 
-export default {
-  rehydrated,
-  status,
-};
+export const createRootReducer = () =>
+  combineReducers({
+    rehydrated,
+    status: statusReducer,
+  });
+
+export default createRootReducer;

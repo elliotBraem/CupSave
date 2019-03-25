@@ -1,41 +1,38 @@
 /* global window */
-import {applyMiddleware, compose, createStore} from 'redux';
-import {persistCombineReducers, persistStore} from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // default: localStorage if web, AsyncStorage if react-native
+import {applyMiddleware, createStore} from 'redux';
+import RNFirebase from 'react-native-firebase';
+import {getFirebase, reactReduxFirebase} from 'react-redux-firebase';
 import thunk from 'redux-thunk';
-import reducers from './reducers';
+import {composeWithDevTools} from 'remote-redux-devtools';
+import {createRootReducer} from './reducers';
 
-export default (initialState = {}) => {
-  // Redux Persist config
-  const config = {
-    key: 'root',
-    storage,
-    blacklist: ['status'],
-  };
+const reactNativeFirebaseConfig = {
+  debug: true,
+};
+
+// for more config options, visit http://docs.react-redux-firebase.com/history/v2.0.0/docs/api/compose.html
+const reduxFirebaseConfig = {
+  userProfile: 'users', // save users profiles to 'users' collection
+};
+
+export default function configureStore(initialState = {firebase: {}}) {
+  const firebase = RNFirebase.initializeApp(reactNativeFirebaseConfig);
 
   // Middleware configuration
-  const middleware = [thunk];
-
-  // Store enhancers
-  // const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const enhancers = [];
-  const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-  if (typeof devToolsExtension === 'function') {
-    enhancers.push(devToolsExtension());
-  }
+  const middleware = [
+    // make getFirebase available in third argument of thunks
+    thunk.withExtraArgument({getFirebase}),
+  ];
 
   // Store initialization
-  const persistedReducer = persistCombineReducers(config, reducers);
   const store = createStore(
-    persistedReducer,
+    createRootReducer(),
     initialState,
-    compose(
-      applyMiddleware(...middleware),
-      ...enhancers
+    composeWithDevTools(
+      reactReduxFirebase(firebase, reduxFirebaseConfig), // pass initialized react-native-firebase app instance
+      applyMiddleware(...middleware)
     )
   );
 
-  const persistor = persistStore(store);
-
-  return {persistor, store};
-};
+  return store;
+}
