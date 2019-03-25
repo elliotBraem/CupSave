@@ -1,7 +1,7 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import createStore from './createStore';
-import Home from './Home';
+import createStore from 'store';
+import Home from 'components/Home';
 
 // Store Initialization
 const initialState = {firebase: {}};

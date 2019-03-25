@@ -2,32 +2,34 @@
   "name": "cupsave",
   "version": "0.0.1",
   "private": true,
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "react-native start",
-    "eject": "react-native eject",
-    "android": "react-native android",
-    "ios": "react-native ios",
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject",
     "format": "prettier --config ./.prettierrc.json --write \"src/**/*.{js,jsx,json,md,scss}\""
   },
   "dependencies": {
-    "@expo/vector-icons": "^9.0.0",
+    "@expo/vector-icons": "^10.0.1",
     "expo": "^32.0.5",
     "firebase": "^5.8.2",
     "nachos-ui": "^0.2.0-beta.1",
     "prop-types": "^15.7.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "react-native": "^0.58.4",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-firebase": "^5.2.3",
     "react-redux": "^6.0.0",
     "react-redux-firebase": "^2.2.6",
-    "react-router-dom": "^4.3.1",
+    "react-router-dom": "^5.0.0",
     "recompose": "^0.30.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "remote-redux-devtools": "^0.5.16"
   },
   "devDependencies": {
+    "babel-preset-expo": "^5.0.0",
     "expo-cli": "^2.10.1",
     "prettier": "^1.16.4"
   }
