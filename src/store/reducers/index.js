@@ -1,5 +1,7 @@
-import statusReducer from './status';
 import {combineReducers} from 'redux';
+import {firebaseStateReducer as firebase} from 'react-redux-firebase';
+// Reducers
+import status from './status';
 
 const rehydrated = (state = false, action) => {
   switch (action.type) {
@@ -10,10 +12,10 @@ const rehydrated = (state = false, action) => {
   }
 };
 
-export const createRootReducer = () =>
-  combineReducers({
-    rehydrated,
-    status: statusReducer,
-  });
+const rootReducer = combineReducers({
+  rehydrated,
+  firebase,
+  status,
+});
 
-export default createRootReducer;
+export default rootReducer;

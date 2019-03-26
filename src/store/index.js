@@ -1,22 +1,18 @@
 /* global window */
 import {applyMiddleware, createStore} from 'redux';
-import RNFirebase from 'react-native-firebase';
 import {getFirebase, reactReduxFirebase} from 'react-redux-firebase';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'remote-redux-devtools';
-import {createRootReducer} from './reducers';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
-const reactNativeFirebaseConfig = {
-  debug: true,
-};
-
-// for more config options, visit http://docs.react-redux-firebase.com/history/v2.0.0/docs/api/compose.html
-const reduxFirebaseConfig = {
-  userProfile: 'users', // save users profiles to 'users' collection
-};
+import rootReducer from './reducers';
+import {firebaseConfig, reactReduxFirebaseConfig} from '../constants/firebase';
 
 export default function configureStore(initialState = {firebase: {}}) {
-  const firebase = RNFirebase.initializeApp(reactNativeFirebaseConfig);
+  // Initialize Firebase instance
+  firebase.initializeApp(firebaseConfig);
 
   // Middleware configuration
   const middleware = [
@@ -26,13 +22,22 @@ export default function configureStore(initialState = {firebase: {}}) {
 
   // Store initialization
   const store = createStore(
-    createRootReducer(),
+    rootReducer,
     initialState,
     composeWithDevTools(
-      reactReduxFirebase(firebase, reduxFirebaseConfig), // pass initialized react-native-firebase app instance
+      reactReduxFirebase(firebase, reactReduxFirebaseConfig), // pass initialized react-native-firebase app instance
       applyMiddleware(...middleware)
     )
   );
+
+  // TODO: maybe not need? ---------
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('./reducers', () => {
+      store.replaceReducer(rootReducer());
+    });
+  }
+  // -------------------------------
 
   return store;
 }

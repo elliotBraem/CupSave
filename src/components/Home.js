@@ -2,7 +2,7 @@ import React from 'react';
 
 import {View, Text, StyleSheet} from 'react-native';
 
-const Home = ({todos, addTodo, onNewTodoChange, newTodoText}) => (
+const Home = () => (
   <View style={styles.container}>
     <Text style={styles.header}>Hello</Text>
   </View>
