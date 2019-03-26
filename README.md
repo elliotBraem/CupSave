@@ -1,6 +1,9 @@
 # CupShare
 An application that tracks a user’s ecological footprint of disposable coffee cups saved by purchasing drinks with a personal mug.
 
+### Commit style guidelines:
+https://udacity.github.io/git-styleguide/
+
 ## Understanding the File Structure
 - `/docs` - Documentation
 - `/src` - Contains the source code for native (ios and android)

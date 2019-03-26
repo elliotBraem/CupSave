@@ -12,7 +12,7 @@ import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
 
-import rootReducer from './reducers';
+import createRootReducer from './reducers';
 import {firebaseConfig, reactReduxFirebaseConfig} from '../constants/firebase';
 import {version} from '../../package.json';
 
@@ -37,22 +37,15 @@ export default function configureStore(initialState = {}) {
   firebase.initializeApp(firebaseConfig);
 
   // Store initialization
-  const persistedReducer = persistReducer(persistConfig, rootReducer);
+  const persistedReducer = persistReducer(persistConfig, createRootReducer());
   const store = createStore(
     persistedReducer,
     initialState,
     composeWithDevTools(
-      reactReduxFirebase(firebase, reactReduxFirebaseConfig), // pass initialized react-native-firebase app instance
+      reactReduxFirebase(firebase, reactReduxFirebaseConfig), // pass initialized firebase app instance
       applyMiddleware(...middleware)
     )
   );
-
-  // if (module.hot) {
-  //   // Enable Webpack hot module replacement for reducers
-  //   module.hot.accept('./reducers', () => {
-  //     store.replaceReducer(persistedReducer);
-  //   });
-  // }
 
   // Setup Store Persistor
   const persistor = persistStore(store);
