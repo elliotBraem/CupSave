@@ -2,24 +2,24 @@
   "name": "cupsave",
   "version": "0.0.1",
   "private": true,
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "./node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
     "format": "prettier --config ./.prettierrc.json --write \"src/**/*.{js,jsx,json,md,scss}\""
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.1",
     "expo": "^32.0.5",
-    "firebase": "^5.8.2",
+    "firebase": "^5.9.1",
     "nachos-ui": "^0.2.0-beta.1",
     "prop-types": "^15.7.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
-    "react-native-firebase": "^5.2.3",
     "react-redux": "^6.0.0",
     "react-redux-firebase": "^2.2.6",
     "react-router-dom": "^5.0.0",
@@ -31,6 +31,12 @@
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
     "expo-cli": "^2.10.1",
-    "prettier": "^1.16.4"
+    "jest-expo": "^32.0.0",
+    "prettier": "^1.16.4",
+    "react-test-renderer": "^16.8.5",
+    "schedule": "^0.4.0"
+  },
+  "jest": {
+    "preset": "jest-expo"
   }
 }

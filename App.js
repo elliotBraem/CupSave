@@ -1,11 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import {Provider} from 'react-redux';
+import createStore from './src/store';
+import Home from './src/components/Home';
+
+// Store Initialization
+const initialState = window.__INITIAL_STATE__ || {
+  firebase: {authError: null},
+};
+
+const store = createStore(initialState);
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <Provider store={store}>
+          <Home />
+        </Provider>
       </View>
     );
   }
