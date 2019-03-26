@@ -47,12 +47,12 @@ export default function configureStore(initialState = {}) {
     )
   );
 
-  if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept('./reducers', () => {
-      store.replaceReducer(persistedReducer);
-    });
-  }
+  // if (module.hot) {
+  //   // Enable Webpack hot module replacement for reducers
+  //   module.hot.accept('./reducers', () => {
+  //     store.replaceReducer(persistedReducer);
+  //   });
+  // }
 
   // Setup Store Persistor
   const persistor = persistStore(store);
