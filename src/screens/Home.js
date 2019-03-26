@@ -2,6 +2,29 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Button, Text, StyleSheet, View} from 'react-native';
 
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 100,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  header: {
+    alignSelf: 'center',
+    marginBottom: 50,
+  },
+  buttons: {
+    position: 'absolute',
+    paddingBottom: 30,
+    bottom: 0,
+    paddingTop: 10,
+    paddingHorizontal: 10,
+    left: 0,
+    flexDirection: 'row',
+    right: 0,
+    justifyContent: 'space-between',
+  },
+});
+
 export default class Home extends Component {
   static navigationOptions = {
     title: 'Home',
@@ -28,26 +51,3 @@ export default class Home extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 100,
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  header: {
-    alignSelf: 'center',
-    marginBottom: 50,
-  },
-  buttons: {
-    position: 'absolute',
-    paddingBottom: 30,
-    bottom: 0,
-    paddingTop: 10,
-    paddingHorizontal: 10,
-    left: 0,
-    flexDirection: 'row',
-    right: 0,
-    justifyContent: 'space-between',
-  },
-});

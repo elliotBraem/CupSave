@@ -1,3 +1,4 @@
+/* global window */
 import React from 'react';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -14,14 +15,12 @@ const initialState = window.__INITIAL_STATE__ || {
 
 const {store, persistor} = configureStore(initialState);
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <PersistGate loading={<Loading />} persistor={persistor}>
-          <AppContainer />
-        </PersistGate>
-      </Provider>
-    );
-  }
-}
+const App = () => (
+  <Provider store={store}>
+    <PersistGate loading={<Loading />} persistor={persistor}>
+      <AppContainer />
+    </PersistGate>
+  </Provider>
+);
+
+export default App;

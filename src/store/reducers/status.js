@@ -1,9 +1,6 @@
-export const initialState = {
-  loading: false,
-  info: null,
-  error: null,
-  success: null,
-};
+import Store from '../status';
+
+export const initialState = Store;
 
 export default function statusReducer(state = initialState, action) {
   switch (action.type) {

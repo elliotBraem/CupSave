@@ -9,11 +9,7 @@ export default function(dispatch, type, val) {
     const allowed = ['error', 'success', 'info', 'loading'];
 
     if (allowed.indexOf(type) === -1) {
-      return reject(
-        new Error(
-          `Error: Received "${type}". Type should be one of loading, success, error or info.`
-        )
-      );
+      return reject(new Error(`Error: Received "${type}". Type should be one of loading, success, error or info.`));
     }
 
     // Set some defaults for convenience
