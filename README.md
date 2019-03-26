@@ -14,4 +14,4 @@ An application that tracks a user’s ecological footprint of disposable coffee 
         - `/actions` - Redux Actions - payloads of information that send data _from_ your application _to_ your store. [Read More](https://redux.js.org/docs/basics/Actions.html)
         - `/reducers` - Redux Reducers - Actions dispatch to reducers, which actually change the state (and log the results of actions) [Read More](https://redux.js.org/docs/basics/Reducers.html)
 
-Important library we're using to connect to firebase: ttps://github.com/prescottprue/react-redux-firebase#use
+Important library we're using to connect to firebase: https://github.com/prescottprue/react-redux-firebase#use
