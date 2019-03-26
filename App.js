@@ -1,33 +1,27 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
 import {Provider} from 'react-redux';
-import createStore from './src/store';
-import Home from './src/components/Home';
+import {PersistGate} from 'redux-persist/integration/react';
 
-// Store Initialization
+import configureStore from './src/store';
+import Loading from './src/components/Loading';
+import AppContainer from './src/navigation';
+
 const initialState = window.__INITIAL_STATE__ || {
-  firebase: {authError: null},
+  firebase: {
+    authError: null,
+  },
 };
 
-const store = createStore(initialState);
+const {store, persistor} = configureStore(initialState);
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Provider store={store}>
-          <Home />
-        </Provider>
-      </View>
+      <Provider store={store}>
+        <PersistGate loading={<Loading />} persistor={persistor}>
+          <AppContainer />
+        </PersistGate>
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
