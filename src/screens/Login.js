@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, Button} from 'react-native';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-
-import * as authActions from '../store/actions/auth';
+import {withFirebase} from 'react-redux-firebase';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,12 +38,12 @@ class LoginScreen extends Component {
     }).isRequired,
     firebase: PropTypes.shape({
       login: PropTypes.func.isRequired,
-    }),
+    }).isRequired,
     auth: PropTypes.object,
   };
 
   render() {
-    const {navigation} = this.props;
+    const {navigation, firebase} = this.props;
 
     return (
       <View style={styles.container}>
@@ -59,21 +57,4 @@ class LoginScreen extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    login: formData => dispatch(authActions.dbLogin(formData)),
-  };
-};
-
-const mapStateToProps = (state, ownProps) => {
-  const auth = state.firebase.auth || {};
-
-  return {
-    auth,
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginScreen);
+export default withFirebase(LoginScreen);
