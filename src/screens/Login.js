@@ -38,8 +38,8 @@ class LoginScreen extends Component {
     }).isRequired,
     firebase: PropTypes.shape({
       login: PropTypes.func.isRequired,
-    }).isRequired,
-    auth: PropTypes.object,
+    }).isRequired, // from withFirebase
+    auth: PropTypes.object, // from withFirebase
   };
 
   render() {
