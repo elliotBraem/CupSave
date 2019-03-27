@@ -1,34 +1,45 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Button} from 'react-native';
+import {Text, StyleSheet, View, Button, TextInput} from 'react-native';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-
-import * as authActions from '../store/actions/auth';
+import {withFirebase} from 'react-redux-firebase';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
+    paddingTop: 15,
     paddingLeft: 15,
     paddingRight: 15,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
+    fontSize: 42,
     alignSelf: 'center',
     marginBottom: 50,
   },
-  buttons: {
-    position: 'absolute',
-    paddingBottom: 30,
-    bottom: 0,
-    paddingTop: 10,
-    paddingHorizontal: 10,
-    left: 0,
-    flexDirection: 'row',
-    right: 0,
-    justifyContent: 'space-between',
+  textInput: {
+    height: 40,
+    width: '100%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginTop: 14,
+    alignSelf: 'stretch',
+    textAlign: 'center',
   },
 });
 
 class LoginScreen extends Component {
+  state = {email: '', password: '', errorMessage: null, btnColor: '#56638A'};
+  handleLogin = () => {
+    const {email, password} = this.state;
+
+    if (email.trim() == "" || password.trim() == "") {
+      Alert.alert("Invalid Parameters:", "Username / password cannot be empty");
+    } else {
+      this.props.firebase.login(email, password).then(() => this.navigation.navigate('Main')).catch(error => this.setState({errorMessage: error.message}))
+      console.log('handleLogin')
+    }
+  }
   static navigationOptions = {
     title: 'Login',
   };
@@ -40,7 +51,7 @@ class LoginScreen extends Component {
     }).isRequired,
     firebase: PropTypes.shape({
       login: PropTypes.func.isRequired,
-    }),
+    }).isRequired,
     auth: PropTypes.object,
   };
 
@@ -49,8 +60,35 @@ class LoginScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Login time</Text>
-        <View style={styles.buttons}>
+        <Text style={styles.header}> Welcome to CupSave!</Text>
+        <Text>Let's get started</Text>
+          <Text>Login</Text>
+          {this.state.errorMessage &&
+          <Text style={{ color: 'red' }}>
+            {this.state.errorMessage}
+          </Text>}
+          <TextInput
+            style={styles.textInput}
+            autoCapitalize="none"
+            placeholder="Email"
+            onChangeText={email => this.setState({ email })}
+            value={this.state.email}
+          />
+          <TextInput
+            secureTextEntry
+            style={styles.textInput}
+            autoCapitalize="none"
+            placeholder="Password"
+            onChangeText={password => this.setState({ password })}
+            value={this.state.password}
+          />
+          <View style={styles.view}>
+            <Button title="Login" onPress={this.handleLogin} color={this.state.btnColor}/>
+          </View>
+          <View style={styles.view}>
+            <Button
+              title="Don't have an account? Sign Up"
+              onPress={() => navigation.navigate('SignUp')} color={this.state.btnColor}/>
           <Button title="Open drawer" onPress={() => navigation.openDrawer()} />
           <Button title="Go back" onPress={() => navigation.navigate('Home')} />
         </View>
@@ -59,21 +97,4 @@ class LoginScreen extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    login: formData => dispatch(authActions.dbLogin(formData)),
-  };
-};
-
-const mapStateToProps = (state, ownProps) => {
-  const auth = state.firebase.auth || {};
-
-  return {
-    auth,
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginScreen);
+export default withFirebase(LoginScreen);
