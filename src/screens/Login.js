@@ -36,7 +36,7 @@ class LoginScreen extends Component {
     if (email.trim() == "" || password.trim() == "") {
       Alert.alert("Invalid Parameters:", "Username / password cannot be empty");
     } else {
-      this.props.firebase.login(email, password).then(() => this.navigation.navigate('Main')).catch(error => this.setState({errorMessage: error.message}))
+      this.props.firebase.login({email: email, password: password}).then(() => this.navigation.navigate('Main')).catch(error => this.setState({errorMessage: error.message}))
       console.log('handleLogin')
     }
   }
