@@ -3,6 +3,7 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {AppRegistry} from 'react-native';
+import {ThemeProvider} from 'nachos-ui';
 
 import {ReactReduxFirebaseProvider} from 'react-redux-firebase';
 import {createFirestoreInstance} from 'redux-firestore';
@@ -38,9 +39,11 @@ const App = () => (
       dispatch={store.dispatch}
       firebase={firebase}
       createFirestoreInstance={createFirestoreInstance}>
-      <PersistGate loading={<Loading />} persistor={persistor}>
-        <AppContainer />
-      </PersistGate>
+      <ThemeProvider>
+        <PersistGate loading={<Loading />} persistor={persistor}>
+          <AppContainer />
+        </PersistGate>
+      </ThemeProvider>
     </ReactReduxFirebaseProvider>
   </Provider>
 );

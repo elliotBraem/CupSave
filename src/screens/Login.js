@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Button} from 'react-native';
+import {Text, StyleSheet, View} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
+import {Button} from 'nachos-ui';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,15 +15,13 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   buttons: {
-    position: 'absolute',
-    paddingBottom: 30,
-    bottom: 0,
-    paddingTop: 10,
-    paddingHorizontal: 10,
-    left: 0,
     flexDirection: 'row',
-    right: 0,
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    margin: 15,
+    justifyContent: 'center',
   },
 });
 
@@ -49,8 +48,12 @@ class LoginScreen extends Component {
       <View style={styles.container}>
         <Text style={styles.header}>Login time</Text>
         <View style={styles.buttons}>
-          <Button title="Open drawer" onPress={() => navigation.openDrawer()} />
-          <Button title="Go back" onPress={() => navigation.navigate('Home')} />
+          <Button onPress={() => navigation.openDrawer()} style={styles.button}>
+            Open drawer
+          </Button>
+          <Button onPress={() => navigation.navigate('Home')} style={styles.button}>
+            Go back
+          </Button>
         </View>
       </View>
     );
