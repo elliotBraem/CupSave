@@ -5,6 +5,7 @@ import HomeContainer from '../screens/Home';
 import LoginContainer from '../screens/Login';
 import COLORS from '../constants/colors';
 
+/* eslint-disable react/prop-types */
 const HomeStack = createStackNavigator({
   Home: {
     path: '/',
@@ -24,6 +25,7 @@ const LoginStack = createStackNavigator({
     },
   },
 });
+/* eslint-enable react/prop-types */
 
 const Sidebar = createDrawerNavigator(
   {

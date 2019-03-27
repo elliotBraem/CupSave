@@ -6,7 +6,6 @@ import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to AsyncStorage for react-native
 
 import createRootReducer from './reducers';
-
 import {version} from '../../package.json';
 
 export default function configureStore(initialState = {}) {

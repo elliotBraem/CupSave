@@ -10,6 +10,8 @@ export const firebaseConfig = {
 
 export const reactReduxFirebaseConfig = {
   userProfile: 'users', // root that user profiles are written to
+  useFirestoreForProfile: true,
+  enableLogging: false,
 };
 
 export default {firebaseConfig, reactReduxFirebaseConfig};
