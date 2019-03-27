@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Button, TextInput} from 'react-native';
+import {Text, StyleSheet, View, TextInput} from 'react-native';
+import {Button} from 'nachos-ui';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
 
@@ -13,9 +14,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    fontSize: 42,
-    alignSelf: 'center',
-    marginBottom: 50,
+    fontSize: 38,
+    marginBottom: 20,
   },
   textInput: {
     height: 40,
@@ -36,7 +36,7 @@ class LoginScreen extends Component {
     if (email.trim() == "" || password.trim() == "") {
       Alert.alert("Invalid Parameters:", "Username / password cannot be empty");
     } else {
-      this.props.firebase.login({email: email, password: password}).then(() => this.navigation.navigate('Main')).catch(error => this.setState({errorMessage: error.message}))
+      this.props.firebase.login({email: email, password: password}).then(() => this.navigation.navigate('Home')).catch(error => this.setState({errorMessage: error.message}))
       console.log('handleLogin')
     }
   }
@@ -60,7 +60,7 @@ class LoginScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.header}> Welcome to CupSave!</Text>
+        <Text style={styles.header}>Welcome to CupSave!</Text>
         <Text>Let's get started</Text>
           <Text>Login</Text>
           {this.state.errorMessage &&
