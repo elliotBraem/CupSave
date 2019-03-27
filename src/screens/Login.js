@@ -56,7 +56,7 @@ class LoginScreen extends Component {
   };
 
   render() {
-    const {navigation} = this.props;
+    const {navigation, firebase} = this.props;
 
     return (
       <View style={styles.container}>
