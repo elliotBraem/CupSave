@@ -1,42 +1,54 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, TextInput} from 'react-native';
-import {Button} from 'nachos-ui';
+import {Text, StyleSheet, View, TextInput, Alert} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
 import {Button} from 'nachos-ui';
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 50,
     paddingTop: 15,
     paddingLeft: 15,
     paddingRight: 15,
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttons: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   header: {
     fontSize: 38,
     marginBottom: 20,
   },
+  button: {
+    margin: 15,
+    justifyContent: 'center',
+    paddingBottom: 10,
+  },
   textInput: {
     height: 40,
-    width: '100%',
+    width: '90%',
     borderColor: 'gray',
     borderWidth: 1,
     marginTop: 14,
     alignSelf: 'stretch',
-    textAlign: 'center'},
-});
+    textAlign: 'center',
+  }
+})
 
 class LoginScreen extends Component {
-  state = {email: '', password: '', errorMessage: null, btnColor: '#56638A'};
+  state = {email: '', password: '', errorMessage: null};
   handleLogin = () => {
     const {email, password} = this.state;
 
     if (email.trim() == "" || password.trim() == "") {
       Alert.alert("Invalid Parameters:", "Username / password cannot be empty");
     } else {
-      this.props.firebase.login({email: email, password: password}).then(() => this.navigation.navigate('Home')).catch(error => this.setState({errorMessage: error.message}))
+      this.props.firebase.login({
+        email: email,
+        password: password
+      }).then(() => this.navigation.navigate('Home')).catch(error => this.setState({errorMessage: error.message}))
       console.log('handleLogin')
     }
   }
@@ -54,13 +66,11 @@ class LoginScreen extends Component {
     }).isRequired, // from withFirebase
     auth: PropTypes.object, // from withFirebase
   };
-
   render() {
     const {navigation, firebase} = this.props;
 
     return (
       <View style={styles.container}>
-<<<<<<< HEAD
         <Text style={styles.header}>Welcome to CupSave!</Text>
         <Text>Let's get started</Text>
           <Text>Login</Text>
@@ -83,26 +93,14 @@ class LoginScreen extends Component {
             onChangeText={password => this.setState({ password })}
             value={this.state.password}
           />
-          <View style={styles.view}>
-            <Button title="Login" onPress={this.handleLogin} color={this.state.btnColor}/>
-          </View>
-          <View style={styles.view}>
+          <View style={styles.buttons}>
+            <Button title="Login" onPress={this.handleLogin} style={styles.button}/>
             <Button
               title="Don't have an account? Sign Up"
-              onPress={() => navigation.navigate('SignUp')} color={this.state.btnColor}/>
-          <Button title="Open drawer" onPress={() => navigation.openDrawer()} />
-          <Button title="Go back" onPress={() => navigation.navigate('Home')} />
-=======
-        <Text style={styles.header}>Login time</Text>
-        <View style={styles.buttons}>
-          <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-            Open drawer
-          </Button>
-          <Button onPress={() => navigation.navigate('Home')} style={styles.button}>
-            Go back
-          </Button>
->>>>>>> develop
-        </View>
+              onPress={() => navigation.navigate('SignUp')} style={styles.button}/>
+          <Button title="Open drawer" onPress={() => navigation.openDrawer()} style={styles.button} />
+          <Button title="Go back" onPress={() => navigation.navigate('Home')} style={styles.button} />
+      </View>
       </View>
     );
   }
