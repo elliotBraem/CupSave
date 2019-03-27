@@ -22,7 +22,7 @@ export default function createRootReducer() {
     rehydrated,
     firebase: persistReducer(
       {
-        key: 'firepersist',
+        key: 'firebasepersist',
         storage,
         stateReconciler: hardSet,
       },
