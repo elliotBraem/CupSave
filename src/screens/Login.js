@@ -3,6 +3,7 @@ import {Text, StyleSheet, View, TextInput} from 'react-native';
 import {Button} from 'nachos-ui';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
+import {Button} from 'nachos-ui';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,8 +25,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 14,
     alignSelf: 'stretch',
-    textAlign: 'center',
-  },
+    textAlign: 'center'},
 });
 
 class LoginScreen extends Component {
@@ -60,6 +60,7 @@ class LoginScreen extends Component {
 
     return (
       <View style={styles.container}>
+<<<<<<< HEAD
         <Text style={styles.header}>Welcome to CupSave!</Text>
         <Text>Let's get started</Text>
           <Text>Login</Text>
@@ -91,6 +92,16 @@ class LoginScreen extends Component {
               onPress={() => navigation.navigate('SignUp')} color={this.state.btnColor}/>
           <Button title="Open drawer" onPress={() => navigation.openDrawer()} />
           <Button title="Go back" onPress={() => navigation.navigate('Home')} />
+=======
+        <Text style={styles.header}>Login time</Text>
+        <View style={styles.buttons}>
+          <Button onPress={() => navigation.openDrawer()} style={styles.button}>
+            Open drawer
+          </Button>
+          <Button onPress={() => navigation.navigate('Home')} style={styles.button}>
+            Go back
+          </Button>
+>>>>>>> develop
         </View>
       </View>
     );
