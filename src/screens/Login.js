@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, TextInput, Alert} from 'react-native';
+import {Text, StyleSheet, View, TextInput, Alert, Button} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
-import {Button} from 'nachos-ui';
+// import {Button} from 'nachos-ui';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,30 +11,31 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     justifyContent: 'center',
+    flex: 1,
     alignItems: 'center',
   },
   buttons: {
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   header: {
     fontSize: 38,
     marginBottom: 20,
   },
   button: {
-    margin: 15,
+    marginBottom: 15,
     justifyContent: 'center',
-    paddingBottom: 10,
   },
   textInput: {
     height: 40,
-    width: '90%',
+    width: '100%',
     borderColor: 'gray',
     borderWidth: 1,
     marginTop: 14,
     alignSelf: 'stretch',
     textAlign: 'center',
-  }
+  },
 })
 
 class LoginScreen extends Component {
@@ -52,6 +53,7 @@ class LoginScreen extends Component {
       console.log('handleLogin')
     }
   }
+
   static navigationOptions = {
     title: 'Login',
   };
@@ -66,6 +68,7 @@ class LoginScreen extends Component {
     }).isRequired, // from withFirebase
     auth: PropTypes.object, // from withFirebase
   };
+
   render() {
     const {navigation, firebase} = this.props;
 
@@ -73,11 +76,11 @@ class LoginScreen extends Component {
       <View style={styles.container}>
         <Text style={styles.header}>Welcome to CupSave!</Text>
         <Text>Let's get started</Text>
-          <Text>Login</Text>
-          {this.state.errorMessage &&
-          <Text style={{ color: 'red' }}>
-            {this.state.errorMessage}
-          </Text>}
+        <Text>Login</Text>
+        {this.state.errorMessage &&
+        <Text style={{ color: 'red' }}>
+          {this.state.errorMessage}
+        </Text>}
           <TextInput
             style={styles.textInput}
             autoCapitalize="none"
@@ -98,8 +101,8 @@ class LoginScreen extends Component {
             <Button
               title="Don't have an account? Sign Up"
               onPress={() => navigation.navigate('SignUp')} style={styles.button}/>
-          <Button title="Open drawer" onPress={() => navigation.openDrawer()} style={styles.button} />
-          <Button title="Go back" onPress={() => navigation.navigate('Home')} style={styles.button} />
+            <Button title="Open drawer" onPress={() => navigation.openDrawer()} style={styles.button} />
+            <Button title="Go back" onPress={() => navigation.navigate('Home')} style={styles.button} />
       </View>
       </View>
     );
