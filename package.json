@@ -9,6 +9,8 @@
     "ios": "expo start --ios",
     "eject": "expo eject",
     "test": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "reinit": "watchman watch-del-all && rm -rf node_modules package-lock.json && npm i && npm run clearcache",
+    "clearcache": "rm -rf /tmp/metro-bundler-cache-* /tmp/haste-map-react-native-packager-*",
     "lint": "eslint -c ./.eslintrc ./src ./App.js",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --config ./.prettierrc --write \"src/**/*.{js,json,md,css,scss}\""
