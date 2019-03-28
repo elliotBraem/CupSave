@@ -36,23 +36,27 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     textAlign: 'center',
   },
-})
+});
 
 class LoginScreen extends Component {
   state = {email: '', password: '', errorMessage: null};
+
   handleLogin = () => {
     const {email, password} = this.state;
 
-    if (email.trim() == "" || password.trim() == "") {
-      Alert.alert("Invalid Parameters:", "Username / password cannot be empty");
+    if (email.trim() == '' || password.trim() == '') {
+      Alert.alert('Invalid Parameters:', 'Username / password cannot be empty');
     } else {
-      this.props.firebase.login({
-        email: email,
-        password: password
-      }).then(() => this.navigation.navigate('Home')).catch(error => this.setState({errorMessage: error.message}))
-      console.log('handleLogin')
+      this.props.firebase
+        .login({
+          email,
+          password,
+        })
+        .then(() => this.navigation.navigate('Home'))
+        .catch(error => this.setState({errorMessage: error.message}));
+      console.log('handleLogin');
     }
-  }
+  };
 
   static navigationOptions = {
     title: 'Login',
@@ -77,33 +81,32 @@ class LoginScreen extends Component {
         <Text style={styles.header}>Welcome to CupSave!</Text>
         <Text>Let's get started</Text>
         <Text>Login</Text>
-        {this.state.errorMessage &&
-        <Text style={{ color: 'red' }}>
-          {this.state.errorMessage}
-        </Text>}
-          <TextInput
-            style={styles.textInput}
-            autoCapitalize="none"
-            placeholder="Email"
-            onChangeText={email => this.setState({ email })}
-            value={this.state.email}
+        {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
+        <TextInput
+          style={styles.textInput}
+          autoCapitalize="none"
+          placeholder="Email"
+          onChangeText={email => this.setState({email})}
+          value={this.state.email}
+        />
+        <TextInput
+          secureTextEntry
+          style={styles.textInput}
+          autoCapitalize="none"
+          placeholder="Password"
+          onChangeText={password => this.setState({password})}
+          value={this.state.password}
+        />
+        <View style={styles.buttons}>
+          <Button title="Login" onPress={this.handleLogin} style={styles.button} />
+          <Button
+            title="Don't have an account? Sign Up"
+            onPress={() => navigation.navigate('SignUp')}
+            style={styles.button}
           />
-          <TextInput
-            secureTextEntry
-            style={styles.textInput}
-            autoCapitalize="none"
-            placeholder="Password"
-            onChangeText={password => this.setState({ password })}
-            value={this.state.password}
-          />
-          <View style={styles.buttons}>
-            <Button title="Login" onPress={this.handleLogin} style={styles.button}/>
-            <Button
-              title="Don't have an account? Sign Up"
-              onPress={() => navigation.navigate('SignUp')} style={styles.button}/>
-            <Button title="Open drawer" onPress={() => navigation.openDrawer()} style={styles.button} />
-            <Button title="Go back" onPress={() => navigation.navigate('Home')} style={styles.button} />
-      </View>
+          <Button title="Open drawer" onPress={() => navigation.openDrawer()} style={styles.button} />
+          <Button title="Go back" onPress={() => navigation.navigate('Home')} style={styles.button} />
+        </View>
       </View>
     );
   }
