@@ -3,19 +3,10 @@ import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
 
 import HomeContainer from '../screens/Home';
 import LoginContainer from '../screens/Login';
+import ProfileContainer from '../screens/Profile';
 import COLORS from '../constants/colors';
 
 /* eslint-disable react/prop-types */
-const HomeStack = createStackNavigator({
-  Home: {
-    path: '/',
-    screen: ({navigation}) => <HomeContainer navigation={navigation} />,
-    navigationOptions: {
-      drawerLabel: 'Home',
-    },
-  },
-});
-
 const LoginStack = createStackNavigator({
   Login: {
     path: '/login',
@@ -29,11 +20,10 @@ const LoginStack = createStackNavigator({
 
 const Sidebar = createDrawerNavigator(
   {
-    Home: HomeStack,
     Login: LoginStack,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Login',
     drawerWidth: 250,
     navigationOptions: {
       header: null,

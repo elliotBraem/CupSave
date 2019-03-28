@@ -41,13 +41,10 @@ class HomeScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Hello</Text>
-        <View style={styles.buttons}>
+        <Text style={styles.header}>Home</Text>
+         <View style={styles.buttons}>
           <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-            Open drawer
-          </Button>
-          <Button onPress={() => navigation.navigate('Login')} style={styles.button}>
-            To Login
+            Menu
           </Button>
         </View>
       </View>

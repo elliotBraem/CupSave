@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View} from 'react-native';
 import PropTypes from 'prop-types';
-import {withFirebase} from 'react-redux-firebase';
+import {Text, StyleSheet, View} from 'react-native';
 import {Button} from 'nachos-ui';
 
 const styles = StyleSheet.create({
@@ -25,9 +24,9 @@ const styles = StyleSheet.create({
   },
 });
 
-class LoginScreen extends Component {
+class QRScannerScreen extends Component {
   static navigationOptions = {
-    title: 'Login',
+    title: 'QRScanner',
   };
 
   static propTypes = {
@@ -35,35 +34,22 @@ class LoginScreen extends Component {
       openDrawer: PropTypes.func.isRequired,
       navigate: PropTypes.func.isRequired,
     }).isRequired,
-    firebase: PropTypes.shape({
-      login: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
-    auth: PropTypes.object, // from withFirebase
   };
 
   render() {
-    const {navigation, firebase} = this.props;
+    const {navigation} = this.props;
 
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>
-          Click the Login button to enter sample profile
-        </Text>
-        <View style={styles.buttons}>
-          <Button onPress={() => navigation.navigate('ProfileMain')} style={styles.button}>
-            Login
-          </Button>
-
-
+        <Text style={styles.header}>QR Scanner</Text>
+         <View style={styles.buttons}>
           <Button onPress={() => navigation.openDrawer()} style={styles.button}>
             Menu
           </Button>
-
-
         </View>
       </View>
     );
   }
 }
 
-export default withFirebase(LoginScreen);
+export default QRScannerScreen;
