@@ -43,16 +43,17 @@ class LoginScreen extends Component {
 
   handleLogin = () => {
     const {email, password} = this.state;
+    const {navigation, firebase} = this.props;
 
-    if (email.trim() == '' || password.trim() == '') {
+    if (email.trim() === '' || password.trim() === '') {
       Alert.alert('Invalid Parameters:', 'Username / password cannot be empty');
     } else {
-      this.props.firebase
+      firebase
         .login({
           email,
           password,
         })
-        .then(() => this.navigation.navigate('Home'))
+        .then(() => navigation.navigate('Home'))
         .catch(error => this.setState({errorMessage: error.message}));
       console.log('handleLogin');
     }

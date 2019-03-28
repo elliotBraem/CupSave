@@ -42,17 +42,18 @@ class SignUpScreen extends Component {
   state = {email: '', password: '', confirmedPassword: '', errorMessage: null};
 
   handleSignUp = () => {
-    if (this.state.email.trim() == '' || this.state.password.trim() == '') {
+    const {email, password, confirmedPassword} = this.state;
+    const {navigation, firebase} = this.props;
+    if (email.trim() === '' || password.trim() === '') {
       Alert.alert('ERROR:', 'Username / password cannot be empty');
-    } else if (this.state.confirmedPassword != this.state.password) {
+    } else if (confirmedPassword !== password) {
       Alert.alert('ERROR:', 'Password does not match confirmed password');
     } else {
-      this.props.firebase
-        .login({
+      firebase
+        .createUser({
           email,
-          password,
-        })
-        .then(() => this.navigation.navigate('Home'))
+          password}, {email})
+        .then(() => navigation.navigate('Home'))
         .catch(error => this.setState({errorMessage: error.message}));
       console.log('handleSignUp');
     }
