@@ -76,19 +76,20 @@ class LoginScreen extends Component {
 
   render() {
     const {navigation, firebase} = this.props;
+    const {state} = this.state;
 
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Welcome to CupSave!</Text>
-        <Text>Let's get started</Text>
+        <Text>Let&#39;s get started</Text>
         <Text>Login</Text>
-        {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
+        {state.errorMessage && <Text style={{color: 'red'}}>{state.errorMessage}</Text>}
         <TextInput
           style={styles.textInput}
           autoCapitalize="none"
           placeholder="Email"
           onChangeText={email => this.setState({email})}
-          value={this.state.email}
+          value={state.email}
         />
         <TextInput
           secureTextEntry
@@ -96,7 +97,7 @@ class LoginScreen extends Component {
           autoCapitalize="none"
           placeholder="Password"
           onChangeText={password => this.setState({password})}
-          value={this.state.password}
+          value={state.password}
         />
         <View style={styles.buttons}>
           <Button title="Login" onPress={this.handleLogin} style={styles.button} />
