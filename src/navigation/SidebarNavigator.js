@@ -1,8 +1,10 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
 
 import HomeContainer from '../screens/Home';
 import LoginContainer from '../screens/Login';
+import StatContainer from '../screens/Stats';
 import COLORS from '../constants/colors';
 
 /* eslint-disable react/prop-types */
@@ -25,12 +27,24 @@ const LoginStack = createStackNavigator({
     },
   },
 });
+
+
+const StatStack = createStackNavigator({
+  Stats: {
+    path: '/stats',
+    screen: ({navigation}) => <StatContainer navigation={navigation} />,
+    navigationOptions: {
+      drawerLabel: 'Stats',
+    },
+  },
+});
 /* eslint-enable react/prop-types */
 
 const Sidebar = createDrawerNavigator(
   {
     Home: HomeStack,
     Login: LoginStack,
+    Stats: StatStack,
   },
   {
     initialRouteName: 'Home',
