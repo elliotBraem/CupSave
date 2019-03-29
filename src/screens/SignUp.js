@@ -39,29 +39,11 @@ const styles = StyleSheet.create({
 });
 
 class SignUpScreen extends Component {
-  state = {email: '', password: '', confirmedPassword: '', errorMessage: null};
-
-  handleSignUp = () => {
-    const {email, password, confirmedPassword} = this.state;
-    const {navigation, firebase} = this.props;
-    if (email.trim() === '' || password.trim() === '') {
-      Alert.alert('ERROR:', 'Username / password cannot be empty');
-    } else if (confirmedPassword !== password) {
-      Alert.alert('ERROR:', 'Password does not match confirmed password');
-    } else {
-      firebase
-        .createUser({
-          email,
-          password}, {email})
-        .then(() => navigation.navigate('Home'))
-        .catch(error => this.setState({errorMessage: error.message}));
-      console.log('handleSignUp');
-    }
-  };
-
   static navigationOptions = {
     title: 'SignUp',
   };
+
+  state = {email: '', password: '', confirmedPassword: '', errorMessage: null};
 
   static propTypes = {
     navigation: PropTypes.shape({
@@ -74,20 +56,43 @@ class SignUpScreen extends Component {
     auth: PropTypes.object, // from withFirebase
   };
 
+  handleSignUp = () => {
+    const {email, password, confirmedPassword} = this.state;
+    const {navigation, firebase} = this.props;
+    if (email.trim() === '' || password.trim() === '') {
+      Alert.alert('ERROR:', 'Username / password cannot be empty');
+    } else if (confirmedPassword !== password) {
+      Alert.alert('ERROR:', 'Password does not match confirmed password');
+    } else {
+      firebase
+        .createUser(
+          {
+            email,
+            password,
+          },
+          {email}
+        )
+        .then(() => navigation.navigate('Home'))
+        .catch(error => this.setState({errorMessage: error.message}));
+      console.log('handleSignUp');
+    }
+  };
+
   render() {
     const {navigation, firebase} = this.props;
+    const {state} = this.state;
 
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Welcome to CupSave!</Text>
         <Text>Sign Up</Text>
-        {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
+        {state.errorMessage && <Text style={{color: 'red'}}>{state.errorMessage}</Text>}
         <TextInput
           style={styles.textInput}
           autoCapitalize="none"
           placeholder="Email"
           onChangeText={email => this.setState({email})}
-          value={this.state.email}
+          value={state.email}
         />
         <TextInput
           secureTextEntry
@@ -95,7 +100,7 @@ class SignUpScreen extends Component {
           autoCapitalize="none"
           placeholder="Password"
           onChangeText={password => this.setState({password})}
-          value={this.state.password}
+          value={state.password}
         />
         <TextInput
           secureTextEntry
@@ -103,7 +108,7 @@ class SignUpScreen extends Component {
           autoCapitalize="none"
           style={styles.textInput}
           onChangeText={confirmedPassword => this.setState({confirmedPassword})}
-          value={this.state.confirmedPassword}
+          value={state.confirmedPassword}
         />
         <View style={styles.buttons}>
           <Button title="Sign Up" onPress={this.handleSignUp} style={styles.button} />
