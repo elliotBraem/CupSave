@@ -43,8 +43,6 @@ class LoginScreen extends Component {
     title: 'Login',
   };
 
-  state = {email: '', password: '', errorMessage: null};
-
   static propTypes = {
     navigation: PropTypes.shape({
       openDrawer: PropTypes.func.isRequired,
@@ -55,6 +53,8 @@ class LoginScreen extends Component {
     }).isRequired, // from withFirebase
     auth: PropTypes.object, // from withFirebase
   };
+
+  state = {email: '', password: '', errorMessage: null};
 
   handleLogin = () => {
     const {email, password} = this.state;
@@ -80,7 +80,7 @@ class LoginScreen extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Welcome to CupSave!</Text>
-        <Text>Let's get started</Text>
+        <Text>Let&#39;s get started</Text>
         <Text>Login</Text>
         {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
         <TextInput

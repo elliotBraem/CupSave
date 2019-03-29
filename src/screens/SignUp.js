@@ -39,26 +39,6 @@ const styles = StyleSheet.create({
 });
 
 class SignUpScreen extends Component {
-  state = {email: '', password: '', confirmedPassword: '', errorMessage: null};
-
-  handleSignUp = () => {
-    const {email, password, confirmedPassword} = this.state;
-    const {navigation, firebase} = this.props;
-    if (email.trim() === '' || password.trim() === '') {
-      Alert.alert('ERROR:', 'Username / password cannot be empty');
-    } else if (confirmedPassword !== password) {
-      Alert.alert('ERROR:', 'Password does not match confirmed password');
-    } else {
-      firebase
-        .createUser({
-          email,
-          password}, {email})
-        .then(() => navigation.navigate('Home'))
-        .catch(error => this.setState({errorMessage: error.message}));
-      console.log('handleSignUp');
-    }
-  };
-
   static navigationOptions = {
     title: 'SignUp',
   };
@@ -72,6 +52,30 @@ class SignUpScreen extends Component {
       login: PropTypes.func.isRequired,
     }).isRequired, // from withFirebase
     auth: PropTypes.object, // from withFirebase
+  };
+
+  state = {email: '', password: '', confirmedPassword: '', errorMessage: null};
+
+  handleSignUp = () => {
+    const {email, password, confirmedPassword} = this.state;
+    const {navigation, firebase} = this.props;
+    if (email.trim() === '' || password.trim() === '') {
+      Alert.alert('ERROR:', 'Username / password cannot be empty');
+    } else if (confirmedPassword !== password) {
+      Alert.alert('ERROR:', 'Password does not match confirmed password');
+    } else {
+      firebase
+        .createUser(
+          {
+            email,
+            password,
+          },
+          {email}
+        )
+        .then(() => navigation.navigate('Home'))
+        .catch(error => this.setState({errorMessage: error.message}));
+      console.log('handleSignUp');
+    }
   };
 
   render() {
