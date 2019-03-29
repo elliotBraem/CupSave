@@ -56,6 +56,17 @@ class SignUpScreen extends Component {
 
   state = {email: '', password: '', confirmedPassword: '', errorMessage: null};
 
+  static propTypes = {
+    navigation: PropTypes.shape({
+      openDrawer: PropTypes.func.isRequired,
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+    firebase: PropTypes.shape({
+      login: PropTypes.func.isRequired,
+    }).isRequired, // from withFirebase
+    auth: PropTypes.object, // from withFirebase
+  };
+
   handleSignUp = () => {
     const {email, password, confirmedPassword} = this.state;
     const {navigation, firebase} = this.props;
