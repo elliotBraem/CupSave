@@ -1,4 +1,5 @@
 import React from 'react';
+import {Text, StyleSheet, View, Image} from 'react-native';
 import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
 
 import HomeContainer from '../screens/Home';

@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   header: {
     alignSelf: 'center',
     marginBottom: 50,
+    fontSize: 22,
   },
   buttons: {
     flexDirection: 'row',
@@ -27,7 +28,15 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     alignSelf: 'center',
-    marginBottom: 20
+    marginBottom: 20,
+  },
+  circle: {
+    width: 160,
+    height: 160,
+    alignSelf: 'center',
+    marginBottom: 20,
+    borderRadius: 60,
+    backgroundColor: 'black',
   }
 });
 
@@ -48,6 +57,7 @@ class ProfileScreen extends Component {
 
     return (
       <View style={styles.container}>
+        <Image source={require('../assets/images/profileicon.png')} style={styles.circle} />
         <Text style={styles.header}>First M. Last</Text>
         <View style={styles.buttons}>
           <Button onPress={() => navigation.openDrawer()} style={styles.button}>
