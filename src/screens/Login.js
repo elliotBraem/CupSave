@@ -3,6 +3,7 @@ import {Text, StyleSheet, View, Alert} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
 import {Button, Input, H1, H4, P} from 'nachos-ui';
+import Logo from '../assets/images/logo.svg';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,11 +12,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // buttons: {
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   marginBottom: 10,
-  // },
+  signUpContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   header: {
     fontSize: 38,
     // marginBottom: 20,
@@ -30,7 +32,8 @@ const styles = StyleSheet.create({
   //   textAlign: 'center',
   // },
   inputStyle: {
-    margin: 15,
+    marginHorizontal: 15,
+    marginVertical: 5,
   },
   btnStyle: {
     margin: 15,
@@ -81,8 +84,8 @@ class LoginScreen extends Component {
         <H1 style={styles.header} align="center">
           Welcome to{'\n'}CupSave!
         </H1>
+        <Logo width={150} height={150} />
         <H4>Let&#39;s get started</H4>
-        <H4>Login</H4>
         {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
         <Input
           style={styles.inputStyle}
@@ -99,18 +102,16 @@ class LoginScreen extends Component {
           onChangeText={password => this.setState({password})}
           value={this.state.password}
         />
+        <P>Don&#39;t have an account?</P>
+        <Button onPress={() => navigation.navigate('SignUp')} style={styles.btnStyle}>
+          Sign Up
+        </Button>
         <Button style={styles.btnStyle} onPress={this.handleLogin}>
           Login
         </Button>
-        <P>Don&#39;t have an account?</P>
-        <Button onPress={() => navigation.navigate('SignUp')} style={styles.button}>
-          Sign Up
-        </Button>
-        <Button onPress={() => navigation.openDrawer()} style={styles.button}>
+        {/* <Button onPress={() => navigation.openDrawer()} style={styles.button}>
           Open drawer
-        </Button>
-        {/* <Button title="Open drawer" onPress={() => navigation.openDrawer()} style={styles.button} />
-        <Button title="Go back" onPress={() => navigation.navigate('Home')} style={styles.button} /> */}
+        </Button> */}
       </View>
     );
   }
