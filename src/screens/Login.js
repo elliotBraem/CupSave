@@ -39,7 +39,22 @@ const styles = StyleSheet.create({
 });
 
 class LoginScreen extends Component {
+  static navigationOptions = {
+    title: 'Login',
+  };
+
   state = {email: '', password: '', errorMessage: null};
+
+  static propTypes = {
+    navigation: PropTypes.shape({
+      openDrawer: PropTypes.func.isRequired,
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+    firebase: PropTypes.shape({
+      login: PropTypes.func.isRequired,
+    }).isRequired, // from withFirebase
+    auth: PropTypes.object, // from withFirebase
+  };
 
   handleLogin = () => {
     const {email, password} = this.state;
@@ -57,21 +72,6 @@ class LoginScreen extends Component {
         .catch(error => this.setState({errorMessage: error.message}));
       console.log('handleLogin');
     }
-  };
-
-  static navigationOptions = {
-    title: 'Login',
-  };
-
-  static propTypes = {
-    navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
-    firebase: PropTypes.shape({
-      login: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
-    auth: PropTypes.object, // from withFirebase
   };
 
   render() {
