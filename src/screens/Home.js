@@ -27,6 +27,13 @@ const styles = StyleSheet.create({
 class HomeScreen extends Component {
   static navigationOptions = {
     title: 'Home',
+    headerStyle: {
+      backgroundColor: '#03A9F4',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
   };
 
   static propTypes = {
