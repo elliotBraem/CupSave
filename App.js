@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {AppRegistry} from 'react-native';
 import {ThemeProvider} from 'nachos-ui';
+import {Svg} from 'expo';
 
 import {ReactReduxFirebaseProvider} from 'react-redux-firebase';
 import {createFirestoreInstance} from 'redux-firestore';
