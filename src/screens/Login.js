@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Alert} from 'react-native';
+import {Text, StyleSheet, View, Alert, KeyboardAvoidingView} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
 import {Button, Input, H1, H4, P} from 'nachos-ui';
@@ -72,7 +72,6 @@ class LoginScreen extends Component {
         })
         .then(() => navigation.navigate('Home'))
         .catch(error => this.setState({errorMessage: error.message}));
-      console.log('handleLogin');
     }
   };
 
@@ -80,7 +79,7 @@ class LoginScreen extends Component {
     const {navigation, firebase} = this.props;
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="position" enable>
         <H1 style={styles.header} align="center">
           Welcome to{'\n'}CupSave!
         </H1>
@@ -102,17 +101,17 @@ class LoginScreen extends Component {
           onChangeText={password => this.setState({password})}
           value={this.state.password}
         />
+        <Button style={styles.btnStyle} onPress={this.handleLogin}>
+          Login
+        </Button>
         <P>Don&#39;t have an account?</P>
         <Button onPress={() => navigation.navigate('SignUp')} style={styles.btnStyle}>
           Sign Up
         </Button>
-        <Button style={styles.btnStyle} onPress={this.handleLogin}>
-          Login
-        </Button>
         {/* <Button onPress={() => navigation.openDrawer()} style={styles.button}>
           Open drawer
         </Button> */}
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
