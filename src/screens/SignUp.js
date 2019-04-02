@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, TextInput, Alert, Button} from 'react-native';
+import {Text, StyleSheet, View, TextInput, Alert, Button, KeyboardAvoidingView} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
 // import {Button} from 'nachos-ui';
@@ -93,7 +93,7 @@ class SignUpScreen extends Component {
     const {navigation, firebase} = this.props;
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="position" enabled>
         <Text style={styles.header}>Welcome to CupSave!</Text>
         <Text>Sign Up</Text>
         {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
@@ -130,7 +130,7 @@ class SignUpScreen extends Component {
           <Button title="Open drawer" onPress={() => navigation.openDrawer()} style={styles.button} />
           <Button title="Go back" onPress={() => navigation.navigate('Home')} style={styles.button} />
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
