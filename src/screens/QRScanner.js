@@ -24,16 +24,9 @@ const styles = StyleSheet.create({
   },
 });
 
-class HomeScreen extends Component {
+class QRScannerScreen extends Component {
   static navigationOptions = {
-    title: 'Home',
-    headerStyle: {
-      backgroundColor: '#03A9F4',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
+    title: 'QRScanner',
   };
 
   static propTypes = {
@@ -48,7 +41,7 @@ class HomeScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Home</Text>
+        <Text style={styles.header}>QR Scanner</Text>
          <View style={styles.buttons}>
           <Button onPress={() => navigation.openDrawer()} style={styles.button}>
             Menu
@@ -59,4 +52,4 @@ class HomeScreen extends Component {
   }
 }
 
-export default HomeScreen;
+export default QRScannerScreen;
