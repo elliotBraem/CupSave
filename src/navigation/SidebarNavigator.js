@@ -3,6 +3,8 @@ import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
 
 import HomeContainer from '../screens/Home';
 import LoginContainer from '../screens/Login';
+import SignUpContainer from '../screens/SignUp';
+
 import COLORS from '../constants/colors';
 
 /* eslint-disable react/prop-types */
@@ -24,6 +26,13 @@ const LoginStack = createStackNavigator({
       drawerLabel: 'Login',
     },
   },
+  SignUp: {
+    path: '/signup',
+    screen: ({navigation}) => <SignUpContainer navigation={navigation} />,
+    navigationOptions: {
+      drawerLabel: 'SignUp',
+    },
+  },
 });
 /* eslint-enable react/prop-types */
 
@@ -35,9 +44,9 @@ const Sidebar = createDrawerNavigator(
   {
     initialRouteName: 'Home',
     drawerWidth: 250,
-    navigationOptions: {
-      header: null,
-    },
+    // navigationOptions: {
+    //   header: null,
+    // },
     contentOptions: {
       activeTintColor: COLORS.primary,
     },
