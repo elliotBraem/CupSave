@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
 class LoginScreen extends Component {
   static navigationOptions = {
-    title: 'Login',
+    header: null,
   };
 
   static propTypes = {
@@ -102,12 +102,12 @@ class LoginScreen extends Component {
           onChangeText={password => this.setState({password})}
           value={this.state.password}
         />
+        <Button style={styles.btnStyle} onPress={this.handleLogin}>
+          Login
+        </Button>
         <P>Don&#39;t have an account?</P>
         <Button onPress={() => navigation.navigate('SignUp')} style={styles.btnStyle}>
           Sign Up
-        </Button>
-        <Button style={styles.btnStyle} onPress={this.handleLogin}>
-          Login
         </Button>
         {/* <Button onPress={() => navigation.openDrawer()} style={styles.button}>
           Open drawer
