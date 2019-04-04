@@ -44,9 +44,9 @@ const Sidebar = createDrawerNavigator(
   {
     initialRouteName: 'Home',
     drawerWidth: 250,
-    navigationOptions: {
-      header: null,
-    },
+    // navigationOptions: {
+    //   header: null,
+    // },
     contentOptions: {
       activeTintColor: COLORS.primary,
     },
