@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import {Text, StyleSheet, View, Image} from 'react-native';
 import PropTypes from 'prop-types';
-import {Text, StyleSheet, View} from 'react-native';
+import {withFirebase} from 'react-redux-firebase';
 import {Button} from 'nachos-ui';
 
 const styles = StyleSheet.create({
@@ -12,6 +13,7 @@ const styles = StyleSheet.create({
   header: {
     alignSelf: 'center',
     marginBottom: 50,
+    fontSize: 22,
   },
   buttons: {
     flexDirection: 'row',
@@ -22,18 +24,25 @@ const styles = StyleSheet.create({
     margin: 15,
     justifyContent: 'center',
   },
+  icon: {
+    width: 80,
+    height: 80,
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  circle: {
+    width: 160,
+    height: 160,
+    alignSelf: 'center',
+    marginBottom: 20,
+    borderRadius: 60,
+    backgroundColor: 'black',
+  }
 });
 
-class HomeScreen extends Component {
+class ProfileScreen extends Component {
   static navigationOptions = {
-    title: 'Home',
-    headerStyle: {
-      backgroundColor: '#03A9F4',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
+    title: 'Profile',
   };
 
   static propTypes = {
@@ -48,13 +57,11 @@ class HomeScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Home</Text>
+        <Image source={require('../assets/images/profileicon.png')} style={styles.circle} />
+        <Text style={styles.header}>First M. Last</Text>
         <View style={styles.buttons}>
           <Button onPress={() => navigation.openDrawer()} style={styles.button}>
             Menu
-          </Button>
-          <Button onPress={() => navigation.navigate('ProfileMain')} style={styles.btnStyle}>
-            Login
           </Button>
         </View>
       </View>
@@ -62,4 +69,4 @@ class HomeScreen extends Component {
   }
 }
 
-export default HomeScreen;
+export default ProfileScreen;
