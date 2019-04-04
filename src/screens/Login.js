@@ -123,10 +123,8 @@ class LoginScreen extends Component {
             <Button style={styles.btnStyle} onPress={() => navigation.navigate('SignUp')}>
               Sign Up
             </Button>
-            <Button onPress={() => navigation.navigate('ProfileMain')} style={styles.btnStyle}>
-              Profile
-            </Button>
-            <Button onPress={() => navigation.openDrawer()} style={styles.btnStyle}>
+            <P style={styles.accountPrompt}>Go to Menu</P>
+            <Button onPress={() => navigation.openDrawer()} style={styles.button}>
               Menu
             </Button>
           </View>
