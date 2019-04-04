@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
+import {createSwitchNavigator, createDrawerNavigator} from 'react-navigation';
 
 import HomeContainer from '../screens/Home';
 import LoginContainer from '../screens/Login';
@@ -7,7 +7,7 @@ import ProfileContainer from '../screens/Profile';
 import COLORS from '../constants/colors';
 
 /* eslint-disable react/prop-types */
-const LoginStack = createStackNavigator({
+const LoginStack = createSwitchNavigator({
   Login: {
     path: '/login',
     screen: ({navigation}) => <LoginContainer navigation={navigation} />,
