@@ -4,7 +4,6 @@ import {createSwitchNavigator, createDrawerNavigator} from 'react-navigation';
 
 import HomeContainer from '../screens/Home';
 import LoginContainer from '../screens/Login';
-import StatContainer from '../screens/Stats';
 import ProfileContainer from '../screens/Profile';
 import SignUpContainer from '../screens/SignUp';
 import COLORS from '../constants/colors';
@@ -27,22 +26,9 @@ const LoginStack = createSwitchNavigator({
   },
 });
 
-
-const StatStack = createStackNavigator({
-  Stats: {
-    path: '/stats',
-    screen: ({navigation}) => <StatContainer navigation={navigation} />,
-    navigationOptions: {
-      drawerLabel: 'Stats',
-    },
-  },
-});
-/* eslint-enable react/prop-types */
-
 const Sidebar = createDrawerNavigator(
   {
     Login: LoginStack,
-    Stats: StatStack,
   },
   {
     initialRouteName: 'Login',

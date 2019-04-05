@@ -1,13 +1,15 @@
 import React from 'react';
 import {Text, StyleSheet, View, Image} from 'react-native';
-import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
+import {createStackNavigator, createDrawerNavigator, createSwitchNavigator} from 'react-navigation';
 
 import HomeContainer from '../screens/Home';
 import ProfileContainer from '../screens/Profile';
+import StatContainer from '../screens/Stats';
 import QRContainer from '../screens/QRScanner';
 import MapContainer from '../screens/Map';
 import AboutUsContainer from '../screens/AboutUs';
 import COLORS from '../constants/colors';
+import PasswordContainer from '../screens/Password';
 
 /* eslint-disable react/prop-types */
 const HomeStack = createStackNavigator({
@@ -29,6 +31,17 @@ const ProfileStack = createStackNavigator({
     },
   },
 });
+
+const StatStack = createSwitchNavigator({
+  Stats: {
+    path: '/stats',
+    screen: ({navigation}) => <StatContainer navigation={navigation} />,
+    navigationOptions: {
+      drawerLabel: 'Stats',
+    },
+  },
+});
+/* eslint-enable react/prop-types */
 
 const QRScannerStack = createStackNavigator({
   QRScanner: {
@@ -61,13 +74,25 @@ const AboutUsStack = createStackNavigator({
 });
 /* eslint-enable react/prop-types */
 
+const PasswordStack = createStackNavigator({
+  QRScanner: {
+    path: '/password',
+    screen: ({navigation}) => <PasswordContainer navigation={navigation} />,
+    navigationOptions: {
+      drawerLabel: 'Password',
+    },
+  },
+});
+
 const ProfileSidebar = createDrawerNavigator(
   {
     Home: HomeStack,
     Profile: ProfileStack,
+    Stats: StatStack,
     Scanner: QRScannerStack,
     Map: MapStack,
     About: AboutUsStack,
+    Password: PasswordStack,
   },
   {
     initialRouteName: 'Profile',

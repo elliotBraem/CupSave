@@ -3,6 +3,7 @@ import {Text, StyleSheet, View, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
 import {Button} from 'nachos-ui';
+import PasswordContainer from './Password';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 60,
     backgroundColor: 'black',
-  }
+  },
 });
 
 class ProfileScreen extends Component {
@@ -62,6 +63,14 @@ class ProfileScreen extends Component {
         <View style={styles.buttons}>
           <Button onPress={() => navigation.openDrawer()} style={styles.button}>
             Menu
+          </Button>
+        </View>
+        <View style={styles.buttons}>
+          <Button onPress={() => navigation.navigate('Home')} style={styles.button}>
+            Change Password
+          </Button>
+          <Button onPress={() => navigation.navigate('Password')} style={styles.button}>
+            Change Email
           </Button>
         </View>
       </View>
