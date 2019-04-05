@@ -71,6 +71,13 @@ class PasswordScreen extends Component {
 
   state = {currentpassword: '', newpassword: '', errorMessage: null};
 
+  reauthenticate = (currentPassword) => {
+    var user = firebase.auth().currentUser;
+    var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+    return user.reauthenticateWithCredential(cred);
+  }
+
+
   handlePasswordChange = () => {
     const {currentpassword, newpassword} = this.state;
     const {navigation, firebase} = this.props;
@@ -78,8 +85,7 @@ class PasswordScreen extends Component {
     //if (currentpassword.trim() === '' || newpassword.trim() === '') {
     //  Alert.alert('Invalid Parameters:', 'old password / new password cannot be empty');
     //} else {
-      firebase
-        .reauthenticate(currentpassword)
+        this.reauthenticate(currentpassword)
         .then(() => {var user = firebase.auth().currentUser;
         user.updatePassword(newpassword);
         }).catch(error => this.setState({errorMessage: error.message}))
