@@ -1,36 +1,61 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Button} from 'react-native';
+import {Text, StyleSheet, View, Alert, KeyboardAvoidingView} from 'react-native';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-
-import * as authActions from '../store/actions/auth';
+import {withFirebase} from 'react-redux-firebase';
+import {Button, Input, H1, H4, P} from 'nachos-ui';
+import Logo from '../assets/images/logo.svg';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
-    paddingLeft: 15,
-    paddingRight: 15,
+    flex: 1,
+    justifyContent: 'space-between',
   },
   header: {
-    alignSelf: 'center',
-    marginBottom: 50,
+    fontSize: 38,
   },
-  buttons: {
-    position: 'absolute',
-    paddingBottom: 30,
-    bottom: 0,
-    paddingTop: 10,
-    paddingHorizontal: 10,
-    left: 0,
-    flexDirection: 'row',
-    right: 0,
+  subtext: {
+    alignSelf: 'center',
+  },
+  logo: {
+    flex: 1,
+    alignSelf: 'center',
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+  },
+  form: {
+    flex: 1,
     justifyContent: 'space-between',
+    width: '80%',
+    alignSelf: 'center',
+  },
+  inputStyle: {
+    height: 40,
+    width: '100%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 20,
+    alignSelf: 'stretch',
+    textAlign: 'center',
+  },
+  btnStyle: {
+    width: '100%',
+    alignSelf: 'stretch',
+    textAlign: 'center',
+  },
+  btnContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    // alignContent: 'space-between',
+  },
+  accountPrompt: {
+    margin: 15,
   },
 });
 
 class LoginScreen extends Component {
   static navigationOptions = {
-    title: 'Login',
+    header: null,
   };
 
   static propTypes = {
@@ -40,40 +65,76 @@ class LoginScreen extends Component {
     }).isRequired,
     firebase: PropTypes.shape({
       login: PropTypes.func.isRequired,
-    }),
-    auth: PropTypes.object,
+    }).isRequired, // from withFirebase
+    auth: PropTypes.object, // from withFirebase
+  };
+
+  state = {email: '', password: '', errorMessage: null};
+
+  handleLogin = () => {
+    const {email, password} = this.state;
+    const {navigation, firebase} = this.props;
+
+    if (email.trim() === '' || password.trim() === '') {
+      Alert.alert('Invalid Parameters:', 'Username / password cannot be empty');
+    } else {
+      firebase
+        .login({
+          email,
+          password,
+        })
+        .then(() => navigation.navigate('Home'))
+        .catch(error => this.setState({errorMessage: error.message}));
+    }
   };
 
   render() {
-    const {navigation} = this.props;
+    const {navigation, firebase} = this.props;
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Login time</Text>
-        <View style={styles.buttons}>
-          <Button title="Open drawer" onPress={() => navigation.openDrawer()} />
-          <Button title="Go back" onPress={() => navigation.navigate('Home')} />
+      <KeyboardAvoidingView style={styles.container} behavior="position" enable>
+        <H1 style={styles.header} align="center">
+          Welcome to{'\n'}CupSave!
+        </H1>
+        <Logo style={styles.logo} />
+        <H4 style={styles.subtext}>Let&#39;s get started</H4>
+        <View style={styles.form}>
+          {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
+          <Input
+            style={styles.inputStyle}
+            autoCapitalize="none"
+            placeholder="Email"
+            value={this.state.email}
+            onChangeText={email => this.setState({email})}
+          />
+          <Input
+            secureTextEntry
+            style={styles.inputStyle}
+            autoCapitalize="none"
+            placeholder="Password"
+            onChangeText={password => this.setState({password})}
+            value={this.state.password}
+          />
+          <View style={styles.btnContainer}>
+            <Button style={styles.btnStyle} onPress={this.handleLogin}>
+              Login
+            </Button>
+            <P style={styles.accountPrompt}>Don&#39;t have an account?</P>
+            <Button style={styles.btnStyle} onPress={() => navigation.navigate('SignUp')}>
+              Sign Up
+            </Button>
+            <P style={styles.accountPrompt}>Go to Menu</P>
+            <Button onPress={() => navigation.openDrawer()} style={styles.button}>
+              Menu
+            </Button>
+          </View>
         </View>
-      </View>
+        {/* <Button onPress={() => navigation.openDrawer()} style={styles.button}>
+          Open drawer
+        </Button> */}
+      </KeyboardAvoidingView>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    login: formData => dispatch(authActions.dbLogin(formData)),
-  };
-};
-
-const mapStateToProps = (state, ownProps) => {
-  const auth = state.firebase.auth || {};
-
-  return {
-    auth,
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginScreen);
+export default withFirebase(LoginScreen);

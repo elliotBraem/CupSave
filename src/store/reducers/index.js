@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {firebaseStateReducer as firebase} from 'react-redux-firebase';
+import {firebaseReducer} from 'react-redux-firebase';
 import {persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to AsyncStorage for react-native
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
@@ -22,11 +22,11 @@ export default function createRootReducer() {
     rehydrated,
     firebase: persistReducer(
       {
-        key: 'firepersist',
+        key: 'firebasepersist',
         storage,
         stateReconciler: hardSet,
       },
-      firebase
+      firebaseReducer
     ),
     status,
   });

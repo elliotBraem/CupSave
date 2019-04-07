@@ -10,7 +10,8 @@ export const firebaseConfig = {
 
 export const reactReduxFirebaseConfig = {
   userProfile: 'users', // root that user profiles are written to
-  enableLogging: false, // Required with react-native v2.0.0 (http://react-redux-firebase.com/docs/integrations/react-native.html)
+  useFirestoreForProfile: true,
+  enableLogging: false,
 };
 
 export default {firebaseConfig, reactReduxFirebaseConfig};

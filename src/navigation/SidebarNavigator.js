@@ -1,21 +1,16 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
-import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
+import {createSwitchNavigator, createDrawerNavigator} from 'react-navigation';
 
 import HomeContainer from '../screens/Home';
 import LoginContainer from '../screens/Login';
+import StatContainer from '../screens/Stats';
+import ProfileContainer from '../screens/Profile';
+import SignUpContainer from '../screens/SignUp';
 import COLORS from '../constants/colors';
 
-const HomeStack = createStackNavigator({
-  Home: {
-    path: '/',
-    screen: ({navigation}) => <HomeContainer navigation={navigation} />,
-    navigationOptions: {
-      drawerLabel: 'Home',
-    },
-  },
-});
-
-const LoginStack = createStackNavigator({
+/* eslint-disable react/prop-types */
+const LoginStack = createSwitchNavigator({
   Login: {
     path: '/login',
     screen: ({navigation}) => <LoginContainer navigation={navigation} />,
@@ -23,19 +18,38 @@ const LoginStack = createStackNavigator({
       drawerLabel: 'Login',
     },
   },
+  SignUp: {
+    path: '/signup',
+    screen: ({navigation}) => <SignUpContainer navigation={navigation} />,
+    navigationOptions: {
+      drawerLabel: 'SignUp',
+    },
+  },
 });
+
+
+const StatStack = createStackNavigator({
+  Stats: {
+    path: '/stats',
+    screen: ({navigation}) => <StatContainer navigation={navigation} />,
+    navigationOptions: {
+      drawerLabel: 'Stats',
+    },
+  },
+});
+/* eslint-enable react/prop-types */
 
 const Sidebar = createDrawerNavigator(
   {
-    Home: HomeStack,
     Login: LoginStack,
+    Stats: StatStack,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Login',
     drawerWidth: 250,
-    navigationOptions: {
-      header: null,
-    },
+    // navigationOptions: {
+    //   header: null,
+    // },
     contentOptions: {
       activeTintColor: COLORS.primary,
     },
