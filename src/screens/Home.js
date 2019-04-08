@@ -27,33 +27,26 @@ const styles = StyleSheet.create({
 class HomeScreen extends Component {
   static navigationOptions = {
     title: 'Home',
-    headerStyle: {
-      backgroundColor: '#03A9F4',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
   };
 
-  static propTypes = {
-    navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
-  };
+  // static propTypes = {
+  //   navigation: PropTypes.shape({
+  //     openDrawer: PropTypes.func.isRequired,
+  //     navigate: PropTypes.func.isRequired,
+  //   }).isRequired,
+  // };
 
   render() {
-    const {navigation} = this.props;
+    const {navigation} = this.props.navigation;
 
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Home</Text>
         <View style={styles.buttons}>
-          <Button onPress={() => navigation.openDrawer()} style={styles.button}>
+          <Button onPress={() => this.props.navigation.openDrawer()} style={styles.button}>
             Menu
           </Button>
-          <Button onPress={() => navigation.navigate('ProfileMain')} style={styles.btnStyle}>
+          <Button onPress={() => this.props.navigation.navigate('Login')} style={styles.btnStyle}>
             Login
           </Button>
         </View>
