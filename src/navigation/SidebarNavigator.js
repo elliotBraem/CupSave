@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {createSwitchNavigator, createDrawerNavigator} from 'react-navigation';
+import {createSwitchNavigator, createDrawerNavigator, createStackNavigator} from 'react-navigation';
 
 import HomeContainer from '../screens/Home';
 import LoginContainer from '../screens/Login';
