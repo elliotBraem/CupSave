@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, StyleSheet, View, Image} from 'react-native';
-import {createSwitchNavigator, createStackNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
+import {createStackNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
 
 import HomeScreen from '../screens/Home';
 import AuthLoadingScreen from '../screens/AuthLoading';
@@ -12,13 +12,33 @@ import MapScreen from '../screens/Map';
 import AboutUsScreen from '../screens/AboutUs';
 import COLORS from '../constants/colors';
 
+// Stack for logged in user
 const AppStack = createDrawerNavigator({
-  Home: {screen: HomeScreen},
-  Profile: {screen: ProfileScreen},
-  QRScanner: {screen: QRScannerScreen},
-  Map: {screen: MapScreen},
-  AboutUs: {screen: AboutUsScreen},
+  Home: HomeScreen,
+  Profile: ProfileScreen,
+  QRScanner: QRScannerScreen,
+  Map: MapScreen,
+  AboutUs: AboutUsScreen,
+  Login: LoginScreen,
 });
+
+// Stack for not logged in user
+const AuthStack = createStackNavigator(
+  {
+    Login: LoginScreen,
+    Signup: SignupScreen,
+  },
+  {
+    // headerMode: 'float',
+    // Header for not logged in user
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: 'red',
+      },
+      headerTitle: 'You are not logged in',
+    },
+  }
+);
 
 const DrawerNavigation = createStackNavigator(
   {
@@ -26,27 +46,25 @@ const DrawerNavigation = createStackNavigator(
   },
   {
     headerMode: 'float',
-    // navigationOptions: ({navigation}) => ({
-    //   headerStyle: {backgroundColor: 'green'},
-    //   title: 'Logged In to your app!',
-    //   headerLeft: <Text onPress={() => navigation.navigate('DrawerOpen')}>Menu</Text>,
-    // }),
+    // Header for logged in user
+    defaultNavigationOptions: ({navigation}) => ({
+      headerStyle: {
+        backgroundColor: 'blue',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerLeft: <Text onPress={() => navigation.toggleDrawer()}>Menu</Text>,
+    }),
   }
 );
 
-const AuthStack = createStackNavigator(
-  {
-    loginScreen: {screen: LoginScreen},
-    signupScreen: {screen: SignupScreen},
-  },
-  {
-    headerMode: 'float',
-    navigationOptions: {
-      headerStyle: {backgroundColor: 'red'},
-      title: 'You are not logged in',
-    },
-  }
-);
+const isLoggedIn = true;
+
+const AppNavigator = isLoggedIn ? DrawerNavigation : AuthStack;
+
+const AppContainer = createAppContainer(AppNavigator);
 
 // Manifest of possible screens
 // const PrimaryNav = createStackNavigator(
@@ -123,16 +141,4 @@ const AuthStack = createStackNavigator(
 //   }
 // );
 
-export default createAppContainer(DrawerNavigation);
-//   createSwitchNavigator(
-//     {
-//       AuthLoading: {screen: AuthLoadingScreen},
-//       App: DrawerNavigation,
-//       Auth: AuthStack,
-//     },
-//     {
-//       initialRouteName: 'AuthLoading',
-//     }
-//   )
-// );
-// export default PrimaryNav
+export default AppContainer;
