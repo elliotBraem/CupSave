@@ -3,7 +3,6 @@ import {Text, StyleSheet, View, Image} from 'react-native';
 import {createStackNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
 
 import HomeScreen from '../screens/Home';
-import AuthLoadingScreen from '../screens/AuthLoading';
 import LoginScreen from '../screens/Login';
 import SignupScreen from '../screens/SignUp';
 import ProfileScreen from '../screens/Profile';
@@ -19,7 +18,6 @@ const AppStack = createDrawerNavigator({
   QRScanner: QRScannerScreen,
   Map: MapScreen,
   AboutUs: AboutUsScreen,
-  Login: LoginScreen,
 });
 
 // Stack for not logged in user
