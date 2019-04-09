@@ -37,7 +37,6 @@ class HomeScreen extends Component {
     firebase: PropTypes.shape({
       auth: PropTypes.func.isRequired,
     }).isRequired, // from withFirebase
-    // auth: PropTypes.object, // from withFirebase
   };
 
   state = {currentUser: null};
