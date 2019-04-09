@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, StyleSheet, View, Platform} from 'react-native';
 import {withFirebase} from 'react-redux-firebase';
 import {Button} from 'nachos-ui';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
-    paddingLeft: 15,
-    paddingRight: 15,
+    flex: 1,
+    backgroundColor: '#79db85',
   },
   header: {
     alignSelf: 'center',
@@ -26,11 +25,6 @@ const styles = StyleSheet.create({
 });
 
 class HomeScreen extends Component {
-  static navigationOptions = {
-    title: 'hello',
-    drawerLabel: 'ugly',
-  };
-
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
