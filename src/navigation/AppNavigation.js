@@ -27,13 +27,9 @@ const AuthStack = createStackNavigator(
     Signup: SignupScreen,
   },
   {
-    // headerMode: 'float',
     // Header for not logged in user
     defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: 'red',
-      },
-      headerTitle: 'You are not logged in',
+      header: null,
     },
   }
 );
@@ -47,9 +43,9 @@ const DrawerNavigation = createStackNavigator(
     // Header for logged in user
     defaultNavigationOptions: ({navigation}) => ({
       headerStyle: {
-        backgroundColor: 'blue',
+        backgroundColor: 'transparent',
       },
-      headerTintColor: '#fff',
+      // headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
       },
@@ -58,7 +54,7 @@ const DrawerNavigation = createStackNavigator(
   }
 );
 
-const isLoggedIn = true;
+const isLoggedIn = false;
 
 const AppNavigator = isLoggedIn ? DrawerNavigation : AuthStack;
 
