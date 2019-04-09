@@ -1,7 +1,6 @@
 import React from 'react';
-import {Text, StyleSheet, View, Image} from 'react-native';
+import {Text} from 'react-native';
 import {createStackNavigator, createSwitchNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
-import {withFirebase} from 'react-redux-firebase';
 
 import HomeScreen from '../screens/Home';
 import LoginScreen from '../screens/Login';
