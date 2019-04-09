@@ -54,13 +54,8 @@ const styles = StyleSheet.create({
 });
 
 class LoginScreen extends Component {
-  static navigationOptions = {
-    header: null,
-  };
-
   static propTypes = {
     navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
       navigate: PropTypes.func.isRequired,
     }).isRequired,
     firebase: PropTypes.shape({
@@ -123,15 +118,8 @@ class LoginScreen extends Component {
             <Button style={styles.btnStyle} onPress={() => navigation.navigate('SignUp')}>
               Sign Up
             </Button>
-            <P style={styles.accountPrompt}>Go to Menu</P>
-            <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-              Menu
-            </Button>
           </View>
         </View>
-        {/* <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-          Open drawer
-        </Button> */}
       </KeyboardAvoidingView>
     );
   }

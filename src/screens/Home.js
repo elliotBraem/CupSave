@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    title: 'Home',
+    headerTitle: 'Home',
   };
 
   // static propTypes = {
