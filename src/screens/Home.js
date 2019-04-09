@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    headerTitle: 'Home',
+    title: 'hello',
+    drawerLabel: 'ugly',
   };
 
   static propTypes = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {Text, StyleSheet, Image} from 'react-native';
 import {createStackNavigator, createSwitchNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
 
 import HomeScreen from '../screens/Home';
@@ -11,15 +11,74 @@ import MapScreen from '../screens/Map';
 import AboutUsScreen from '../screens/AboutUs';
 import COLORS from '../constants/colors';
 import LoadingScreen from '../screens/Loading';
+import CustomDrawerComponent from '../components/customDrawer';
+import HomeIcon from '../assets/images/drawer-icons/home-icon.svg';
+import ProfileIcon from '../assets/images/drawer-icons/profile-icon.svg';
+import QRScannerIcon from '../assets/images/drawer-icons/qr-scanner-icon.svg';
+import MapIcon from '../assets/images/drawer-icons/map-icon.svg';
+import AboutIcon from '../assets/images/drawer-icons/about-icon.svg';
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 20,
+    height: 20,
+  },
+});
 
 // Stack for logged in user
-const AppStack = createDrawerNavigator({
-  Home: HomeScreen,
-  Profile: ProfileScreen,
-  QRScanner: QRScannerScreen,
-  Map: MapScreen,
-  AboutUs: AboutUsScreen,
-});
+const AppStack = createDrawerNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        drawerLabel: 'Home',
+        drawerIcon: () => <HomeIcon style={styles.icon} />,
+      },
+    },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: {
+        drawerLabel: 'Profile',
+        drawerIcon: () => <ProfileIcon style={styles.icon} />,
+      },
+    },
+    QRScanner: {
+      screen: QRScannerScreen,
+      navigationOptions: {
+        drawerLabel: 'QR Scanner',
+        drawerIcon: () => <QRScannerIcon style={styles.icon} />,
+      },
+    },
+    Map: {
+      screen: MapScreen,
+      navigationOptions: {
+        drawerLabel: 'Map',
+        drawerIcon: () => <MapIcon style={styles.icon} />,
+      },
+    },
+    AboutUs: {
+      screen: AboutUsScreen,
+      navigationOptions: {
+        drawerLabel: 'About Us',
+        drawerIcon: () => <AboutIcon style={styles.icon} />,
+      },
+    },
+  },
+  {
+    drawerBackgroundColor: '#1a1a1a',
+    drawerWidth: 250,
+    contentComponent: CustomDrawerComponent,
+    contentOptions: {
+      activeBackgroundColor: '#79DB85',
+      labelStyle: {
+        color: '#ffffff',
+        marginLeft: 0,
+        fontSize: 16,
+        fontWeight: 'normal',
+      },
+    },
+  }
+);
 
 // Stack for not logged in user
 const AuthStack = createSwitchNavigator(
@@ -37,10 +96,11 @@ const AuthStack = createSwitchNavigator(
 
 const DrawerNavigation = createStackNavigator(
   {
-    DrawerStack: {screen: AppStack},
+    DrawerStack: AppStack,
   },
   {
     headerMode: 'float',
+    gesturesEnabled: true,
     // Header for logged in user
     defaultNavigationOptions: ({navigation}) => ({
       headerStyle: {
