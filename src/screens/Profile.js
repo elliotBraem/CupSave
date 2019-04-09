@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 60,
     backgroundColor: 'black',
-  }
+  },
 });
 
 class ProfileScreen extends Component {
