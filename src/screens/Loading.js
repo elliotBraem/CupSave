@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {View, Text, ActivityIndicator, StyleSheet} from 'react-native';
 import {withFirebase} from 'react-redux-firebase';
 
@@ -11,9 +12,19 @@ const styles = StyleSheet.create({
 });
 
 class LoadingScreen extends Component {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+    firebase: PropTypes.shape({
+      auth: PropTypes.func.isRequired,
+    }).isRequired, // from withFirebase
+  };
+
   componentDidMount() {
-      this.props.firebase.auth().onAuthStateChanged(user => {
-      this.props.navigation.navigate(user ? 'App' : 'Auth');
+    const {firebase, navigation} = this.props;
+    firebase.auth().onAuthStateChanged(user => {
+      navigation.navigate(user ? 'App' : 'Auth');
     });
   }
 

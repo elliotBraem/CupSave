@@ -30,25 +30,37 @@ class HomeScreen extends Component {
     headerTitle: 'Home',
   };
 
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+    firebase: PropTypes.shape({
+      auth: PropTypes.func.isRequired,
+    }).isRequired, // from withFirebase
+    // auth: PropTypes.object, // from withFirebase
+  };
+
   state = {currentUser: null};
 
   componentDidMount() {
-    const {currentUser} = this.props.firebase.auth();
+    const {firebase} = this.props;
+    const {currentUser} = firebase.auth();
     this.setState({currentUser});
   }
 
   render() {
-    const {navigation} = this.props.navigation;
+    const {firebase, navigation} = this.props;
+    const {currentUser} = this.state;
 
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Home</Text>
         <View style={styles.buttons}>
-          <Text>Hi {this.state.currentUser && this.state.currentUser.email}!</Text>
-          <Button onPress={() => this.props.navigation.openDrawer()} style={styles.button}>
+          <Text>Hi {currentUser && currentUser.email}!</Text>
+          <Button onPress={() => navigation.openDrawer()} style={styles.button}>
             Menu
           </Button>
-          <Button onPress={() => this.props.firebase.logout()} style={styles.btnStyle}>
+          <Button onPress={() => firebase.logout()} style={styles.btnStyle}>
             Logout
           </Button>
         </View>

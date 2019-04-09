@@ -69,4 +69,4 @@ class ProfileScreen extends Component {
   }
 }
 
-export default ProfileScreen;
+export default withFirebase(ProfileScreen);
