@@ -61,7 +61,7 @@ class LoginScreen extends Component {
     firebase: PropTypes.shape({
       login: PropTypes.func.isRequired,
     }).isRequired, // from withFirebase
-    auth: PropTypes.object, // from withFirebase
+    // auth: PropTypes.object, // from withFirebase
   };
 
   state = {email: '', password: '', errorMessage: null};
@@ -84,7 +84,7 @@ class LoginScreen extends Component {
   };
 
   render() {
-    const {navigation, firebase} = this.props;
+    const {navigation} = this.props;
 
     return (
       <KeyboardAvoidingView style={styles.container} behavior="position" enable>

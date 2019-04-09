@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Text, StyleSheet, View} from 'react-native';
+import {withFirebase} from 'react-redux-firebase';
 import {Button} from 'nachos-ui';
 
 const styles = StyleSheet.create({
@@ -29,12 +30,12 @@ class HomeScreen extends Component {
     headerTitle: 'Home',
   };
 
-  // static propTypes = {
-  //   navigation: PropTypes.shape({
-  //     openDrawer: PropTypes.func.isRequired,
-  //     navigate: PropTypes.func.isRequired,
-  //   }).isRequired,
-  // };
+  state = {currentUser: null};
+
+  componentDidMount() {
+    const {currentUser} = this.props.firebase.auth();
+    this.setState({currentUser});
+  }
 
   render() {
     const {navigation} = this.props.navigation;
@@ -43,11 +44,12 @@ class HomeScreen extends Component {
       <View style={styles.container}>
         <Text style={styles.header}>Home</Text>
         <View style={styles.buttons}>
+          <Text>Hi {this.state.currentUser && this.state.currentUser.email}!</Text>
           <Button onPress={() => this.props.navigation.openDrawer()} style={styles.button}>
             Menu
           </Button>
-          <Button onPress={() => this.props.navigation.navigate('Login')} style={styles.btnStyle}>
-            Login
+          <Button onPress={() => this.props.firebase.logout()} style={styles.btnStyle}>
+            Logout
           </Button>
         </View>
       </View>
@@ -55,4 +57,4 @@ class HomeScreen extends Component {
   }
 }
 
-export default HomeScreen;
+export default withFirebase(HomeScreen);
