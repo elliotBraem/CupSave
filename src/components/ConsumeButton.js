@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 class ConsumeButton extends Component {
   state = {consumeCount: 0};
 
-  consumeDrink = () => {
+  onCupSaveFormSubmit = () => {
     this.setState(prevState => ({
       consumeCount: prevState.consumeCount + 1,
     }));
@@ -29,7 +29,7 @@ class ConsumeButton extends Component {
     const {consumeCount} = this.state;
     return (
       <View style={styles.container}>
-        <Button onPress={() => this.consumeDrink()} style={styles.button}>
+        <Button onPress={() => this.onCupSaveFormSubmit()} style={styles.button}>
           Save a Cup
         </Button>
         <Text>{consumeCount}</Text>
