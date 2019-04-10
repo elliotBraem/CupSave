@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Text, StyleSheet, View, Platform} from 'react-native';
 import {withFirebase} from 'react-redux-firebase';
 import {Button} from 'nachos-ui';
+import ConsumeButton from '../components/ConsumeButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -49,14 +50,9 @@ class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Home</Text>
+        <Text style={styles.header}>Hi {currentUser && currentUser.email}!</Text>
         <View style={styles.buttons}>
-          <Text>Hi {currentUser && currentUser.email}!</Text>
-          <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-            Menu
-          </Button>
-          <Button onPress={() => firebase.logout()} style={styles.btnStyle}>
-            Logout
-          </Button>
+          <ConsumeButton />
         </View>
       </View>
     );
