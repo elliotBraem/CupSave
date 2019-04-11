@@ -22,22 +22,17 @@ const styles = StyleSheet.create({
 
 class SaveCupForm extends Component {
   static propTypes = {
-    // currentUser: PropTypes.func({
-    //   doc: PropTypes.func.isRequired,
-    // }).isRequired,
+    currentUser: PropTypes.shape.isRequired,
     firestore: PropTypes.shape({
       runTransaction: PropTypes.func.isRequired,
     }).isRequired,
-    firebase: PropTypes.shape({
-      auth: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
   };
 
   state = {consumeCount: null, errorMessage: null};
 
   onSaveCupFormSubmit = () => {
-    const {firestore, firebase} = this.props;
-    const currentUID = firebase.auth().currentUser.uid;
+    const {currentUser, firestore} = this.props;
+    const currentUID = currentUser.uid;
     const ref = firestore.collection('users').doc(currentUID + '/consumption/cups');
 
     firestore
@@ -77,14 +72,10 @@ class SaveCupForm extends Component {
 
 const enhance = compose(
   withFirestore,
-  withFirebase,
   setPropTypes({
     firestore: PropTypes.shape({
       runTransaction: PropTypes.func.isRequired,
     }),
-    firebase: PropTypes.shape({
-      auth: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
   })
 );
 

@@ -44,7 +44,6 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const {firebase, navigation} = this.props;
     const {currentUser} = this.state;
 
     return (
