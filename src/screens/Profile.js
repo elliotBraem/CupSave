@@ -69,7 +69,7 @@ class ProfileScreen extends Component {
           <Button onPress={() => navigation.navigate('Password')} style={styles.button}>
             Change Password
           </Button>
-          <Button onPress={() => navigation.navigate('Password')} style={styles.button}>
+          <Button onPress={() => navigation.navigate('Email')} style={styles.button}>
             Change Email
           </Button>
         </View>

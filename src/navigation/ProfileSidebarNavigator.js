@@ -10,6 +10,7 @@ import MapContainer from '../screens/Map';
 import AboutUsContainer from '../screens/AboutUs';
 import COLORS from '../constants/colors';
 import PasswordContainer from '../screens/Password';
+import EmailContainer from '../screens/Email';
 
 /* eslint-disable react/prop-types */
 const HomeStack = createStackNavigator({
@@ -84,6 +85,16 @@ const PasswordStack = createStackNavigator({
   },
 });
 
+const EmailStack = createStackNavigator({
+  QRScanner: {
+    path: '/email',
+    screen: ({navigation}) => <EmailContainer navigation={navigation} />,
+    navigationOptions: {
+      drawerLabel: 'Email',
+    },
+  },
+});
+
 const ProfileSidebar = createDrawerNavigator(
   {
     Home: HomeStack,
@@ -93,6 +104,7 @@ const ProfileSidebar = createDrawerNavigator(
     Map: MapStack,
     About: AboutUsStack,
     Password: PasswordStack,
+    Email: EmailStack,
   },
   {
     initialRouteName: 'Profile',
