@@ -3,7 +3,7 @@ import {Text, StyleSheet, View, Alert, KeyboardAvoidingView} from 'react-native'
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
 import {Button, Input, H1, H4, P} from 'nachos-ui';
-import Logo from '../../../assets/images/logo.svg';
+import Logo from '../../assets/images/logo.svg';
 
 const styles = StyleSheet.create({
   container: {
