@@ -72,28 +72,28 @@ class PasswordScreen extends Component {
 
   state = {currentpassword: '', newpassword: '', errorMessage: null};
 
-  //reauthenticate = (currentPassword) => {
-  //  var user = firebase.auth().currentUser;
-  //  var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
-  //  return user.reauthenticateWithCredential(cred);
-  //}
+  reauthenticate = (currentPassword) => {
+    const {navigation, firebase} = this.props;
+    var user = firebase.auth().currentUser;
+    var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+    return user.reauthenticateWithCredential(cred);
+  }
 
 
   handlePasswordChange = () => {
     const {currentpassword, newpassword} = this.state;
     const {navigation, firebase} = this.props;
 
-    //if (currentpassword.trim() === '' || newpassword.trim() === '') {
-    //  Alert.alert('Invalid Parameters:', 'old password / new password cannot be empty');
-    //} else {
-        //this.reauthenticate(currentpassword)
-        //then(() => {var user = firebase.auth().currentUser;
-        let user = firebase.auth().currentUser;
+    if (currentpassword.trim() === '' || newpassword.trim() === '') {
+      Alert.alert('Invalid Parameters:', 'old password / new password cannot be empty');
+    } else {
+        this.reauthenticate(currentpassword)
+          .then(() => {var user = firebase.auth().currentUser;
         user.updatePassword(newpassword);
-        //}).catch(error => this.setState({errorMessage: error.message}))
-       // .then(() => navigation.navigate('Home'))
-       // .catch(error => this.setState({errorMessage: error.message}));
-    //}
+        }).catch(error => this.setState({errorMessage: error.message}))
+       .then(() => navigation.navigate('Home'))
+       .catch(error => this.setState({errorMessage: error.message}));
+    }
   };
 
 
@@ -106,6 +106,7 @@ class PasswordScreen extends Component {
         <View style={styles.form}>
           {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
           <Input
+            secureTextEntry
             style={styles.inputStyle}
             autoCapitalize="none"
             placeholder="Current Password"
@@ -121,7 +122,7 @@ class PasswordScreen extends Component {
             value={this.state.newpassword}
           />
           <View style={styles.btnContainer}>
-            <Button style={styles.btnStyle} onPress={this.handlePasswordChange()}>
+            <Button style={styles.btnStyle} onPress={this.handlePasswordChange}>
               Change Password
             </Button>
             <Button onPress={() => navigation.openDrawer()} style={styles.button}>
