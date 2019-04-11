@@ -50,9 +50,11 @@ class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Home</Text>
-        <Text style={styles.header}>Hi {currentUser && currentUser.email}!</Text>
+        <Text style={styles.header}>
+          Hi {currentUser && currentUser.email} {currentUser && currentUser.uid} !
+        </Text>
         <View style={styles.buttons}>
-          <ConsumeButton />
+          <ConsumeButton currentUser={currentUser} />
         </View>
       </View>
     );
