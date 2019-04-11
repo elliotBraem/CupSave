@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, StyleSheet, Image} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {createStackNavigator, createSwitchNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
 
 import HomeScreen from '../screens/Home';
@@ -11,7 +11,7 @@ import MapScreen from '../screens/Map';
 import AboutUsScreen from '../screens/AboutUs';
 import COLORS from '../constants/colors';
 import LoadingScreen from '../screens/Loading';
-import CustomDrawerComponent from '../components/CustomDrawer';
+import CustomDrawerComponent from '../components/customDrawer';
 import HomeIcon from '../assets/images/drawer-icons/home-icon.svg';
 import ProfileIcon from '../assets/images/drawer-icons/profile-icon.svg';
 import QRScannerIcon from '../assets/images/drawer-icons/qr-scanner-icon.svg';
@@ -78,7 +78,6 @@ const AppStack = createDrawerNavigator(
     // Header for logged in user
     defaultNavigationOptions: ({navigation}) => ({
       headerStyle: {
-        // backgroundColor: 'transparent',
         borderBottomWidth: 0,
       },
       headerTitleStyle: {
