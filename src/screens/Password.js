@@ -4,6 +4,7 @@ import {Text, StyleSheet, View, Alert, KeyboardAvoidingView} from 'react-native'
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
 import {Button, Input, H1, H4, P} from 'nachos-ui';
+//import * as firebase from 'firebase';
 
 const styles = StyleSheet.create({
   container: {
@@ -71,11 +72,11 @@ class PasswordScreen extends Component {
 
   state = {currentpassword: '', newpassword: '', errorMessage: null};
 
-  reauthenticate = (currentPassword) => {
-    var user = firebase.auth().currentUser;
-    var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
-    return user.reauthenticateWithCredential(cred);
-  }
+  //reauthenticate = (currentPassword) => {
+  //  var user = firebase.auth().currentUser;
+  //  var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+  //  return user.reauthenticateWithCredential(cred);
+  //}
 
 
   handlePasswordChange = () => {
@@ -85,12 +86,13 @@ class PasswordScreen extends Component {
     //if (currentpassword.trim() === '' || newpassword.trim() === '') {
     //  Alert.alert('Invalid Parameters:', 'old password / new password cannot be empty');
     //} else {
-        this.reauthenticate(currentpassword)
-        .then(() => {var user = firebase.auth().currentUser;
+        //this.reauthenticate(currentpassword)
+        //then(() => {var user = firebase.auth().currentUser;
+        let user = firebase.auth().currentUser;
         user.updatePassword(newpassword);
-        }).catch(error => this.setState({errorMessage: error.message}))
-        .then(() => navigation.navigate('Home'))
-        .catch(error => this.setState({errorMessage: error.message}));
+        //}).catch(error => this.setState({errorMessage: error.message}))
+       // .then(() => navigation.navigate('Home'))
+       // .catch(error => this.setState({errorMessage: error.message}));
     //}
   };
 
