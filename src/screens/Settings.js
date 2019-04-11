@@ -4,7 +4,53 @@ import {withFirebase} from 'react-redux-firebase';
 import PropTypes from 'prop-types';
 import {Button, Input} from 'nachos-ui';
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  header: {
+    fontSize: 38,
+  },
+  subtext: {
+    alignSelf: 'center',
+  },
+  logo: {
+    flex: 1,
+    alignSelf: 'center',
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+  },
+  form: {
+    flex: 1,
+    justifyContent: 'space-between',
+    width: '80%',
+    alignSelf: 'center',
+  },
+  inputStyle: {
+    height: 40,
+    width: '100%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 20,
+    alignSelf: 'stretch',
+    textAlign: 'center',
+  },
+  btnStyle: {
+    width: '100%',
+    alignSelf: 'stretch',
+    textAlign: 'center',
+  },
+  btnContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    // alignContent: 'space-between',
+  },
+  accountPrompt: {
+    margin: 15,
+  },
+});
 
 class SettingsScreen extends Component {
   // Any props you are taking in (I think it should only need firebase)
@@ -25,7 +71,7 @@ class SettingsScreen extends Component {
     auth: PropTypes.object, // from withFirebase
   };
 
-  state = {currentpassword: '', newpassword: '',newemail: '', errorMessage: null};
+  state = {currentpassword: '', newpassword: '', newemail: '', errorMessage: null};
 
   reauthenticate = (currentPassword) => {
     const {navigation, firebase} = this.props;
@@ -70,7 +116,6 @@ class SettingsScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Change Password</Text>
         <View style={styles.form}>
           {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
           <Input
@@ -88,24 +133,26 @@ class SettingsScreen extends Component {
             onChangeText={newemail => this.setState({newemail})}
             value={this.state.newemail}
           />
-          <View style={styles.btnContainer}>
-            <Button style={styles.btnStyle} onPress={this.handleEmailChange}>
-              Change Email
-            </Button>
-            <Input
-              secureTextEntry
-              style={styles.inputStyle}
-              autoCapitalize="none"
-              placeholder="New Password"
-              onChangeText={newpassword => this.setState({newpassword})}
-              value={this.state.newpassword}
-            />
-            <View style={styles.btnContainer}>
-              <Button style={styles.btnStyle} onPress={this.handlePasswordChange}>
-                Change Password
-              </Button>
-            </View>
-          </View>
+        </View>
+        <View style={styles.btnContainer}>
+          <Button style={styles.btnStyle} onPress={this.handleEmailChange}>
+            Change Email
+          </Button>
+        </View>
+        <View style={styles.form}>
+          <Input
+            secureTextEntry
+            style={styles.inputStyle}
+            autoCapitalize="none"
+            placeholder="New Password"
+            onChangeText={newpassword => this.setState({newpassword})}
+            value={this.state.newpassword}
+          />
+        </View>
+        <View style={styles.btnContainer}>
+          <Button style={styles.btnStyle} onPress={this.handlePasswordChange}>
+            Change Password
+          </Button>
         </View>
       </View>
     );
