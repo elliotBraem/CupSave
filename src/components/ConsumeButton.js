@@ -38,7 +38,7 @@ class SaveCupForm extends Component {
   onSaveCupFormSubmit = () => {
     const {firestore, firebase} = this.props;
     const currentUID = firebase.auth().currentUser.uid;
-    const ref = firestore.collection('users').doc(currentUID + '/consumption/title');
+    const ref = firestore.collection('users').doc(currentUID + '/consumption/cups');
 
     firestore
       .runTransaction(async transaction => {
