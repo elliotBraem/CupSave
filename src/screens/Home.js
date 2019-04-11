@@ -1,9 +1,6 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Text, StyleSheet, View, Platform} from 'react-native';
-import {withFirebase} from 'react-redux-firebase';
-import {Button} from 'nachos-ui';
-import ConsumeButton from '../components/ConsumeButton';
+import React from 'react';
+import {Text, StyleSheet, View} from 'react-native';
+import SaveCupForm from '../components/SaveCupForm';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,39 +22,15 @@ const styles = StyleSheet.create({
   },
 });
 
-class HomeScreen extends Component {
-  static propTypes = {
-    navigation: PropTypes.shape({
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
-    firebase: PropTypes.shape({
-      auth: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
-  };
-
-  state = {currentUser: null};
-
-  componentDidMount() {
-    const {firebase} = this.props;
-    const {currentUser} = firebase.auth();
-    this.setState({currentUser});
-  }
-
-  render() {
-    const {currentUser} = this.state;
-
-    return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Home</Text>
-        <Text style={styles.header}>
-          Hi {currentUser && currentUser.email} {currentUser && currentUser.uid} !
-        </Text>
-        <View style={styles.buttons}>
-          <ConsumeButton currentUser={currentUser} />
-        </View>
+const HomeScreen = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Home</Text>
+      <View style={styles.buttons}>
+        <SaveCupForm />
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 
-export default withFirebase(HomeScreen);
+export default HomeScreen;
