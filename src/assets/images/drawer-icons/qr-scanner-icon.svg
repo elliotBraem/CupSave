@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18.005" height="16.294" viewBox="0 0 18.005 16.294">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="path" d="M381.037,163.526a.47.47,0,0,1,.489-.489h2.933V161h-2.852A2.557,2.557,0,0,0,379,163.526v2.852h2.037Z" transform="translate(-379 -161)" fill="#fff"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <path id="path-2" data-name="path" d="M397.133,161H394.2v2.037h2.933a.545.545,0,0,1,.57.489v2.852h2.037v-2.852A2.557,2.557,0,0,0,397.133,161Z" transform="translate(-394.2 -161)" fill="#fff"/>
+    </clipPath>
+    <clipPath id="clip-path-3">
+      <path id="path-3" data-name="path" d="M397.722,177.151a.47.47,0,0,1-.489.489H394.3v2.118h2.933a2.574,2.574,0,0,0,2.607-2.607V174.3H397.8v2.852Z" transform="translate(-394.3 -174.3)" fill="#fff"/>
+    </clipPath>
+    <clipPath id="clip-path-4">
+      <path id="path-4" data-name="path" d="M381.607,177.64a.47.47,0,0,1-.489-.489V174.3H379v2.852a2.681,2.681,0,0,0,2.607,2.607h2.852V177.64Z" transform="translate(-379 -174.3)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Group_166" data-name="Group 166" transform="translate(-24.995 -403.089)">
+    <g id="group" transform="translate(24.995 403.089)">
+      <g id="group-2" data-name="group" clip-path="url(#clip-path)">
+        <rect id="rectangle" width="13.687" height="13.606" transform="translate(-4.073 -4.074)" fill="#fff"/>
+      </g>
+    </g>
+    <g id="group-3" data-name="group" transform="translate(37.378 403.089)">
+      <g id="group-4" data-name="group" clip-path="url(#clip-path-2)">
+        <rect id="rectangle-2" data-name="rectangle" width="13.687" height="13.606" transform="translate(-4.073 -4.074)" fill="#fff"/>
+      </g>
+    </g>
+    <g id="group-5" data-name="group" transform="translate(37.46 413.924)">
+      <g id="group-6" data-name="group" clip-path="url(#clip-path-3)">
+        <rect id="rectangle-3" data-name="rectangle" width="13.687" height="13.606" transform="translate(-4.155 -4.074)" fill="#fff"/>
+      </g>
+    </g>
+    <g id="group-7" data-name="group" transform="translate(24.995 413.924)">
+      <g id="group-8" data-name="group" clip-path="url(#clip-path-4)">
+        <rect id="rectangle-4" data-name="rectangle" width="13.687" height="13.606" transform="translate(-4.073 -4.074)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>
