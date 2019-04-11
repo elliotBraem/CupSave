@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const customDrawer = props => {
+const CustomDrawer = props => {
   return (
     <SafeAreaView style={styles.container} forceInset={{top: 'always', horizontal: 'never'}}>
       <View style={styles.headerContainer}>
@@ -64,4 +64,4 @@ const customDrawer = props => {
   );
 };
 
-export default withFirebase(customDrawer);
+export default withFirebase(CustomDrawer);
