@@ -42,7 +42,7 @@ class QRScannerScreen extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>QR Scanner</Text>
-         <View style={styles.buttons}>
+        <View style={styles.buttons}>
           <Button onPress={() => navigation.openDrawer()} style={styles.button}>
             Menu
           </Button>
