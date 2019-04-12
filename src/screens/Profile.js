@@ -30,6 +30,10 @@ const styles = StyleSheet.create({
 });
 
 class ProfileScreen extends Component {
+  constructor(props) {
+    super(props)
+  }
+
   static propTypes = {
     firestore: PropTypes.shape({
       collection: PropTypes.func.isRequired,

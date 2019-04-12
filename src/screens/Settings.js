@@ -56,6 +56,9 @@ const styles = StyleSheet.create({
 });
 
 class SettingsScreen extends Component {
+  constructor(props) {
+    super(props)
+  }
   // Any props you are taking in (I think it should only need firebase)
   static propTypes = {};
 
