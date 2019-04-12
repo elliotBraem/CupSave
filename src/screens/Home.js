@@ -1,66 +1,26 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Text, StyleSheet, View, Platform} from 'react-native';
-import {withFirebase} from 'react-redux-firebase';
-import {Button} from 'nachos-ui';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import SaveCupForm from '../components/SaveCupForm';
+import CustomHeader from '../components/CustomHeader';
+import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#79db85',
-  },
-  header: {
-    alignSelf: 'center',
-    marginBottom: 50,
-  },
-  buttons: {
-    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    margin: 15,
-    justifyContent: 'center',
+    backgroundColor: COLORS.primary,
   },
 });
 
-class HomeScreen extends Component {
-  static propTypes = {
-    navigation: PropTypes.shape({
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
-    firebase: PropTypes.shape({
-      auth: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
-  };
+const HomeScreen = () => {
+  return (
+    <View style={styles.container}>
+      <CustomHeader title="Home" />
+      <SaveCupForm />
+    </View>
+  );
+};
 
-  state = {currentUser: null};
-
-  componentDidMount() {
-    const {firebase} = this.props;
-    const {currentUser} = firebase.auth();
-    this.setState({currentUser});
-  }
-
-  render() {
-    const {firebase, navigation} = this.props;
-    const {currentUser} = this.state;
-
-    return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Home</Text>
-        <View style={styles.buttons}>
-          <Text>Hi {currentUser && currentUser.email}!</Text>
-          <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-            Menu
-          </Button>
-          <Button onPress={() => firebase.logout()} style={styles.btnStyle}>
-            Logout
-          </Button>
-        </View>
-      </View>
-    );
-  }
-}
-
-export default withFirebase(HomeScreen);
+export default HomeScreen;
