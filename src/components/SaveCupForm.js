@@ -1,35 +1,62 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
-import {Button} from 'nachos-ui';
 import {withHandlers, compose} from 'recompose';
 import {connect} from 'react-redux';
 import {withFirestore} from 'react-redux-firebase';
 import COLORS from '../constants/colors';
+import AppText from './TextComponents';
+
+const Logo = require('../assets/images/logo.png');
 
 const styles = StyleSheet.create({
   container: {
+    // width: 300,
+    // height: 130,
+    // color: COLORS.white,
     flex: 1,
-    flexDirection: 'row',
     justifyContent: 'center',
-    marginRight: 20,
-    marginLeft: 20,
+    alignItems: 'center',
+  },
+  inner: {
+    width: 300,
+    height: 130,
+    alignItems: 'center',
+    borderRadius: 12,
+    // flexDirection: 'row',
+    backgroundColor: COLORS.white,
   },
   button: {
-    marginRight: 20,
+    // flex: 1,
+    // flexDirection: 'row',
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 12,
+    width: 270,
+    height: 70,
+    backgroundColor: COLORS.primary,
+  },
+  logoIcon: {
+    height: 45,
+    width: 30,
+    marginRight: 30,
   },
 });
 
 const SaveCupForm = ({onSaveCupFormSubmit}) => (
   <View style={styles.container}>
-    <Button onPress={onSaveCupFormSubmit} style={styles.button}>
-      Save a Cup
-    </Button>
+    <View style={styles.inner}>
+      <TouchableOpacity onPress={onSaveCupFormSubmit} style={styles.button}>
+        <Image source={Logo} style={styles.logoIcon} />
+        <AppText>SAVE A CUP</AppText>
+      </TouchableOpacity>
+    </View>
   </View>
 );
 
 SaveCupForm.propTypes = {
-  // userToken: PropTypes.string.isRequired,
   onSaveCupFormSubmit: PropTypes.func.isRequired,
 };
 
