@@ -42,7 +42,7 @@ class AboutUsScreen extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>About Us</Text>
-         <View style={styles.buttons}>
+        <View style={styles.buttons}>
           <Button onPress={() => navigation.openDrawer()} style={styles.button}>
             Menu
           </Button>
