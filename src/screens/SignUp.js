@@ -39,6 +39,10 @@ const styles = StyleSheet.create({
 });
 
 class SignUpScreen extends Component {
+  constructor(props) {
+    super(props)
+  }
+
   static navigationOptions = {
     title: 'SignUp',
   };

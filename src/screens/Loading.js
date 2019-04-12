@@ -12,6 +12,10 @@ const styles = StyleSheet.create({
 });
 
 class LoadingScreen extends Component {
+  constructor(props) {
+    super(props)
+  }
+
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,

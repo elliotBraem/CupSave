@@ -38,6 +38,194 @@ exports[`Loading test against snapshot 1`] = `
 </View>
 `;
 
+exports[`SignUp test against snapshot 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "justifyContent": "center",
+      "marginTop": 50,
+      "paddingLeft": 15,
+      "paddingRight": 15,
+      "paddingTop": 15,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "bottom": 0,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "fontSize": 38,
+          "marginBottom": 20,
+        }
+      }
+    >
+      Welcome to CupSave!
+    </Text>
+    <Text>
+      Sign Up
+    </Text>
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Email"
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "borderColor": "gray",
+          "borderWidth": 1,
+          "height": 40,
+          "marginTop": 14,
+          "textAlign": "center",
+          "width": "100%",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Password"
+      secureTextEntry={true}
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "borderColor": "gray",
+          "borderWidth": 1,
+          "height": 40,
+          "marginTop": 14,
+          "textAlign": "center",
+          "width": "100%",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Confirm Password"
+      secureTextEntry={true}
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "borderColor": "gray",
+          "borderWidth": 1,
+          "height": 40,
+          "marginTop": 14,
+          "textAlign": "center",
+          "width": "100%",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "marginBottom": 10,
+        }
+      }
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Sign Up
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Already have an account? Login
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`StatsOverview test against snapshot 1`] = `
 <View
   style={

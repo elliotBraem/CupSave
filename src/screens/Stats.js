@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
 });
 
 class Stats extends Component {
+  constructor(props) {
+    super(props)
+  }
+
   static navigationOptions = {
     title: 'Stats',
   };

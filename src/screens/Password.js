@@ -55,6 +55,10 @@ const styles = StyleSheet.create({
 });
 
 class PasswordScreen extends Component {
+  constructor(props) {
+    super(props)
+  }
+
   static navigationOptions = {
     title: 'Password',
   };
