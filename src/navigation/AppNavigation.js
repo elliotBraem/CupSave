@@ -1,7 +1,7 @@
 import React from 'react';
 import {_} from 'lodash';
-import {Text, StyleSheet, Image} from 'react-native';
-import {createStackNavigator, createSwitchNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
+import {StyleSheet} from 'react-native';
+import {createSwitchNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
 
 import HomeScreen from '../screens/Home';
 import LoginScreen from '../screens/Login';
@@ -19,18 +19,11 @@ import ProfileIcon from '../assets/images/drawer-icons/profile-icon.svg';
 import QRScannerIcon from '../assets/images/drawer-icons/qr-scanner-icon.svg';
 import MapIcon from '../assets/images/drawer-icons/map-icon.svg';
 import AboutIcon from '../assets/images/drawer-icons/about-icon.svg';
-import BurgerIcon from '../assets/images/drawer-icons/burger-icon.svg';
 
 const styles = StyleSheet.create({
   icon: {
     width: 20,
     height: 20,
-  },
-  burgerIcon: {
-    width: 30,
-    height: 30,
-    marginLeft: 20,
-    color: 'red',
   },
 });
 
@@ -79,19 +72,7 @@ const AppStack = createDrawerNavigator(
     },
   },
   {
-    headerMode: 'float',
-    headerTransparent: true,
     gesturesEnabled: true,
-    // Header for logged in user
-    defaultNavigationOptions: ({navigation}) => ({
-      headerStyle: {
-        borderBottomWidth: 0,
-      },
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-      headerLeft: <BurgerIcon style={styles.burgerIcon} onPress={() => navigation.toggleDrawer()} />,
-    }),
     drawerBackgroundColor: COLORS.secondary,
     drawerWidth: 250,
     contentComponent: props => {
@@ -127,31 +108,10 @@ const AuthStack = createSwitchNavigator(
   }
 );
 
-const DrawerNavigation = createStackNavigator(
-  {
-    DrawerStack: AppStack,
-  },
-  {
-    headerMode: 'float',
-    gesturesEnabled: true,
-    // Header for logged in user
-    defaultNavigationOptions: ({navigation}) => ({
-      headerStyle: {
-        backgroundColor: COLORS.primary,
-        borderBottomWidth: 0,
-      },
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-      headerLeft: <BurgerIcon style={styles.burgerIcon} onPress={() => navigation.toggleDrawer()} />,
-    }),
-  }
-);
-
 const AppNavigator = createSwitchNavigator(
   {
     Loading: LoadingScreen,
-    App: DrawerNavigation,
+    App: AppStack,
     Auth: AuthStack,
   },
   {
