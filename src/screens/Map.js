@@ -1,33 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Text, StyleSheet, View, Button} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-// import {Button} from 'nachos-ui';
+import CustomHeader from '../components/CustomHeader';
+import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
-    // marginTop: 100,
-    // paddingLeft: 15,
-    // paddingRight: 15,
-  },
-  header: {
-    alignSelf: 'center',
-    marginBottom: 50,
-  },
-  buttons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  btnStyle: {
-    width: '100%',
-    alignSelf: 'stretch',
-    textAlign: 'center',
-  },
-  btnContainer: {
     flex: 1,
-    flexDirection: 'column',
-    // alignContent: 'space-between',
+    justifyContent: 'space-between',
+    backgroundColor: COLORS.primary,
   },
   mapContainer: {
     width: '100%',
@@ -66,7 +48,7 @@ const UserMap = props => {
 
 class MapScreen extends Component {
   static navigationOptions = {
-    title: 'Map',
+    // title: 'Map',
   };
 
   static propTypes = {
@@ -99,10 +81,10 @@ class MapScreen extends Component {
   };
 
   render() {
-    const {navigation} = this.props;
     const {userLocation} = this.state;
     return (
       <View style={styles.container}>
+        <CustomHeader title="Map" />
         {/* <Text style={styles.header}>Map</Text>
         <Button title="Menu" onPress={() => navigation.openDrawer()} style={styles.btnStyle} />
         <Button title="Get Location" onPress={() => this.getUserLocation()} style={styles.btnStyle} /> */}
