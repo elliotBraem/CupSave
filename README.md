@@ -7,7 +7,14 @@ Write a test in __tests__
 npm run test or 
 npm run testWithCoverage
 
-### Commit style guidelines:
+## Instructions for building the application:
+  1. Clone the repository to your system using git clone
+  2. In an active shell, navigate to the project folder.
+  3. Run 'npm install' to install all necessary packages.
+  4. After packages have been installed, run 'npm run android' to launch the application on an emulator.
+  5. A server will start in your browser and begin bundling the Javascript.  This may take awhile.  After bundling, the application should be active on your emulated device.
+
+## Commit style guidelines:
 https://udacity.github.io/git-styleguide/
 
 ## Understanding the File Structure
