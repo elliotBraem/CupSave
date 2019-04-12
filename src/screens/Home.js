@@ -7,15 +7,10 @@ import COLORS from '../constants/colors';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+    alignItems: 'center',
     backgroundColor: COLORS.primary,
-  },
-  saveACupContainer: {
-    marginTop: 120,
-  },
-  button: {
-    margin: 15,
-    justifyContent: 'center',
   },
 });
 
@@ -23,9 +18,7 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <CustomHeader title="Home" />
-      <View style={styles.saveACupContainer}>
-        <SaveCupForm />
-      </View>
+      <SaveCupForm />
     </View>
   );
 };
