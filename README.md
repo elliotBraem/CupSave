@@ -1,6 +1,12 @@
 # CupShare
 An application that tracks a user’s ecological footprint of disposable coffee cups saved by purchasing drinks with a personal mug.
 
+### Instructions for running test:
+
+Write a test in __tests__
+npm run test or 
+npm run testWithCoverage
+
 ## Instructions for building the application:
   1. Clone the repository to your system using git clone
   2. In an active shell, navigate to the project folder.
