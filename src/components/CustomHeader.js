@@ -8,7 +8,6 @@ import {HeaderTitle} from './TextComponents';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: 'transparent',
     width: '100%',
     height: Platform.OS === 'ios' ? 70 : 70 - 24,
