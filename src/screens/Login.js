@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Alert, KeyboardAvoidingView} from 'react-native';
+import {Text, StyleSheet, View, Alert, KeyboardAvoidingView, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
 import {Button, Input, H1, H4, P} from 'nachos-ui';
-import Logo from '../assets/images/logo.svg';
+
+const Logo = require('../assets/images/logo.png');
 
 const styles = StyleSheet.create({
   container: {
@@ -54,19 +55,14 @@ const styles = StyleSheet.create({
 });
 
 class LoginScreen extends Component {
-  static navigationOptions = {
-    header: null,
-  };
-
   static propTypes = {
     navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
       navigate: PropTypes.func.isRequired,
     }).isRequired,
     firebase: PropTypes.shape({
       login: PropTypes.func.isRequired,
     }).isRequired, // from withFirebase
-    auth: PropTypes.object, // from withFirebase
+    // auth: PropTypes.object, // from withFirebase
   };
 
   state = {email: '', password: '', errorMessage: null};
@@ -83,55 +79,49 @@ class LoginScreen extends Component {
           email,
           password,
         })
-        .then(() => navigation.navigate('Home'))
+        .then(() => navigation.navigate('App'))
         .catch(error => this.setState({errorMessage: error.message}));
     }
   };
 
   render() {
-    const {navigation, firebase} = this.props;
+    const {navigation} = this.props;
+    const {errorMessage, email, password} = this.state;
 
     return (
       <KeyboardAvoidingView style={styles.container} behavior="position" enable>
         <H1 style={styles.header} align="center">
           Welcome to{'\n'}CupSave!
         </H1>
-        <Logo style={styles.logo} />
+        <Image source={Logo} style={styles.logo} />
         <H4 style={styles.subtext}>Let&#39;s get started</H4>
         <View style={styles.form}>
-          {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
+          {errorMessage && <Text style={{color: 'red'}}>{errorMessage}</Text>}
           <Input
             style={styles.inputStyle}
             autoCapitalize="none"
             placeholder="Email"
-            value={this.state.email}
-            onChangeText={email => this.setState({email})}
+            value={email}
+            onChangeText={emailInput => this.setState({email: emailInput})}
           />
           <Input
             secureTextEntry
             style={styles.inputStyle}
             autoCapitalize="none"
             placeholder="Password"
-            onChangeText={password => this.setState({password})}
-            value={this.state.password}
+            value={password}
+            onChangeText={passwordInput => this.setState({password: passwordInput})}
           />
           <View style={styles.btnContainer}>
             <Button style={styles.btnStyle} onPress={this.handleLogin}>
               Login
             </Button>
             <P style={styles.accountPrompt}>Don&#39;t have an account?</P>
-            <Button style={styles.btnStyle} onPress={() => navigation.navigate('SignUp')}>
+            <Button style={styles.btnStyle} onPress={() => navigation.navigate('Signup')}>
               Sign Up
-            </Button>
-            <P style={styles.accountPrompt}>Go to Menu</P>
-            <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-              Menu
             </Button>
           </View>
         </View>
-        {/* <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-          Open drawer
-        </Button> */}
       </KeyboardAvoidingView>
     );
   }
