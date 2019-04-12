@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, StyleSheet, View, AsyncStorage, Alert} from 'react-native';
 import {Button} from 'nachos-ui';
+import {BarCodeScanner, Permissions} from 'expo';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +26,8 @@ const styles = StyleSheet.create({
 });
 
 class QRScannerScreen extends Component {
+  state = {hasCameraPermission: null};
+
   static navigationOptions = {
     title: 'QRScanner',
   };
@@ -43,6 +46,9 @@ class QRScannerScreen extends Component {
       <View style={styles.container}>
         <Text style={styles.header}>QR Scanner</Text>
          <View style={styles.buttons}>
+          <Button onPress={this.scan.bind(this)} style={styles.button}>
+            Scan
+          </Button>
           <Button onPress={() => navigation.openDrawer()} style={styles.button}>
             Menu
           </Button>
@@ -50,6 +56,15 @@ class QRScannerScreen extends Component {
       </View>
     );
   }
+
+   async scan() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({
+      hasCameraPermission: status === 'granted',
+     });
+   }
+
+
 }
 
 export default QRScannerScreen;
