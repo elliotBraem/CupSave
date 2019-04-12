@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Text, StyleSheet, View} from 'react-native';
-import {Button} from 'nachos-ui';
+import {Text, StyleSheet, View, Button} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -57,15 +56,17 @@ class Stats extends Component {
     }).isRequired,
   };
 
+  constructor(props) {
+    super(props)
+  }
+
   render(){
     const {navigation} = this.props;
 
     return <View style={styles.container}>
       <Text style={styles.header}>Welcome to the Stats Page You Goddam Hero You</Text>
       <View style={styles.buttons}>
-        <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-          Menu
-        </Button>
+        <Button onPress={() => navigation.openDrawer()} style={styles.button} title="Menu" />
       </View>
       <View style={styles.statColumn}>
           <View style={styles.stat}>
