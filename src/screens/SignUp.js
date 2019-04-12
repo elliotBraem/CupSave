@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Text, StyleSheet, View, TextInput, Alert, Button, KeyboardAvoidingView} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
-// import {Button} from 'nachos-ui';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,6 +50,10 @@ class SignUpScreen extends Component {
       login: PropTypes.func.isRequired,
     }).isRequired, // from withFirebase
   };
+
+  constructor(props) {
+    super(props)
+  }
 
   state = {email: '', password: '', confirmedPassword: '', errorMessage: null};
 
