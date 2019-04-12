@@ -12,7 +12,6 @@ import Home from '../src/screens/Home';
 import LoadingScreen from '../src/screens/Loading';
 import Login from '../src/screens/Login';
 import Map from '../src/screens/Map';
-import Password from '../src/screens/Password';
 import Profile from '../src/screens/Profile';
 import QRScanner from '../src/screens/QRScanner';
 import Settings from '../src/screens/Settings';
@@ -148,17 +147,6 @@ it('Map renders without crashing', () => {
 
 it('Map test against snapshot', () => {
   const tree = renderer.create(<Map />).toJSON();
-  expect(tree).toMatchSnapshot();
-});
-
-// Screens -> Password
-it('Password renders without crashing', () => {
-  const rendered = renderer.create(<Password />).toJSON();
-  expect(rendered).toBeTruthy();
-});
-
-it('Password test against snapshot', () => {
-  const tree = renderer.create(<Password />).toJSON();
   expect(tree).toMatchSnapshot();
 });
 

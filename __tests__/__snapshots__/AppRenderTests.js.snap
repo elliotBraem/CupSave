@@ -38,6 +38,210 @@ exports[`Loading test against snapshot 1`] = `
 </View>
 `;
 
+exports[`Login test against snapshot 1`] = `
+<View
+  enable={true}
+  onLayout={[Function]}
+  style={
+    Object {
+      "flex": 1,
+      "justifyContent": "space-between",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "bottom": 0,
+      }
+    }
+  >
+    <text
+      align="center"
+      style={
+        Object {
+          "fontSize": 38,
+        }
+      }
+    >
+      Welcome to
+      
+
+      CupSave!
+    </text>
+    <Image
+      source={1}
+      style={
+        Object {
+          "alignSelf": "center",
+          "flex": 1,
+          "height": 150,
+          "resizeMode": "contain",
+          "width": 150,
+        }
+      }
+    />
+    <text
+      style={
+        Object {
+          "alignSelf": "center",
+        }
+      }
+    >
+      Let's get started
+    </text>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flex": 1,
+          "justifyContent": "space-between",
+          "width": "80%",
+        }
+      }
+    >
+      <TextInput
+        allowFontScaling={true}
+        autoCapitalize="none"
+        onChangeText={[Function]}
+        placeholder="Email"
+        style={
+          Object {
+            "alignSelf": "stretch",
+            "borderColor": "gray",
+            "borderWidth": 1,
+            "height": 40,
+            "marginBottom": 20,
+            "textAlign": "center",
+            "width": "100%",
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+      <TextInput
+        allowFontScaling={true}
+        autoCapitalize="none"
+        onChangeText={[Function]}
+        placeholder="Password"
+        secureTextEntry={true}
+        style={
+          Object {
+            "alignSelf": "stretch",
+            "borderColor": "gray",
+            "borderWidth": 1,
+            "height": 40,
+            "marginBottom": 20,
+            "textAlign": "center",
+            "width": "100%",
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "flexDirection": "column",
+          }
+        }
+      >
+        <View
+          accessibilityRole="button"
+          accessibilityStates={Array []}
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {},
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#007AFF",
+                    "fontSize": 18,
+                    "padding": 8,
+                    "textAlign": "center",
+                  },
+                ]
+              }
+            >
+              Login
+            </Text>
+          </View>
+        </View>
+        <text
+          style={
+            Object {
+              "margin": 15,
+            }
+          }
+        >
+          Don't have an account?
+        </text>
+        <View
+          accessibilityRole="button"
+          accessibilityStates={Array []}
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {},
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#007AFF",
+                    "fontSize": 18,
+                    "padding": 8,
+                    "textAlign": "center",
+                  },
+                ]
+              }
+            >
+              Sign Up
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`Settings test against snapshot 1`] = `
 <View
   style={
