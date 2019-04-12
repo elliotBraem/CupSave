@@ -1,32 +1,24 @@
 import React from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import SaveCupForm from '../components/SaveCupForm';
+import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+    alignItems: 'center',
     backgroundColor: COLORS.primary,
-  },
-  saveACupContainer: {
-    marginTop: 120,
-    // flexDirection: 'column',
-    // // alignItems: 'center',
-    // justifyContent: 'center',
-  },
-  button: {
-    margin: 15,
-    justifyContent: 'center',
   },
 });
 
 const HomeScreen = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.saveACupContainer}>
-        <SaveCupForm />
-      </View>
+      <CustomHeader title="Home" />
+      <SaveCupForm />
     </View>
   );
 };
