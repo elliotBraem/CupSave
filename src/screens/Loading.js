@@ -17,7 +17,7 @@ class LoadingScreen extends Component {
       navigate: PropTypes.func.isRequired,
     }).isRequired,
     firebase: PropTypes.shape({
-      auth: PropTypes.shape.isRequired,
+      auth: PropTypes.func.isRequired,
     }).isRequired, // from withFirebase
   };
 
@@ -27,7 +27,7 @@ class LoadingScreen extends Component {
 
   componentDidMount() {
     const {firebase, navigation} = this.props;
-    firebase.auth.onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => {
       navigation.navigate(user ? 'App' : 'Auth');
     });
   }
