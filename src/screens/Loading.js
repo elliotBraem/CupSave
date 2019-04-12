@@ -12,22 +12,18 @@ const styles = StyleSheet.create({
 });
 
 class LoadingScreen extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
     firebase: PropTypes.shape({
-      auth: PropTypes.func.isRequired,
+      auth: PropTypes.shape.isRequired,
     }).isRequired, // from withFirebase
   };
 
   componentDidMount() {
     const {firebase, navigation} = this.props;
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth.onAuthStateChanged(user => {
       navigation.navigate(user ? 'App' : 'Auth');
     });
   }

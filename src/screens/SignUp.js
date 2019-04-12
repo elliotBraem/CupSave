@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Text, StyleSheet, View, TextInput, Alert, Button, KeyboardAvoidingView} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
-// import {Button} from 'nachos-ui';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,10 +38,6 @@ const styles = StyleSheet.create({
 });
 
 class SignUpScreen extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   static navigationOptions = {
     title: 'SignUp',
   };
