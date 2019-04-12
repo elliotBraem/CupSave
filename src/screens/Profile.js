@@ -31,8 +31,12 @@ const styles = StyleSheet.create({
 
 class ProfileScreen extends Component {
   static propTypes = {
-    firestore: PropTypes.shape.isRequired, // from withFirestore
-    auth: PropTypes.shape.isRequired, // from withFirebase
+    firestore: PropTypes.shape({
+      collection: PropTypes.func.isRequired,
+    }).isRequired, // from withFirestore
+    auth: PropTypes.shape({
+      uid: PropTypes.string.isRequired,
+    }).isRequired, // from withFirebase
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
