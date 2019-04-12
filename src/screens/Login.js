@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Alert, KeyboardAvoidingView} from 'react-native';
+import {Text, StyleSheet, View, Alert, KeyboardAvoidingView, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
 import {Button, Input, H1, H4, P} from 'nachos-ui';
-import Logo from '../assets/images/logo.svg';
+
+const Logo = require('../assets/images/logo.png');
 
 const styles = StyleSheet.create({
   container: {
@@ -92,7 +93,7 @@ class LoginScreen extends Component {
         <H1 style={styles.header} align="center">
           Welcome to{'\n'}CupSave!
         </H1>
-        <Logo style={styles.logo} />
+        <Image source={Logo} style={styles.logo} />
         <H4 style={styles.subtext}>Let&#39;s get started</H4>
         <View style={styles.form}>
           {errorMessage && <Text style={{color: 'red'}}>{errorMessage}</Text>}

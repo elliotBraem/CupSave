@@ -3,11 +3,14 @@ import {Text, StyleSheet, View, Alert} from 'react-native';
 import {withFirebase} from 'react-redux-firebase';
 import PropTypes from 'prop-types';
 import {Button, Input} from 'nachos-ui';
+import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
+    backgroundColor: COLORS.primary,
+    alignItems: 'center',
   },
   header: {
     fontSize: 38,
@@ -111,7 +114,6 @@ class SettingsScreen extends Component {
         .catch(error => this.setState({errorMessage: error.message}));
     }
   };
-
 
   render() {
     return (

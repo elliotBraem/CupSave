@@ -4,6 +4,7 @@ import {Text, StyleSheet, View, Image} from 'react-native';
 import {DrawerItems, SafeAreaView} from 'react-navigation';
 import {withFirebase} from 'react-redux-firebase';
 import Logout from '../assets/images/drawer-icons/logout-icon.svg';
+import COLORS from '../constants/colors';
 
 const profileImage = require('../assets/images/profileicon.png');
 
@@ -17,14 +18,13 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 22,
-    color: '#ffffff',
+    color: COLORS.white,
   },
   profileImage: {
     width: 80,
     height: 80,
     marginBottom: 20,
     borderRadius: 40,
-    backgroundColor: 'black',
   },
   bottom: {
     justifyContent: 'flex-end',
@@ -37,12 +37,12 @@ const styles = StyleSheet.create({
   },
   logout: {
     marginLeft: 10,
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
   },
 });
 
-const customDrawer = props => {
+const CustomDrawer = props => {
   return (
     <SafeAreaView style={styles.container} forceInset={{top: 'always', horizontal: 'never'}}>
       <View style={styles.headerContainer}>
@@ -64,4 +64,4 @@ const customDrawer = props => {
   );
 };
 
-export default withFirebase(customDrawer);
+export default withFirebase(CustomDrawer);
