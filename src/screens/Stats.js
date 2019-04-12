@@ -56,6 +56,10 @@ class Stats extends Component {
     }).isRequired,
   };
 
+  constructor(props) {
+    super(props)
+  }
+
   render(){
     const {navigation} = this.props;
 

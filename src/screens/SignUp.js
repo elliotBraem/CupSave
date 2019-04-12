@@ -51,6 +51,10 @@ class SignUpScreen extends Component {
     }).isRequired, // from withFirebase
   };
 
+  constructor(props) {
+    super(props)
+  }
+
   state = {email: '', password: '', confirmedPassword: '', errorMessage: null};
 
   handleSignUp = () => {

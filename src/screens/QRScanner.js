@@ -24,6 +24,10 @@ class QRScannerScreen extends Component {
     }).isRequired,
   };
 
+  constructor(props) {
+    super(props)
+  }
+
   render() {
     return (
       <View style={styles.container}>

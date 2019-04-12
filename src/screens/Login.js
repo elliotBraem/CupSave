@@ -65,6 +65,10 @@ class LoginScreen extends Component {
     // auth: PropTypes.object, // from withFirebase
   };
 
+  constructor(props) {
+    super(props)
+  }
+
   state = {email: '', password: '', errorMessage: null};
 
   handleLogin = () => {

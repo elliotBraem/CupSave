@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
 });
 
 const HomeScreen = () => {
-
   return (
     <View style={styles.container}>
       <CustomHeader title="Home" />

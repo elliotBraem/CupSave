@@ -41,6 +41,10 @@ class ProfileScreen extends Component {
     }).isRequired,
   };
 
+  constructor(props) {
+    super(props)
+  }
+
   state = {userData: null, errorMessage: ''};
 
   componentDidMount() {
