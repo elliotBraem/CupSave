@@ -11,7 +11,7 @@ import MapScreen from '../screens/Map';
 import AboutUsScreen from '../screens/AboutUs';
 import COLORS from '../constants/colors';
 import LoadingScreen from '../screens/Loading';
-import CustomDrawerComponent from '../components/customDrawer';
+import CustomDrawerComponent from '../components/CustomDrawer';
 import HomeIcon from '../assets/images/drawer-icons/home-icon.svg';
 import ProfileIcon from '../assets/images/drawer-icons/profile-icon.svg';
 import QRScannerIcon from '../assets/images/drawer-icons/qr-scanner-icon.svg';

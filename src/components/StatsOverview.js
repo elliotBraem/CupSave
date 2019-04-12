@@ -29,25 +29,21 @@ const StatsOverview = ({drinkSize, totalCupsSaved, level}) => (
 
 StatsOverview.propTypes = {
   drinkSize: PropTypes.string,
-  totalCupsSaved: PropTypes.string.isRequired,
+  totalCupsSaved: PropTypes.number,
   level: PropTypes.string,
 };
 
 StatsOverview.defaultProps = {
   drinkSize: '16oz',
+  totalCupsSaved: 0,
   level: '0',
 };
 
-function mapStateToProps(state) {
-  const {totalCupsSaved} = state;
-  return {totalCupsSaved};
-}
-
 const enhance = compose(
-  connect(mapStateToProps),
+  // connect(mapStateToProps),
   setPropTypes({
     drinkSize: PropTypes.string,
-    totalCupsSaved: PropTypes.string.isRequired,
+    totalCupsSaved: PropTypes.number,
     level: PropTypes.string,
   })
 );
