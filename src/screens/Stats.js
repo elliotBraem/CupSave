@@ -64,10 +64,7 @@ class Stats extends Component {
       <Text style={styles.header}>Welcome to the Stats Page You Goddam Hero You</Text>
       <View style={styles.buttons}>
         <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-          Open drawer
-        </Button>
-        <Button onPress={() => navigation.navigate('Login')} style={styles.button}>
-          To Login
+          Menu
         </Button>
       </View>
       <View style={styles.statColumn}>

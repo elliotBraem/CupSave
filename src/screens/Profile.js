@@ -1,21 +1,19 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase, withFirestore} from 'react-redux-firebase';
-import {withHandlers, compose, setPropTypes} from 'recompose';
+import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import StatsOverview from '../components/StatsOverview';
-import AppText from '../components/TextComponents';
 import COLORS from '../constants/colors';
+import CustomHeader from '../components/CustomHeader';
 
 const profileImage = require('../assets/images/profileicon.png');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: 100,
-    // paddingLeft: 15,
-    // paddingRight: 15,
+    // justifyContent: 'space-between',
     backgroundColor: COLORS.primary,
     alignItems: 'center',
   },
@@ -60,6 +58,7 @@ class ProfileScreen extends Component {
     const {userData} = this.state;
     return (
       <View style={styles.container}>
+        <CustomHeader title="Profile" />
         <Image source={profileImage} style={styles.circle} />
         {/* <Text>{userData && userData.total}</Text> */}
         <StatsOverview totalCupsSaved={userData && userData.total} />

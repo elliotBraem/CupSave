@@ -1,6 +1,7 @@
 import React from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import SaveCupForm from '../components/SaveCupForm';
+import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
@@ -11,9 +12,6 @@ const styles = StyleSheet.create({
   },
   saveACupContainer: {
     marginTop: 120,
-    // flexDirection: 'column',
-    // // alignItems: 'center',
-    // justifyContent: 'center',
   },
   button: {
     margin: 15,
@@ -24,6 +22,7 @@ const styles = StyleSheet.create({
 const HomeScreen = () => {
   return (
     <View style={styles.container}>
+      <CustomHeader title="Home" />
       <View style={styles.saveACupContainer}>
         <SaveCupForm />
       </View>
