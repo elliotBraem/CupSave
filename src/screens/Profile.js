@@ -1,79 +1,92 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import PropTypes from 'prop-types';
-import {withFirebase} from 'react-redux-firebase';
+import {withFirebase, withFirestore} from 'react-redux-firebase';
+import {withNavigation} from 'react-navigation';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
 import {Button} from 'nachos-ui';
+import StatsOverview from '../components/StatsOverview';
+import COLORS from '../constants/colors';
+import CustomHeader from '../components/CustomHeader';
 
 const profileImage = require('../assets/images/profileicon.png');
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  header: {
-    alignSelf: 'center',
-    marginBottom: 50,
-    fontSize: 22,
-  },
-  buttons: {
-    flexDirection: 'row',
+    flex: 1,
+    // justifyContent: 'space-between',
+    backgroundColor: COLORS.primary,
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    margin: 15,
-    justifyContent: 'center',
-  },
-  icon: {
-    width: 80,
-    height: 80,
-    alignSelf: 'center',
-    marginBottom: 20,
   },
   circle: {
     width: 160,
     height: 160,
     alignSelf: 'center',
     marginBottom: 20,
-    borderRadius: 60,
+    borderRadius: 80,
     backgroundColor: 'black',
   },
 });
 
 class ProfileScreen extends Component {
-  static navigationOptions = {
-    title: 'Profile',
-  };
-
   static propTypes = {
+    firestore: PropTypes.shape({
+      collection: PropTypes.func.isRequired,
+    }).isRequired, // from withFirestore
+    auth: PropTypes.shape({
+      uid: PropTypes.string.isRequired,
+    }).isRequired, // from withFirebase
     navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
       navigate: PropTypes.func.isRequired,
     }).isRequired,
   };
 
-  render() {
-    const {navigation} = this.props;
+  state = {userData: null, errorMessage: ''};
 
+  componentDidMount() {
+    const {auth, firestore} = this.props;
+    const currentUID = auth.uid;
+    const ref = firestore.collection('users').doc(currentUID + '/consumption/cups');
+    ref
+      .get()
+      .then(function getTotal(doc) {
+        if (doc.exists) {
+          const userData = doc.data();
+          return userData;
+        }
+        return 0;
+      })
+      .then(userData => this.setState({userData}))
+      .catch(error => {
+        this.setState({errorMessage: error.message});
+      });
+  }
+
+  render() {
+    const {userData} = this.state;
+    const {navigation} = this.props;
     return (
       <View style={styles.container}>
+        <CustomHeader title="Profile" />
         <Image source={profileImage} style={styles.circle} />
-        <Text style={styles.header}>First M. Last</Text>
-        <View style={styles.buttons}>
-          <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-            Menu
-          </Button>
-        </View>
-        <View style={styles.buttons}>
-          <Button onPress={() => navigation.navigate('Settings')} style={styles.button}>
-            Settings
-          </Button>
-        </View>
+        <StatsOverview totalCupsSaved={userData && userData.total} />
+        <Button onPress={() => navigation.navigate('Settings')} style={styles.button}>
+          Settings
+        </Button>
       </View>
     );
   }
 }
 
-export default withFirebase(ProfileScreen);
+const enhance = compose(
+  withNavigation,
+  withFirebase,
+  withFirestore,
+  connect(({firebase: {auth}}, {userData}) => ({
+    auth,
+    userData,
+  }))
+);
+
+export default enhance(ProfileScreen);
