@@ -37,3 +37,50 @@ exports[`Loading test against snapshot 1`] = `
   />
 </View>
 `;
+
+exports[`StatsOverview test against snapshot 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#ffffff",
+      "borderRadius": 12,
+      "flexDirection": "row",
+      "height": 90,
+      "justifyContent": "space-evenly",
+      "width": 350,
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "color": "#1A1A1A",
+        "fontSize": 24,
+      }
+    }
+  >
+    16oz
+  </Text>
+  <Text
+    style={
+      Object {
+        "color": "#1A1A1A",
+        "fontSize": 24,
+      }
+    }
+  >
+    0
+  </Text>
+  <Text
+    style={
+      Object {
+        "color": "#1A1A1A",
+        "fontSize": 24,
+      }
+    }
+  >
+    0
+  </Text>
+</View>
+`;
