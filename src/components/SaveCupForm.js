@@ -11,9 +11,6 @@ const Logo = require('../assets/images/logo.png');
 
 const styles = StyleSheet.create({
   container: {
-    // width: 300,
-    // height: 130,
-    // color: COLORS.white,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -23,12 +20,9 @@ const styles = StyleSheet.create({
     height: 130,
     alignItems: 'center',
     borderRadius: 12,
-    // flexDirection: 'row',
     backgroundColor: COLORS.white,
   },
   button: {
-    // flex: 1,
-    // flexDirection: 'row',
     marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
