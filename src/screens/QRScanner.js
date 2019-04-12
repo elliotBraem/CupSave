@@ -1,36 +1,23 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Text, StyleSheet, View, AsyncStorage, Alert} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Button} from 'nachos-ui';
-import {BarCodeScanner, Permissions} from 'expo';
+import {Permissions} from 'expo';
+import CustomHeader from '../components/CustomHeader';
+import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  header: {
-    alignSelf: 'center',
-    marginBottom: 50,
-  },
-  buttons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    margin: 15,
-    justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'space-between',
+    backgroundColor: COLORS.primary,
   },
 });
 
 class QRScannerScreen extends Component {
-  state = {hasCameraPermission: null};
-
-  static navigationOptions = {
-    title: 'QRScanner',
-  };
+  // static navigationOptions = {
+  //   title: 'QRScanner',
+  // };
 
   static propTypes = {
     navigation: PropTypes.shape({
@@ -39,32 +26,31 @@ class QRScannerScreen extends Component {
     }).isRequired,
   };
 
-  render() {
-    const {navigation} = this.props;
+  state = {hasCameraPermission: null};
 
+  componentDidMount() {
+    this.scan();
+  }
+
+  async scan() {
+    const {status} = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({
+      hasCameraPermission: status === 'granted',
+    });
+  }
+
+  render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>QR Scanner</Text>
-         <View style={styles.buttons}>
+        <CustomHeader title="QR Scanner" />
+        <View style={styles.buttons}>
           <Button onPress={this.scan.bind(this)} style={styles.button}>
             Scan
-          </Button>
-          <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-            Menu
           </Button>
         </View>
       </View>
     );
   }
-
-   async scan() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({
-      hasCameraPermission: status === 'granted',
-     });
-   }
-
-
 }
 
 export default QRScannerScreen;

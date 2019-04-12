@@ -17,7 +17,7 @@ import 'firebase/storage';
 import {firebaseConfig, reactReduxFirebaseConfig} from './src/constants/firebase';
 import configureStore from './src/store/configureStore';
 import Loading from './src/components/Loading';
-import AppContainer from './src/navigation';
+import AppContainer from './src/navigation/AppNavigation';
 
 const initialState = window.__INITIAL_STATE__ || {
   firebase: {
