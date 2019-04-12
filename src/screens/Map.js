@@ -6,9 +6,9 @@ import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
-    paddingLeft: 15,
-    paddingRight: 15,
+    // marginTop: 100,
+    // paddingLeft: 15,
+    // paddingRight: 15,
   },
   header: {
     alignSelf: 'center',
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     width: '100%',
-    height: 200,
+    height: '100%',
   },
   map: {
     width: '100%',
@@ -96,8 +96,6 @@ class MapScreen extends Component {
       },
       err => console.log(err)
     );
-    console.log(this.state.userLocation);
-    console.log(this.state.userLocation);
   };
 
   render() {
@@ -105,10 +103,10 @@ class MapScreen extends Component {
     const {userLocation} = this.state;
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Map</Text>
+        {/* <Text style={styles.header}>Map</Text>
         <Button title="Menu" onPress={() => navigation.openDrawer()} style={styles.btnStyle} />
-        <Button title="Get Location" onPress={() => this.getUserLocation()} style={styles.btnStyle} />
-        <UserMap userLocation={userLocation} />
+        <Button title="Get Location" onPress={() => this.getUserLocation()} style={styles.btnStyle} /> */}
+        <UserMap style={styles.map} userLocation={userLocation} />
       </View>
     );
   }
