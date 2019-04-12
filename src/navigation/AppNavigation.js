@@ -35,18 +35,18 @@ const styles = StyleSheet.create({
 // Stack for logged in user
 const AppStack = createDrawerNavigator(
   {
-    Home: {
-      screen: HomeScreen,
-      navigationOptions: {
-        drawerLabel: 'Home',
-        drawerIcon: () => <HomeIcon style={styles.icon} />,
-      },
-    },
     Profile: {
       screen: ProfileScreen,
       navigationOptions: {
         drawerLabel: 'Profile',
         drawerIcon: () => <ProfileIcon style={styles.icon} />,
+      },
+    },
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        drawerLabel: 'Home',
+        drawerIcon: () => <HomeIcon style={styles.icon} />,
       },
     },
     QRScanner: {

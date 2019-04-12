@@ -8,10 +8,16 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: COLORS.white,
   },
+  statText: {
+    fontSize: 24,
+    color: COLORS.secondary,
+  },
 });
 
-const AppText = props => {
+export const AppText = props => {
   return <Text style={styles.normalText}>{props.children}</Text>;
 };
 
-export default AppText;
+export const StatText = props => {
+  return <Text style={styles.statText}>{props.children}</Text>;
+};
