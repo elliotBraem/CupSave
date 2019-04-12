@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, Button} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase, withFirestore} from 'react-redux-firebase';
 import {withNavigation} from 'react-navigation';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
-import {Button} from 'nachos-ui';
 import StatsOverview from '../components/StatsOverview';
 import COLORS from '../constants/colors';
 import CustomHeader from '../components/CustomHeader';
@@ -42,6 +41,10 @@ class ProfileScreen extends Component {
     }).isRequired,
   };
 
+  constructor(props) {
+    super(props)
+  }
+
   state = {userData: null, errorMessage: ''};
 
   componentDidMount() {
@@ -71,9 +74,7 @@ class ProfileScreen extends Component {
         <CustomHeader title="Profile" />
         <Image source={profileImage} style={styles.circle} />
         <StatsOverview totalCupsSaved={userData && userData.total} />
-        <Button onPress={() => navigation.navigate('Settings')} style={styles.button}>
-          Settings
-        </Button>
+        <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
       </View>
     );
   }
