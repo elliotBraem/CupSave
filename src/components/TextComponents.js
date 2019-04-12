@@ -12,6 +12,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: COLORS.secondary,
   },
+  headerTitle: {
+    fontSize: 20,
+    color: COLORS.white,
+  },
 });
 
 export const AppText = props => {
@@ -20,4 +24,8 @@ export const AppText = props => {
 
 export const StatText = props => {
   return <Text style={styles.statText}>{props.children}</Text>;
+};
+
+export const HeaderTitle = props => {
+  return <Text style={styles.headerTitle}>{props.children}</Text>;
 };
