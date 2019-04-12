@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     width: '100%',
     height: Platform.OS === 'ios' ? 70 : 70 - 24,
-    marginTop: Platform.OS === 'ios' ? 30 : 30 - 24,
+    marginTop: Platform.OS === 'ios' ? 30 : 70 - 24,
     alignContent: 'center',
     flexDirection: 'row',
   },
