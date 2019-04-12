@@ -46,7 +46,7 @@ class QRScannerScreen extends Component {
       <View style={styles.container}>
         <Text style={styles.header}>QR Scanner</Text>
          <View style={styles.buttons}>
-          <Button onPress={this.scan.bind(this)} style={styles.button}>
+          <Button style={styles.button}>
             Scan
           </Button>
           <Button onPress={() => navigation.openDrawer()} style={styles.button}>
@@ -62,6 +62,10 @@ class QRScannerScreen extends Component {
     this.setState({
       hasCameraPermission: status === 'granted',
      });
+   }
+
+   componentDidMount() {
+    this.scan()
    }
 
 
