@@ -6,16 +6,14 @@ import COLORS from '../constants/colors';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between',
     backgroundColor: COLORS.primary,
   },
-  header: {
-    alignSelf: 'center',
-    marginBottom: 50,
-  },
-  buttons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+  saveACupContainer: {
+    marginTop: 120,
+    // flexDirection: 'column',
+    // // alignItems: 'center',
+    // justifyContent: 'center',
   },
   button: {
     margin: 15,
@@ -26,8 +24,7 @@ const styles = StyleSheet.create({
 const HomeScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Home</Text>
-      <View style={styles.buttons}>
+      <View style={styles.saveACupContainer}>
         <SaveCupForm />
       </View>
     </View>
