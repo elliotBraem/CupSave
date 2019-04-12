@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
 import {Button} from 'nachos-ui';
 
+const profileImage = require('../assets/images/profileicon.png');
+
 const styles = StyleSheet.create({
   container: {
     marginTop: 100,
@@ -57,11 +59,16 @@ class ProfileScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <Image source={require('../assets/images/profileicon.png')} style={styles.circle} />
+        <Image source={profileImage} style={styles.circle} />
         <Text style={styles.header}>First M. Last</Text>
         <View style={styles.buttons}>
           <Button onPress={() => navigation.openDrawer()} style={styles.button}>
             Menu
+          </Button>
+        </View>
+        <View style={styles.buttons}>
+          <Button onPress={() => navigation.navigate('Settings')} style={styles.button}>
+            Settings
           </Button>
         </View>
       </View>
