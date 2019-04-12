@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {_} from 'lodash';
+import {Text, StyleSheet, Image} from 'react-native';
 import {createStackNavigator, createSwitchNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
 
 import HomeScreen from '../screens/Home';
@@ -12,6 +13,7 @@ import AboutUsScreen from '../screens/AboutUs';
 import COLORS from '../constants/colors';
 import LoadingScreen from '../screens/Loading';
 import CustomDrawerComponent from '../components/CustomDrawer';
+import SettingsScreen from '../screens/Settings';
 import HomeIcon from '../assets/images/drawer-icons/home-icon.svg';
 import ProfileIcon from '../assets/images/drawer-icons/profile-icon.svg';
 import QRScannerIcon from '../assets/images/drawer-icons/qr-scanner-icon.svg';
@@ -32,21 +34,23 @@ const styles = StyleSheet.create({
   },
 });
 
+const hiddenDrawerItems = ['Settings'];
+
 // Stack for logged in user
 const AppStack = createDrawerNavigator(
   {
-    Profile: {
-      screen: ProfileScreen,
-      navigationOptions: {
-        drawerLabel: 'Profile',
-        drawerIcon: () => <ProfileIcon style={styles.icon} />,
-      },
-    },
     Home: {
       screen: HomeScreen,
       navigationOptions: {
         drawerLabel: 'Home',
         drawerIcon: () => <HomeIcon style={styles.icon} />,
+      },
+    },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: {
+        drawerLabel: 'Profile',
+        drawerIcon: () => <ProfileIcon style={styles.icon} />,
       },
     },
     QRScanner: {
@@ -70,24 +74,22 @@ const AppStack = createDrawerNavigator(
         drawerIcon: () => <AboutIcon style={styles.icon} />,
       },
     },
+    Settings: {
+      screen: SettingsScreen,
+    },
   },
   {
-    headerMode: 'float',
-    headerTransparent: true,
     gesturesEnabled: true,
     // Header for logged in user
-    defaultNavigationOptions: ({navigation}) => ({
-      headerStyle: {
-        borderBottomWidth: 0,
-      },
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-      headerLeft: <BurgerIcon style={styles.burgerIcon} onPress={() => navigation.toggleDrawer()} />,
-    }),
     drawerBackgroundColor: COLORS.secondary,
     drawerWidth: 250,
-    contentComponent: CustomDrawerComponent,
+    contentComponent: props => {
+      const clonedProps = {
+        ...props,
+        items: props.items.filter(item => !hiddenDrawerItems.includes(item.key)),
+      };
+      return <CustomDrawerComponent {...clonedProps} />;
+    },
     contentOptions: {
       activeBackgroundColor: COLORS.primary,
       labelStyle: {
@@ -119,7 +121,7 @@ const DrawerNavigation = createStackNavigator(
     DrawerStack: AppStack,
   },
   {
-    headerMode: 'float',
+    headerMode: 'none',
     gesturesEnabled: true,
     // Header for logged in user
     defaultNavigationOptions: ({navigation}) => ({
