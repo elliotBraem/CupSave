@@ -85,13 +85,13 @@ const AppStack = createDrawerNavigator(
       },
       headerLeft: <BurgerIcon style={styles.burgerIcon} onPress={() => navigation.toggleDrawer()} />,
     }),
-    drawerBackgroundColor: '#1a1a1a',
+    drawerBackgroundColor: COLORS.secondary,
     drawerWidth: 250,
     contentComponent: CustomDrawerComponent,
     contentOptions: {
-      activeBackgroundColor: '#79DB85',
+      activeBackgroundColor: COLORS.primary,
       labelStyle: {
-        color: '#ffffff',
+        color: COLORS.white,
         marginLeft: 0,
         fontSize: 16,
         fontWeight: 'normal',
@@ -124,7 +124,7 @@ const DrawerNavigation = createStackNavigator(
     // Header for logged in user
     defaultNavigationOptions: ({navigation}) => ({
       headerStyle: {
-        backgroundColor: '#79db85',
+        backgroundColor: COLORS.primary,
         borderBottomWidth: 0,
       },
       headerTitleStyle: {

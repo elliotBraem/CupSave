@@ -1,11 +1,12 @@
 import React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import SaveCupForm from '../components/SaveCupForm';
+import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#79db85',
+    backgroundColor: COLORS.primary,
   },
   header: {
     alignSelf: 'center',
