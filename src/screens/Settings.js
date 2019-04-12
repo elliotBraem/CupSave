@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Alert} from 'react-native';
+import {Text, StyleSheet, View, Alert, Button, TextInput} from 'react-native';
 import {withFirebase} from 'react-redux-firebase';
 import PropTypes from 'prop-types';
-import {Button, Input} from 'nachos-ui';
 import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
@@ -56,16 +55,6 @@ const styles = StyleSheet.create({
 });
 
 class SettingsScreen extends Component {
-  constructor(props) {
-    super(props)
-  }
-  // Any props you are taking in (I think it should only need firebase)
-  static propTypes = {};
-
-  // Items you will need to store in this screen's state,
-  // almost like a public static variable. This is where you would initialize it.
-  state = {};
-
   static propTypes = {
     navigation: PropTypes.shape({
       openDrawer: PropTypes.func.isRequired,
@@ -74,90 +63,90 @@ class SettingsScreen extends Component {
     firebase: PropTypes.shape({
       login: PropTypes.func.isRequired,
     }).isRequired, // from withFirebase
-    auth: PropTypes.object, // from withFirebase
   };
 
-  state = {currentpassword: '', newpassword: '', newemail: '', errorMessage: null};
+  state = {currentPassword: '', newPassword: '', newEmail: '', errorMessage: null};
 
-  reauthenticate = (currentPassword) => {
-    const {navigation, firebase} = this.props;
-    var user = firebase.auth().currentUser;
-    var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+  reauthenticate = currentPassword => {
+    const {firebase} = this.props;
+    const user = firebase.auth().currentUser;
+    const cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
     return user.reauthenticateWithCredential(cred);
-  }
+  };
 
   handlePasswordChange = () => {
-    const {currentpassword, newpassword} = this.state;
+    const {currentPassword, newPassword} = this.state;
     const {navigation, firebase} = this.props;
 
-    if (currentpassword.trim() === '' || newpassword.trim() === '') {
+    if (currentPassword.trim() === '' || newPassword.trim() === '') {
       Alert.alert('Invalid Parameters:', 'old password / new password cannot be empty');
     } else {
-      this.reauthenticate(currentpassword)
-        .then(() => {var user = firebase.auth().currentUser;
-          user.updatePassword(newpassword);
-        }).catch(error => this.setState({errorMessage: error.message}))
+      this.reauthenticate(currentPassword)
+        .then(() => {
+          const user = firebase.auth().currentUser;
+          user.updatePassword(newPassword);
+        })
+        .catch(error => this.setState({errorMessage: error.message}))
         .then(() => navigation.navigate('Home'))
         .catch(error => this.setState({errorMessage: error.message}));
     }
   };
 
   handleEmailChange = () => {
-    const {currentpassword, newemail} = this.state;
+    const {currentPassword, newEmail} = this.state;
     const {navigation, firebase} = this.props;
 
-    if (currentpassword.trim() === '' || newemail.trim() === '') {
+    if (currentPassword.trim() === '' || newEmail.trim() === '') {
       Alert.alert('Invalid Parameters:', 'password / new email cannot be empty');
     } else {
-      this.reauthenticate(currentpassword)
-        .then(() => {var user = firebase.auth().currentUser;
-          user.updateEmail(newemail);
-        }).catch(error => this.setState({errorMessage: error.message}))
+      this.reauthenticate(currentPassword)
+        .then(() => {
+          const user = firebase.auth().currentUser;
+          user.updateEmail(newEmail);
+        })
+        .catch(error => this.setState({errorMessage: error.message}))
         .then(() => navigation.navigate('Home'))
         .catch(error => this.setState({errorMessage: error.message}));
     }
   };
 
   render() {
+    const {errorMessage, currentPassword, newEmail, newPassword} = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.form}>
-          {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
-          <Input
+          {errorMessage && <Text style={{color: 'red'}}>{errorMessage}</Text>}
+          <TextInput
             secureTextEntry
             style={styles.inputStyle}
             autoCapitalize="none"
             placeholder="Current Password"
-            value={this.state.currentpassword}
-            onChangeText={currentpassword => this.setState({currentpassword})}
+            value={currentPassword}
+            onChangeText={currentPasswordInput => this.setState({currentPassword: currentPasswordInput})}
           />
-          <Input
+          <TextInput
             style={styles.inputStyle}
             autoCapitalize="none"
             placeholder="New Email"
-            onChangeText={newemail => this.setState({newemail})}
-            value={this.state.newemail}
+            onChangeText={newEmailInput => this.setState({newEmail: newEmailInput})}
+            value={newEmail}
           />
         </View>
         <View style={styles.btnContainer}>
-          <Button style={styles.btnStyle} onPress={this.handleEmailChange}>
-            Change Email
-          </Button>
+          <Button style={styles.btnStyle} onPress={this.handleEmailChange} title="Change Email" />
         </View>
         <View style={styles.form}>
-          <Input
+          <TextInput
             secureTextEntry
             style={styles.inputStyle}
             autoCapitalize="none"
             placeholder="New Password"
-            onChangeText={newpassword => this.setState({newpassword})}
-            value={this.state.newpassword}
+            onChangeText={newPasswordInput => this.setState({newPassword: newPasswordInput})}
+            value={newPassword}
           />
         </View>
         <View style={styles.btnContainer}>
-          <Button style={styles.btnStyle} onPress={this.handlePasswordChange}>
-            Change Password
-          </Button>
+          <Button style={styles.btnStyle} onPress={this.handlePasswordChange} title="Change Password" />
         </View>
       </View>
     );

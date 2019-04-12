@@ -13,10 +13,6 @@ const styles = StyleSheet.create({
 });
 
 class QRScannerScreen extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   static navigationOptions = {
     title: 'QRScanner',
   };

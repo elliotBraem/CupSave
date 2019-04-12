@@ -38,6 +38,198 @@ exports[`Loading test against snapshot 1`] = `
 </View>
 `;
 
+exports[`Settings test against snapshot 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#79db85",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignSelf": "center",
+        "flex": 1,
+        "justifyContent": "space-between",
+        "width": "80%",
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Current Password"
+      secureTextEntry={true}
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "borderColor": "gray",
+          "borderWidth": 1,
+          "height": 40,
+          "marginBottom": 20,
+          "textAlign": "center",
+          "width": "100%",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="New Email"
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "borderColor": "gray",
+          "borderWidth": 1,
+          "height": 40,
+          "marginBottom": 20,
+          "textAlign": "center",
+          "width": "100%",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "column",
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessibilityStates={Array []}
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#007AFF",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Change Email
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "center",
+        "flex": 1,
+        "justifyContent": "space-between",
+        "width": "80%",
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="New Password"
+      secureTextEntry={true}
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "borderColor": "gray",
+          "borderWidth": 1,
+          "height": 40,
+          "marginBottom": 20,
+          "textAlign": "center",
+          "width": "100%",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "column",
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessibilityStates={Array []}
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#007AFF",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Change Password
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`SignUp test against snapshot 1`] = `
 <View
   onLayout={[Function]}
@@ -220,6 +412,221 @@ exports[`SignUp test against snapshot 1`] = `
             Already have an account? Login
           </Text>
         </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Stats test against snapshot 1`] = `
+<View
+  style={
+    Object {
+      "marginTop": 100,
+      "paddingLeft": 15,
+      "paddingRight": 15,
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "alignSelf": "center",
+        "marginBottom": 50,
+      }
+    }
+  >
+    Welcome to the Stats Page You Goddam Hero You
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessibilityStates={Array []}
+      accessible={true}
+      isTVSelectable={true}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#007AFF",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Menu
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": 50,
+          "width": "50%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 2,
+          }
+        }
+      >
+        <Text>
+          Cups Saved
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 3,
+          }
+        }
+      >
+        <Text>
+          5,000
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": 50,
+          "width": "50%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 2,
+          }
+        }
+      >
+        <Text>
+          Lbs Waste Saved
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 3,
+          }
+        }
+      >
+        <Text>
+          40
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": 50,
+          "width": "50%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 2,
+          }
+        }
+      >
+        <Text>
+          Lbs C02 kept out of atmosphere
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 3,
+          }
+        }
+      >
+        <Text>
+          4
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": 50,
+          "width": "50%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 2,
+          }
+        }
+      >
+        <Text>
+          Turtles Saved
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 3,
+          }
+        }
+      >
+        <Text>
+          0
+        </Text>
       </View>
     </View>
   </View>
