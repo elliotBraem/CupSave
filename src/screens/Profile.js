@@ -46,10 +46,11 @@ class ProfileScreen extends Component {
       .then(function getTotal(doc) {
         if (doc.exists) {
           const userData = doc.data();
-          console.log(userData);
-          this.setState({userData});
+          return userData;
         }
+        return 0;
       })
+      .then(userData => this.setState({userData}))
       .catch(error => {
         this.setState({errorMessage: error.message});
       });
@@ -60,18 +61,24 @@ class ProfileScreen extends Component {
     return (
       <View style={styles.container}>
         <Image source={profileImage} style={styles.circle} />
-        <Text>{userData && userData.total}</Text>
-        {/* <StatsOverview totalCupsSaved={totalCupsSaved} /> */}
+        {/* <Text>{userData && userData.total}</Text> */}
+        <StatsOverview totalCupsSaved={userData && userData.total} />
       </View>
     );
   }
 }
 
+// function mapStateToProps(state) {
+//   const {totalCupsSaved} = state.userData.total;
+//   return {totalCupsSaved};
+// }
+
 const enhance = compose(
   withFirebase,
   withFirestore,
-  connect(({firebase: {auth}}) => ({
+  connect(({firebase: {auth}}, {userData}) => ({
     auth,
+    userData,
   }))
 );
 
