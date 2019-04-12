@@ -65,6 +65,10 @@ class SettingsScreen extends Component {
     }).isRequired, // from withFirebase
   };
 
+  constructor(props) {
+    super(props)
+  }
+
   state = {currentPassword: '', newPassword: '', newEmail: '', errorMessage: null};
 
   reauthenticate = currentPassword => {

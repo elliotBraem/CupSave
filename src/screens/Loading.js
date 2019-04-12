@@ -21,6 +21,10 @@ class LoadingScreen extends Component {
     }).isRequired, // from withFirebase
   };
 
+  constructor(props) {
+    super(props)
+  }
+
   componentDidMount() {
     const {firebase, navigation} = this.props;
     firebase.auth.onAuthStateChanged(user => {
