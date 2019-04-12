@@ -5,38 +5,27 @@ import {withHandlers, compose} from 'recompose';
 import {connect} from 'react-redux';
 import {withFirestore} from 'react-redux-firebase';
 import COLORS from '../constants/colors';
-import AppText from './TextComponents';
+import {AppText} from './TextComponents';
 
 const Logo = require('../assets/images/logo.png');
 
 const styles = StyleSheet.create({
   container: {
-    // width: 300,
-    // height: 130,
-    // color: COLORS.white,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inner: {
     width: 300,
     height: 130,
-    alignItems: 'center',
     borderRadius: 12,
-    // flexDirection: 'row',
     backgroundColor: COLORS.white,
+    alignItems: 'center',
   },
   button: {
-    // flex: 1,
-    // flexDirection: 'row',
     marginTop: 10,
+    width: 270,
+    height: 70,
+    borderRadius: 12,
+    backgroundColor: COLORS.primary,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 12,
-    width: 270,
-    height: 70,
-    backgroundColor: COLORS.primary,
   },
   logoIcon: {
     height: 45,
@@ -47,12 +36,10 @@ const styles = StyleSheet.create({
 
 const SaveCupForm = ({onSaveCupFormSubmit}) => (
   <View style={styles.container}>
-    <View style={styles.inner}>
-      <TouchableOpacity onPress={onSaveCupFormSubmit} style={styles.button}>
-        <Image source={Logo} style={styles.logoIcon} />
-        <AppText>SAVE A CUP</AppText>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity onPress={onSaveCupFormSubmit} style={styles.button}>
+      <Image source={Logo} style={styles.logoIcon} />
+      <AppText>SAVE A CUP</AppText>
+    </TouchableOpacity>
   </View>
 );
 
