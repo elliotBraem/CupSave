@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Alert, KeyboardAvoidingView, Image} from 'react-native';
+import {Text, StyleSheet, View, Alert, KeyboardAvoidingView, Image, Button, TextInput} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
-import {Button, Input, H1, H4, P} from 'nachos-ui';
 
 const Logo = require('../assets/images/logo.png');
 
@@ -65,6 +64,10 @@ class LoginScreen extends Component {
     // auth: PropTypes.object, // from withFirebase
   };
 
+  constructor(props) {
+    super(props)
+  }
+
   state = {email: '', password: '', errorMessage: null};
 
   handleLogin = () => {
@@ -90,21 +93,21 @@ class LoginScreen extends Component {
 
     return (
       <KeyboardAvoidingView style={styles.container} behavior="position" enable>
-        <H1 style={styles.header} align="center">
+        <text style={styles.header} align="center">
           Welcome to{'\n'}CupSave!
-        </H1>
+        </text>
         <Image source={Logo} style={styles.logo} />
-        <H4 style={styles.subtext}>Let&#39;s get started</H4>
+        <text style={styles.subtext}>Let&#39;s get started</text>
         <View style={styles.form}>
           {errorMessage && <Text style={{color: 'red'}}>{errorMessage}</Text>}
-          <Input
+          <TextInput
             style={styles.inputStyle}
             autoCapitalize="none"
             placeholder="Email"
             value={email}
             onChangeText={emailInput => this.setState({email: emailInput})}
           />
-          <Input
+          <TextInput
             secureTextEntry
             style={styles.inputStyle}
             autoCapitalize="none"
@@ -113,13 +116,9 @@ class LoginScreen extends Component {
             onChangeText={passwordInput => this.setState({password: passwordInput})}
           />
           <View style={styles.btnContainer}>
-            <Button style={styles.btnStyle} onPress={this.handleLogin}>
-              Login
-            </Button>
-            <P style={styles.accountPrompt}>Don&#39;t have an account?</P>
-            <Button style={styles.btnStyle} onPress={() => navigation.navigate('Signup')}>
-              Sign Up
-            </Button>
+            <Button title="Login" style={styles.btnStyle} onPress={this.handleLogin}/>
+            <text style={styles.accountPrompt}>Don&#39;t have an account?</text>
+            <Button title="Sign Up" style={styles.btnStyle} onPress={() => navigation.navigate('Signup')}/>
           </View>
         </View>
       </KeyboardAvoidingView>
