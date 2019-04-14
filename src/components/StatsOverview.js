@@ -1,9 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
-import {withHandlers, compose, setPropTypes} from 'recompose';
-import {connect} from 'react-redux';
-import {withFirestore} from 'react-redux-firebase';
+import {compose, setPropTypes} from 'recompose';
 import COLORS from '../constants/colors';
 import {StatText} from './TextComponents';
 
