@@ -55,21 +55,14 @@ const enhance = compose(
   withHandlers({
     onSaveCupFormSubmit: props => () => {
       const currentUID = props.auth.uid;
-      const ref = props.firestore.collection('users').doc(`${currentUID}/consumption/cups`);
+      const ref = props.firestore.collection('users').doc(`${currentUID}`);
       props.firestore
         .runTransaction(async transaction => {
           const doc = await transaction.get(ref);
 
-          if (!doc.exists) {
-            transaction.set(ref, {total: 1});
-          }
-
-          const newTotal = doc.data().total + 1;
-          transaction.update(ref, {total: newTotal});
+          const newTotal = doc.exists ? doc.data().consumption.total + 1 : 1;
+          transaction.update(ref, {consumption: {total: newTotal}});
         })
-        // .then(newTotal => {
-        //   console.log(newTotal);
-        // })
         .catch(error => {
           this.setState({errorMessage: error.message});
         });

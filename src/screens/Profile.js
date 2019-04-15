@@ -30,16 +30,11 @@ const styles = StyleSheet.create({
 
 class ProfileScreen extends Component {
   static propTypes = {
-    firestore: PropTypes.shape({
-      collection: PropTypes.func.isRequired,
-    }).isRequired, // from withFirestore
-    user: PropTypes.shape({
-      user: PropTypes.object.isRequired,
-      isLoaded: PropTypes.bool.isRequired,
+    profile: PropTypes.shape({
+      consumption: PropTypes.shape({
+        total: PropTypes.number.isRequired,
+      }).isRequired,
     }).isRequired,
-    auth: PropTypes.shape({
-      uid: PropTypes.string.isRequired,
-    }).isRequired, // from withFirebase
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
@@ -49,58 +44,28 @@ class ProfileScreen extends Component {
     super(props);
   }
 
-  state = {userData: null, errorMessage: ''};
-
-  componentDidMount() {
-    const {auth, firestore} = this.props;
-    const currentUID = auth.uid;
-    const ref = firestore.collection('users').doc(`${currentUID}/consumption/cups`);
-    ref
-      .get()
-      .then(function getTotal(doc) {
-        if (doc.exists) {
-          const userData = doc.data();
-          return userData;
-        }
-        return 0;
-      })
-      .then(userData => this.setState({userData}))
-      .catch(error => {
-        this.setState({errorMessage: error.message});
-      });
-  }
+  state = {};
 
   render() {
-    const {userData} = this.state;
-    const {navigation} = this.props;
+    const {navigation, profile} = this.props;
     return (
       <View style={styles.container}>
         <CustomHeader title="Profile" />
         <Image source={profileImage} style={styles.circle} />
-        <StatsOverview totalCupsSaved={userData && userData.total} />
+        <StatsOverview totalCupsSaved={profile.consumption.total} />
         <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
       </View>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const user = state.user || {};
-
-  return {
-    user,
-  };
-};
-
 const enhance = compose(
   withNavigation,
   withFirebase,
   withFirestore,
-  connect(({firebase: {auth}}, {userData}) => ({
-    auth,
-    userData,
-  })),
-  mapStateToProps
+  connect(({firebase: {profile}}) => ({
+    profile,
+  }))
 );
 
 export default enhance(ProfileScreen);

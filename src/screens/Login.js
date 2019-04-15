@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, Alert, KeyboardAvoidingView, Image, Button, TextInput} from 'react-native';
 import PropTypes from 'prop-types';
-import {withFirebase, withFirestore} from 'react-redux-firebase';
+import {withFirebase} from 'react-redux-firebase';
 import {compose} from 'recompose';
-
-import * as userActions from '../store/actions/user';
 
 const Logo = require('../assets/images/logo.png');
 
@@ -64,9 +62,6 @@ class LoginScreen extends Component {
     firebase: PropTypes.shape({
       login: PropTypes.func.isRequired,
     }).isRequired, // from withFirebase
-    firestore: PropTypes.object.isRequired, // from withFirebase
-    // auth: PropTypes.object, // from withFirebase
-    getUser: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -77,7 +72,7 @@ class LoginScreen extends Component {
 
   handleLogin = () => {
     const {email, password} = this.state;
-    const {navigation, firebase, firestore, getUser} = this.props;
+    const {navigation, firebase} = this.props;
 
     if (email.trim() === '' || password.trim() === '') {
       Alert.alert('Invalid Parameters:', 'Username / password cannot be empty');
@@ -86,20 +81,6 @@ class LoginScreen extends Component {
         .login({
           email,
           password,
-        })
-        .then(authData => {
-          firestore
-            .collection('users')
-            .doc(`${authData.uid}`)
-            .get()
-            .then(doc => {
-              if (doc.exists) {
-                const userData = doc.data();
-
-                getUser(userData);
-              }
-              return 0;
-            });
         })
         .then(() => navigation.navigate('App'))
         .catch(error => this.setState({errorMessage: error.message}));
@@ -112,11 +93,11 @@ class LoginScreen extends Component {
 
     return (
       <KeyboardAvoidingView style={styles.container} behavior="position" enable>
-        <text style={styles.header} align="center">
+        <Text style={styles.header} align="center">
           Welcome to{'\n'}CupSave!
-        </text>
+        </Text>
         <Image source={Logo} style={styles.logo} />
-        <text style={styles.subtext}>Let&#39;s get started</text>
+        <Text style={styles.subtext}>Let&#39;s get started</Text>
         <View style={styles.form}>
           {errorMessage && <Text style={{color: 'red'}}>{errorMessage}</Text>}
           <TextInput
@@ -136,7 +117,7 @@ class LoginScreen extends Component {
           />
           <View style={styles.btnContainer}>
             <Button title="Login" style={styles.btnStyle} onPress={this.handleLogin} />
-            <text style={styles.accountPrompt}>Don&#39;t have an account?</text>
+            <Text style={styles.accountPrompt}>Don&#39;t have an account?</Text>
             <Button title="Sign Up" style={styles.btnStyle} onPress={() => navigation.navigate('Signup')} />
           </View>
         </View>
@@ -145,16 +126,6 @@ class LoginScreen extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    getUser: user => dispatch(userActions.getUserData(user)),
-  };
-};
-
-const enhance = compose(
-  mapDispatchToProps,
-  withFirebase,
-  withFirestore
-);
+const enhance = compose(withFirebase);
 
 export default enhance(LoginScreen);

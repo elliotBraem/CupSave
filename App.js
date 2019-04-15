@@ -16,7 +16,6 @@ import {firebaseConfig, reactReduxFirebaseConfig} from './src/constants/firebase
 import configureStore from './src/store/configureStore';
 import Loading from './src/components/Loading';
 import AppContainer from './src/navigation/AppNavigation';
-import Master from './src/layouts/Master';
 
 const initialState = window.__INITIAL_STATE__ || {
   firebase: {
@@ -40,9 +39,7 @@ const App = () => (
       firebase={firebase}
       createFirestoreInstance={createFirestoreInstance}>
       <PersistGate loading={<Loading />} persistor={persistor}>
-        <Master>
-          <AppContainer />
-        </Master>
+        <AppContainer />
       </PersistGate>
     </ReactReduxFirebaseProvider>
   </Provider>
