@@ -22,7 +22,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run format && git add",
+      "pre-commit": "npm run format",
       "pre-push": "npm run testWithCoverage"
     }
   },
