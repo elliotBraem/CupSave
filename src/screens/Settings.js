@@ -66,7 +66,7 @@ class SettingsScreen extends Component {
   };
 
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   state = {currentPassword: '', newPassword: '', newEmail: '', errorMessage: null};

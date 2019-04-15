@@ -55,7 +55,7 @@ const enhance = compose(
   withHandlers({
     onSaveCupFormSubmit: props => () => {
       const currentUID = props.auth.uid;
-      const ref = props.firestore.collection('users').doc(currentUID + '/consumption/cups');
+      const ref = props.firestore.collection('users').doc(`${currentUID}/consumption/cups`);
       props.firestore
         .runTransaction(async transaction => {
           const doc = await transaction.get(ref);
