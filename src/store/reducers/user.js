@@ -11,7 +11,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         // ...state,
         isLoaded: true,
-        user: action.data,
+        user: action.payload,
       };
     }
 

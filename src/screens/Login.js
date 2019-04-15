@@ -90,9 +90,9 @@ class LoginScreen extends Component {
         .then(authData => {
           firestore
             .collection('users')
-            .doc(`${authData.uid}/consumption/cups`)
+            .doc(`${authData.uid}`)
             .get()
-            .then(function getTotal(doc) {
+            .then(doc => {
               if (doc.exists) {
                 const userData = doc.data();
 

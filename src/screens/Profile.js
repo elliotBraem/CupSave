@@ -33,6 +33,10 @@ class ProfileScreen extends Component {
     firestore: PropTypes.shape({
       collection: PropTypes.func.isRequired,
     }).isRequired, // from withFirestore
+    user: PropTypes.shape({
+      user: PropTypes.object.isRequired,
+      isLoaded: PropTypes.bool.isRequired,
+    }).isRequired, // from withFirestore
     auth: PropTypes.shape({
       uid: PropTypes.string.isRequired,
     }).isRequired, // from withFirebase
@@ -42,7 +46,7 @@ class ProfileScreen extends Component {
   };
 
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   state = {userData: null, errorMessage: ''};
@@ -50,7 +54,7 @@ class ProfileScreen extends Component {
   componentDidMount() {
     const {auth, firestore} = this.props;
     const currentUID = auth.uid;
-    const ref = firestore.collection('users').doc(currentUID + '/consumption/cups');
+    const ref = firestore.collection('users').doc(`${currentUID}/consumption/cups`);
     ref
       .get()
       .then(function getTotal(doc) {
@@ -80,6 +84,14 @@ class ProfileScreen extends Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  const user = state.user || {};
+
+  return {
+    user,
+  };
+};
+
 const enhance = compose(
   withNavigation,
   withFirebase,
@@ -87,7 +99,8 @@ const enhance = compose(
   connect(({firebase: {auth}}, {userData}) => ({
     auth,
     userData,
-  }))
+  })),
+  mapStateToProps
 );
 
 export default enhance(ProfileScreen);
