@@ -22,8 +22,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run format",
-      "pre-push": "npm run testWithCoverage"
+      "pre-commit": "npm run format"
     }
   },
   "dependencies": {
