@@ -3,11 +3,10 @@ import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import {withHandlers, compose} from 'recompose';
 import {connect} from 'react-redux';
-import {withFirestore} from 'react-redux-firebase';
+import {withFirebase, withFirestore} from 'react-redux-firebase';
 import COLORS from '../constants/colors';
 import {AppText} from './TextComponents';
-
-const Logo = require('../assets/images/logo.png');
+import Logo from '../assets/images/logo.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,10 +47,11 @@ SaveCupForm.propTypes = {
 };
 
 const enhance = compose(
+  withFirebase,
+  withFirestore,
   connect(({firebase: {auth}}) => ({
     auth,
   })),
-  withFirestore,
   withHandlers({
     onSaveCupFormSubmit: props => () => {
       const currentUID = props.auth.uid;
