@@ -48,7 +48,7 @@ const UserMap = props => {
 
 class MapScreen extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   static navigationOptions = {

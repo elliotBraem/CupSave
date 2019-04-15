@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 
 class AboutUsScreen extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   static navigationOptions = {
