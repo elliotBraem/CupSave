@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, Alert, KeyboardAvoidingView, Image, Button, TextInput} from 'react-native';
 import PropTypes from 'prop-types';
-import {withFirebase} from 'react-redux-firebase';
+import {withFirebase, withFirestore} from 'react-redux-firebase';
+import {compose} from 'recompose';
+
+import * as userActions from '../store/actions/user';
 
 const Logo = require('../assets/images/logo.png');
 
@@ -61,18 +64,20 @@ class LoginScreen extends Component {
     firebase: PropTypes.shape({
       login: PropTypes.func.isRequired,
     }).isRequired, // from withFirebase
+    firestore: PropTypes.object.isRequired, // from withFirebase
     // auth: PropTypes.object, // from withFirebase
+    getUser: PropTypes.func.isRequired,
   };
 
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   state = {email: '', password: '', errorMessage: null};
 
   handleLogin = () => {
     const {email, password} = this.state;
-    const {navigation, firebase} = this.props;
+    const {navigation, firebase, firestore, getUser} = this.props;
 
     if (email.trim() === '' || password.trim() === '') {
       Alert.alert('Invalid Parameters:', 'Username / password cannot be empty');
@@ -81,6 +86,20 @@ class LoginScreen extends Component {
         .login({
           email,
           password,
+        })
+        .then(authData => {
+          firestore
+            .collection('users')
+            .doc(`${authData.uid}/consumption/cups`)
+            .get()
+            .then(function getTotal(doc) {
+              if (doc.exists) {
+                const userData = doc.data();
+
+                getUser(userData);
+              }
+              return 0;
+            });
         })
         .then(() => navigation.navigate('App'))
         .catch(error => this.setState({errorMessage: error.message}));
@@ -116,9 +135,9 @@ class LoginScreen extends Component {
             onChangeText={passwordInput => this.setState({password: passwordInput})}
           />
           <View style={styles.btnContainer}>
-            <Button title="Login" style={styles.btnStyle} onPress={this.handleLogin}/>
+            <Button title="Login" style={styles.btnStyle} onPress={this.handleLogin} />
             <text style={styles.accountPrompt}>Don&#39;t have an account?</text>
-            <Button title="Sign Up" style={styles.btnStyle} onPress={() => navigation.navigate('Signup')}/>
+            <Button title="Sign Up" style={styles.btnStyle} onPress={() => navigation.navigate('Signup')} />
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -126,4 +145,16 @@ class LoginScreen extends Component {
   }
 }
 
-export default withFirebase(LoginScreen);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    getUser: user => dispatch(userActions.getUser(user)),
+  };
+};
+
+const enhance = compose(
+  mapDispatchToProps,
+  withFirebase,
+  withFirestore
+);
+
+export default enhance(LoginScreen);
