@@ -52,7 +52,7 @@ class SignUpScreen extends Component {
   };
 
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   state = {email: '', password: '', confirmedPassword: '', errorMessage: null};
