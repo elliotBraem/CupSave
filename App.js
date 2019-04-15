@@ -3,8 +3,6 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {AppRegistry} from 'react-native';
-import {ThemeProvider} from 'nachos-ui';
-import {Svg} from 'expo';
 
 import {ReactReduxFirebaseProvider} from 'react-redux-firebase';
 import {createFirestoreInstance} from 'redux-firestore';
@@ -18,6 +16,7 @@ import {firebaseConfig, reactReduxFirebaseConfig} from './src/constants/firebase
 import configureStore from './src/store/configureStore';
 import Loading from './src/components/Loading';
 import AppContainer from './src/navigation/AppNavigation';
+import Master from './src/layouts/Master';
 
 const initialState = window.__INITIAL_STATE__ || {
   firebase: {
@@ -40,11 +39,11 @@ const App = () => (
       dispatch={store.dispatch}
       firebase={firebase}
       createFirestoreInstance={createFirestoreInstance}>
-      <ThemeProvider>
-        <PersistGate loading={<Loading />} persistor={persistor}>
+      <PersistGate loading={<Loading />} persistor={persistor}>
+        <Master>
           <AppContainer />
-        </PersistGate>
-      </ThemeProvider>
+        </Master>
+      </PersistGate>
     </ReactReduxFirebaseProvider>
   </Provider>
 );

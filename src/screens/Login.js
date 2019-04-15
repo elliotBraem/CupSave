@@ -147,7 +147,7 @@ class LoginScreen extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    getUser: user => dispatch(userActions.getUser(user)),
+    getUser: user => dispatch(userActions.getUserData(user)),
   };
 };
 

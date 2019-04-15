@@ -36,7 +36,7 @@ class ProfileScreen extends Component {
     user: PropTypes.shape({
       user: PropTypes.object.isRequired,
       isLoaded: PropTypes.bool.isRequired,
-    }).isRequired, // from withFirestore
+    }).isRequired,
     auth: PropTypes.shape({
       uid: PropTypes.string.isRequired,
     }).isRequired, // from withFirebase

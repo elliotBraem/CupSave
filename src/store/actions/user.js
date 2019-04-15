@@ -1,6 +1,6 @@
 import statusMessage from './status';
 
-export function getUser(userData) {
+export function getUserData(userData) {
   return async dispatch =>
     new Promise(async (resolve, reject) => {
       await statusMessage(dispatch, 'loading', true);
