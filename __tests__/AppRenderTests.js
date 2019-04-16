@@ -5,7 +5,8 @@ import CustomDrawer from '../src/components/CustomDrawer';
 import CustomHeader from '../src/components/CustomHeader';
 import LoadingComp from '../src/components/Loading';
 import SaveCupForm from '../src/components/SaveCupForm';
-import TextComponents from '../src/components/TextComponents';
+import * as TextComponents from '../src/components/TextComponents';
+import StatsOverview from '../src/components/StatsOverview';
 import AboutUs from '../src/screens/AboutUs';
 import Home from '../src/screens/Home';
 import LoadingScreen from '../src/screens/Loading';
@@ -73,15 +74,15 @@ it('SaveCupForm test against snapshot', () => {
 });
 
 // Components -> StatsOverview
-// it('StatsOverview renders without crashing', () => {
-//   const rendered = renderer.create(<StatsOverview />).toJSON();
-//   expect(rendered).toBeTruthy();
-// });
-//
-// it('StatsOverview test against snapshot', () => {
-//   const tree = renderer.create(<StatsOverview />).toJSON();
-//   expect(tree).toMatchSnapshot();
-// });
+it('StatsOverview renders without crashing', () => {
+  const rendered = renderer.create(<StatsOverview />).toJSON();
+  expect(rendered).toBeTruthy();
+});
+
+it('StatsOverview test against snapshot', () => {
+  const tree = renderer.create(<StatsOverview />).toJSON();
+  expect(tree).toMatchSnapshot();
+});
 
 // Components -> TextComponents
 it('TextComponents renders without crashing', () => {
