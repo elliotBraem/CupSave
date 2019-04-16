@@ -1,0 +1,5 @@
+.idea/
+.expo/
+
+# Ignore built files
+package-lock.json

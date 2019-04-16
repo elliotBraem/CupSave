@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
-import {compose, setPropTypes} from 'recompose';
 import COLORS from '../constants/colors';
 import {StatText} from './TextComponents';
 
@@ -26,24 +25,15 @@ const StatsOverview = ({drinkSize, totalCupsSaved, level}) => (
 );
 
 StatsOverview.propTypes = {
-  drinkSize: PropTypes.string,
+  drinkSize: PropTypes.number,
   totalCupsSaved: PropTypes.number,
-  level: PropTypes.string,
+  level: PropTypes.number,
 };
 
 StatsOverview.defaultProps = {
-  drinkSize: '16oz',
+  drinkSize: 16,
   totalCupsSaved: 0,
-  level: '0',
+  level: 0,
 };
 
-const enhance = compose(
-  // connect(mapStateToProps),
-  setPropTypes({
-    drinkSize: PropTypes.string,
-    totalCupsSaved: PropTypes.number,
-    level: PropTypes.string,
-  })
-);
-
-export default enhance(StatsOverview);
+export default StatsOverview;

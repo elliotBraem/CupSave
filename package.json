@@ -12,8 +12,8 @@
     "testWithCoverage": "jest --verbose --updateSnapshot --watch --coverage && open ./coverage/lcov-report/index.html",
     "reinit": "watchman watch-del-all && rm -rf node_modules package-lock.json && npm i && npm run clearcache",
     "clearcache": "rm -rf /tmp/metro-bundler-cache-* /tmp/haste-map-react-native-packager-*",
-    "lint": "eslint -c ./.eslintrc --fix --ext .jsx,.js ./src/ ./App.js",
-    "format": "prettier --config ./.prettierrc --write \"src/**/*.{js,jsx,json,md,scss}\""
+    "lint": "eslint --cache --ext .js,.jsx --fix \"./src/\"",
+    "format": "prettier --write \"**/*.{css,gql,graphql,html,js,jsx,json,less,md,mdx,scss,ts,tsx,vue,yaml,yml}\""
   },
   "rnpm": {
     "assets": [
@@ -29,14 +29,15 @@
     "expo": "^32.0.5",
     "firebase": "^5.9.1",
     "lodash": "^4.17.11",
+    "metro-config": "^0.53.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-maps": "^0.24.0",
     "react-native-svg-transformer": "^0.12.1",
-    "react-navigation": "^3.8.1",
-    "react-redux": "^6.0.1",
+    "react-navigation": "^3.5.1",
+    "react-redux": "^6.0.0",
     "react-redux-firebase": "^3.0.0-alpha.10",
     "react-router-dom": "^5.0.0",
     "react-test-renderer": "^16.8.6",
@@ -54,7 +55,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-import": "^2.17.1",
+    "eslint-plugin-import": "^2.16.1",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
