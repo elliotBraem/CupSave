@@ -29,7 +29,6 @@
     "expo": "^32.0.5",
     "firebase": "^5.9.1",
     "lodash": "^4.17.11",
-    "metro-config": "^0.53.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
