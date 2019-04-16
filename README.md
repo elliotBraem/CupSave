@@ -4,7 +4,7 @@ An application that tracks a user’s ecological footprint of disposable coffee 
 
 ### Instructions for running test:
 
-Write a test in **tests**
+Write a test in `__tests__`
 npm run test or
 npm run testWithCoverage
 
