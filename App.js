@@ -26,10 +26,13 @@ const initialState = window.__INITIAL_STATE__ || {
 const {store, persistor} = configureStore(initialState);
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase only if an fbInstance was not passed to the window (tests)
+if (!window.fbInstance) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 // Initialize firestore service on firebase instance
-// firebase.firestore();
+firebase.firestore();
 
 const App = () => (
   <Provider store={store}>

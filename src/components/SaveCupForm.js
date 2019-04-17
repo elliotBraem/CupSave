@@ -47,24 +47,38 @@ SaveCupForm.propTypes = {
 };
 
 const enhance = compose(
-  withFirebase,
   withFirestore,
   connect(({firebase: {auth}}) => ({
     auth,
   })),
   withHandlers({
-    onSaveCupFormSubmit: props => () => {
-      const currentUID = props.auth.uid;
-      const ref = props.firestore.collection('users').doc(`${currentUID}`);
-      props.firestore
+    onSaveCupFormSubmit: ({auth, firestore}) => () => {
+      const currentUID = auth.uid;
+      const userRef = firestore.collection('users').doc(`${currentUID}`);
+      const currentTimeInUnixEpoch = new Date().valueOf();
+      firestore
         .runTransaction(async transaction => {
-          const doc = await transaction.get(ref);
+          const doc = await transaction.get(userRef);
 
           const newTotal = doc.exists ? doc.data().consumption.total + 1 : 1;
-          transaction.update(ref, {consumption: {total: newTotal}});
+
+          const data = {
+            consumption: {
+              total: newTotal,
+              most_recent_consumption: currentTimeInUnixEpoch,
+              history: {
+                [currentTimeInUnixEpoch]: newTotal,
+              },
+            },
+          };
+
+          transaction.set(userRef, data, {merge: true});
+
+          return newTotal;
         })
         .catch(error => {
-          this.setState({errorMessage: error.message});
+          // this.setState({errorMessage: error.message});
+          console.log(error.message);
         });
     },
   })
