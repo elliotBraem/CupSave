@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Text, StyleSheet, View, Alert, KeyboardAvoidingView, Image, Button, TextInput} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
-import {compose} from 'recompose';
 
 const Logo = require('../assets/images/logo.png');
 
@@ -75,7 +74,7 @@ class LoginScreen extends Component {
     const {navigation, firebase} = this.props;
 
     if (email.trim() === '' || password.trim() === '') {
-      Alert.alert('Invalid Parameters:', 'Username / password cannot be empty');
+      Alert.alert('Invalid Parameters:', 'Username / Password cannot be empty');
     } else {
       firebase
         .login({
@@ -92,7 +91,7 @@ class LoginScreen extends Component {
     const {errorMessage, email, password} = this.state;
 
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="position" enable>
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enable>
         <Text style={styles.header} align="center">
           Welcome to{'\n'}CupSave!
         </Text>
@@ -126,6 +125,4 @@ class LoginScreen extends Component {
   }
 }
 
-const enhance = compose(withFirebase);
-
-export default enhance(LoginScreen);
+export default withFirebase(LoginScreen);

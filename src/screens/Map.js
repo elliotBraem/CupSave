@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const UserMap = props => {
+const UserMap = ({userLocation}) => {
   let userLocationMarker = null;
 
-  if (props.userLocation) {
-    userLocationMarker = <MapView.Marker coordinate={props.userLocation} />;
+  if (userLocation) {
+    userLocationMarker = <MapView.Marker coordinate={userLocation} />;
   }
 
   return (
@@ -39,7 +39,7 @@ const UserMap = props => {
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
         }}
-        region={props.userLocation}>
+        region={userLocation}>
         {userLocationMarker}
       </MapView>
     </View>
@@ -49,6 +49,10 @@ const UserMap = props => {
 class MapScreen extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      userLocation: null,
+    };
   }
 
   static navigationOptions = {
@@ -61,8 +65,6 @@ class MapScreen extends Component {
       navigate: PropTypes.func.isRequired,
     }).isRequired,
   };
-
-  state = {userLocation: null};
 
   componentWillMount() {
     this.getUserLocation();
