@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Text, StyleSheet, View} from 'react-native';
-import {Button} from 'nachos-ui';
+import {Text, StyleSheet, View, Button} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,7 +17,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   statColumn: {
-    flex:1,
+    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
@@ -27,12 +26,12 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: 'row',
   },
-  statName:{
-    flex: 2
+  statName: {
+    flex: 2,
   },
-  statItem:{
-    flex:3,
-   alignItems: 'center',
+  statItem: {
+    flex: 3,
+    alignItems: 'center',
   },
   buttons: {
     flexDirection: 'row',
@@ -57,38 +56,55 @@ class Stats extends Component {
     }).isRequired,
   };
 
-  render(){
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
     const {navigation} = this.props;
 
-    return <View style={styles.container}>
-      <Text style={styles.header}>Welcome to the Stats Page You Goddam Hero You</Text>
-      <View style={styles.buttons}>
-        <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-          Open drawer
-        </Button>
-        <Button onPress={() => navigation.navigate('Login')} style={styles.button}>
-          To Login
-        </Button>
+    return (
+      <View style={styles.container}>
+        <Text style={styles.header}>Welcome to the Stats Page You Goddam Hero You</Text>
+        <View style={styles.buttons}>
+          <Button onPress={() => navigation.openDrawer()} style={styles.button} title="Menu" />
+        </View>
+        <View style={styles.statColumn}>
+          <View style={styles.stat}>
+            <View style={styles.statName}>
+              <Text>Cups Saved</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text>5,000</Text>
+            </View>
+          </View>
+          <View style={styles.stat}>
+            <View style={styles.statName}>
+              <Text>Lbs Waste Saved</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text>40</Text>
+            </View>
+          </View>
+          <View style={styles.stat}>
+            <View style={styles.statName}>
+              <Text>Lbs C02 kept out of atmosphere</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text>4</Text>
+            </View>
+          </View>
+          <View style={styles.stat}>
+            <View style={styles.statName}>
+              <Text>Turtles Saved</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text>0</Text>
+            </View>
+          </View>
+        </View>
       </View>
-      <View style={styles.statColumn}>
-          <View style={styles.stat}>
-            <View style={styles.statName}><Text>Cups Saved</Text></View>
-            <View style={styles.statItem}><Text>5,000</Text></View>
-          </View>
-          <View style={styles.stat}>
-            <View style={styles.statName}><Text>Lbs Waste Saved</Text></View>
-            <View style={styles.statItem}><Text>40</Text></View>
-          </View>
-          <View style={styles.stat}>
-            <View style={styles.statName}><Text>Lbs C02 kept out of atmosphere</Text></View>
-            <View style={styles.statItem}><Text>4</Text></View>
-          </View>
-          <View style={styles.stat}>
-            <View style={styles.statName}><Text>Turtles Saved</Text></View>
-            <View style={styles.statItem}><Text>0</Text></View>
-          </View>
-      </View>
-    </View>;
+    );
   }
 }
 

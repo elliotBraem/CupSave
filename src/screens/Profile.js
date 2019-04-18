@@ -1,72 +1,76 @@
-import React, {Component} from 'react';
-import {Text, StyleSheet, View, Image} from 'react-native';
+import React, {PureComponent} from 'react';
+import {StyleSheet, View, Image, Button} from 'react-native';
 import PropTypes from 'prop-types';
-import {withFirebase} from 'react-redux-firebase';
-import {Button} from 'nachos-ui';
+import {withFirebase, isLoaded} from 'react-redux-firebase';
+import {withNavigation} from 'react-navigation';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
+import COLORS from '../constants/colors';
+import CustomHeader from '../components/CustomHeader';
+import StatsOverview from '../components/StatsOverview';
+import Loading from '../components/Loading';
+
+const profileImage = require('../assets/images/profileicon.png');
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  header: {
-    alignSelf: 'center',
-    marginBottom: 50,
-    fontSize: 22,
-  },
-  buttons: {
-    flexDirection: 'row',
+    flex: 1,
+    // justifyContent: 'space-between',
+    backgroundColor: COLORS.primary,
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    margin: 15,
-    justifyContent: 'center',
-  },
-  icon: {
-    width: 80,
-    height: 80,
-    alignSelf: 'center',
-    marginBottom: 20,
   },
   circle: {
     width: 160,
     height: 160,
     alignSelf: 'center',
     marginBottom: 20,
-    borderRadius: 60,
+    borderRadius: 80,
     backgroundColor: 'black',
-  }
+  },
 });
 
-class ProfileScreen extends Component {
-  static navigationOptions = {
-    title: 'Profile',
-  };
-
+class ProfileScreen extends PureComponent {
   static propTypes = {
+    profile: PropTypes.shape({
+      consumption: PropTypes.shape({
+        total: PropTypes.number,
+      }),
+      cup_volume_oz: PropTypes.number,
+      level: PropTypes.number,
+    }).isRequired,
     navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
       navigate: PropTypes.func.isRequired,
     }).isRequired,
   };
 
   render() {
-    const {navigation} = this.props;
+    const {navigation, profile} = this.props;
+
+    if (!isLoaded(profile)) {
+      return <Loading />;
+    }
 
     return (
       <View style={styles.container}>
-        <Image source={require('../assets/images/profileicon.png')} style={styles.circle} />
-        <Text style={styles.header}>First M. Last</Text>
-        <View style={styles.buttons}>
-          <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-            Menu
-          </Button>
-        </View>
+        <CustomHeader title="Profile" />
+        <Image source={profileImage} style={styles.circle} />
+        <StatsOverview
+          totalCupsSaved={profile.consumption.total}
+          level={profile.level}
+          drinkSize={profile.cup_volume_oz}
+        />
+        <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
       </View>
     );
   }
 }
 
-export default ProfileScreen;
+const enhance = compose(
+  withFirebase,
+  withNavigation,
+  connect(({firebase: {profile}}) => ({
+    profile,
+  }))
+);
+
+export default enhance(ProfileScreen);

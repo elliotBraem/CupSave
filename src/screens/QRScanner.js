@@ -1,26 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Text, StyleSheet, View} from 'react-native';
-import {Button} from 'nachos-ui';
+import {StyleSheet, View} from 'react-native';
+import CustomHeader from '../components/CustomHeader';
+import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  header: {
-    alignSelf: 'center',
-    marginBottom: 50,
-  },
-  buttons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    margin: 15,
-    justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'space-between',
+    backgroundColor: COLORS.primary,
   },
 });
 
@@ -36,17 +24,14 @@ class QRScannerScreen extends Component {
     }).isRequired,
   };
 
-  render() {
-    const {navigation} = this.props;
+  constructor(props) {
+    super(props);
+  }
 
+  render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>QR Scanner</Text>
-         <View style={styles.buttons}>
-          <Button onPress={() => navigation.openDrawer()} style={styles.button}>
-            Menu
-          </Button>
-        </View>
+        <CustomHeader title="QR Scanner" />
       </View>
     );
   }

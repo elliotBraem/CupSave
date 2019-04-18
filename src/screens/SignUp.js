@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, StyleSheet, View, TextInput, Alert, Button, KeyboardAvoidingView} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase} from 'react-redux-firebase';
-// import {Button} from 'nachos-ui';
+import REGEX from '../constants/regex';
 
 const styles = StyleSheet.create({
   container: {
@@ -45,27 +45,18 @@ class SignUpScreen extends Component {
 
   static propTypes = {
     navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
       navigate: PropTypes.func.isRequired,
     }).isRequired,
     firebase: PropTypes.shape({
       login: PropTypes.func.isRequired,
     }).isRequired, // from withFirebase
-    auth: PropTypes.object, // from withFirebase
   };
+
+  constructor(props) {
+    super(props);
+  }
 
   state = {email: '', password: '', confirmedPassword: '', errorMessage: null};
-
-  static propTypes = {
-    navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
-    firebase: PropTypes.shape({
-      login: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
-    auth: PropTypes.object, // from withFirebase
-  };
 
   handleSignUp = () => {
     const {email, password, confirmedPassword} = this.state;
@@ -75,50 +66,78 @@ class SignUpScreen extends Component {
     } else if (confirmedPassword !== password) {
       Alert.alert('ERROR:', 'Password does not match confirmed password');
     } else {
+      const currentTimeInUnixEpoch = new Date().valueOf();
+
+      const isUniversity = new RegExp(REGEX.UNIVERSITY_EMAIL).test(email);
+
+      const badges = {
+        '6W2UJvCl9AKy3X97jhZ0': true, // Hello World badge
+      };
+
+      if (isUniversity) {
+        badges.rJ7XjWH9a336tPj9caEB = true;
+      }
+
       firebase
         .createUser(
           {
             email,
             password,
           },
-          {email}
+          {
+            email,
+            badges,
+            consumption: {
+              total: 0,
+              most_recent_consumption: currentTimeInUnixEpoch,
+              history: {
+                [currentTimeInUnixEpoch]: 0,
+              },
+            },
+            city: '',
+            level: 0,
+            friends: {
+              byZi8ywta1hgA9oTc6YwHEDrrHU2: true, // Test user
+            },
+            cup_volume_oz: 16,
+          }
         )
         .then(() => navigation.navigate('Home'))
         .catch(error => this.setState({errorMessage: error.message}));
-      console.log('handleSignUp');
     }
   };
 
   render() {
-    const {navigation, firebase} = this.props;
+    const {navigation} = this.props;
+    const {errorMessage, email, password, confirmedPassword} = this.state;
 
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="position" enabled>
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <Text style={styles.header}>Welcome to CupSave!</Text>
         <Text>Sign Up</Text>
-        {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
+        {errorMessage && <Text style={{color: 'red'}}>{errorMessage}</Text>}
         <TextInput
           style={styles.textInput}
           autoCapitalize="none"
           placeholder="Email"
-          onChangeText={email => this.setState({email})}
-          value={this.state.email}
+          value={email}
+          onChangeText={emailInput => this.setState({email: emailInput})}
         />
         <TextInput
           secureTextEntry
           style={styles.textInput}
           autoCapitalize="none"
           placeholder="Password"
-          onChangeText={password => this.setState({password})}
-          value={this.state.password}
+          value={password}
+          onChangeText={passwordInput => this.setState({password: passwordInput})}
         />
         <TextInput
           secureTextEntry
           placeholder="Confirm Password"
           autoCapitalize="none"
           style={styles.textInput}
-          onChangeText={confirmedPassword => this.setState({confirmedPassword})}
-          value={this.state.confirmedPassword}
+          onChangeText={confirmedPasswordInput => this.setState({confirmedPassword: confirmedPasswordInput})}
+          value={confirmedPassword}
         />
         <View style={styles.buttons}>
           <Button title="Sign Up" onPress={this.handleSignUp} style={styles.button} />
@@ -127,8 +146,6 @@ class SignUpScreen extends Component {
             onPress={() => navigation.navigate('Login')}
             style={styles.button}
           />
-          <Button title="Open drawer" onPress={() => navigation.openDrawer()} style={styles.button} />
-          <Button title="Go back" onPress={() => navigation.navigate('Home')} style={styles.button} />
         </View>
       </KeyboardAvoidingView>
     );
