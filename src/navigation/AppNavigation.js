@@ -13,6 +13,7 @@ import COLORS from '../constants/colors';
 import LoadingScreen from '../screens/Loading';
 import CustomDrawerComponent from '../components/CustomDrawer';
 import SettingsScreen from '../screens/Settings';
+import SearchScreen from '../screens/Search';
 import HomeIcon from '../assets/images/drawer-icons/home-icon.svg';
 import ProfileIcon from '../assets/images/drawer-icons/profile-icon.svg';
 import QRScannerIcon from '../assets/images/drawer-icons/qr-scanner-icon.svg';
@@ -63,6 +64,13 @@ const AppStack = createDrawerNavigator(
       screen: AboutUsScreen,
       navigationOptions: {
         drawerLabel: 'About Us',
+        drawerIcon: () => <AboutIcon style={styles.icon} />,
+      },
+    },
+    Search: {
+      screen: SearchScreen,
+      navigationOptions: {
+        drawerLabel: 'Search',
         drawerIcon: () => <AboutIcon style={styles.icon} />,
       },
     },
