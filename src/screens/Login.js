@@ -61,11 +61,10 @@ class LoginScreen extends Component {
     firebase: PropTypes.shape({
       login: PropTypes.func.isRequired,
     }).isRequired, // from withFirebase
-    // auth: PropTypes.object, // from withFirebase
   };
 
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   state = {email: '', password: '', errorMessage: null};
@@ -75,7 +74,7 @@ class LoginScreen extends Component {
     const {navigation, firebase} = this.props;
 
     if (email.trim() === '' || password.trim() === '') {
-      Alert.alert('Invalid Parameters:', 'Username / password cannot be empty');
+      Alert.alert('Invalid Parameters:', 'Username / Password cannot be empty');
     } else {
       firebase
         .login({
@@ -92,12 +91,12 @@ class LoginScreen extends Component {
     const {errorMessage, email, password} = this.state;
 
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="position" enable>
-        <text style={styles.header} align="center">
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enable>
+        <Text style={styles.header} align="center">
           Welcome to{'\n'}CupSave!
-        </text>
+        </Text>
         <Image source={Logo} style={styles.logo} />
-        <text style={styles.subtext}>Let&#39;s get started</text>
+        <Text style={styles.subtext}>Let&#39;s get started</Text>
         <View style={styles.form}>
           {errorMessage && <Text style={{color: 'red'}}>{errorMessage}</Text>}
           <TextInput
@@ -116,9 +115,9 @@ class LoginScreen extends Component {
             onChangeText={passwordInput => this.setState({password: passwordInput})}
           />
           <View style={styles.btnContainer}>
-            <Button title="Login" style={styles.btnStyle} onPress={this.handleLogin}/>
-            <text style={styles.accountPrompt}>Don&#39;t have an account?</text>
-            <Button title="Sign Up" style={styles.btnStyle} onPress={() => navigation.navigate('Signup')}/>
+            <Button title="Login" style={styles.btnStyle} onPress={this.handleLogin} />
+            <Text style={styles.accountPrompt}>Don&#39;t have an account?</Text>
+            <Button title="Sign Up" style={styles.btnStyle} onPress={() => navigation.navigate('Signup')} />
           </View>
         </View>
       </KeyboardAvoidingView>

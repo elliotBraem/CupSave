@@ -3,8 +3,6 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {AppRegistry} from 'react-native';
-import {ThemeProvider} from 'nachos-ui';
-import {Svg} from 'expo';
 
 import {ReactReduxFirebaseProvider} from 'react-redux-firebase';
 import {createFirestoreInstance} from 'redux-firestore';
@@ -28,10 +26,13 @@ const initialState = window.__INITIAL_STATE__ || {
 const {store, persistor} = configureStore(initialState);
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase only if an fbInstance was not passed to the window (tests)
+if (!window.fbInstance) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 // Initialize firestore service on firebase instance
-// firebase.firestore();
+firebase.firestore();
 
 const App = () => (
   <Provider store={store}>
@@ -40,11 +41,9 @@ const App = () => (
       dispatch={store.dispatch}
       firebase={firebase}
       createFirestoreInstance={createFirestoreInstance}>
-      <ThemeProvider>
-        <PersistGate loading={<Loading />} persistor={persistor}>
-          <AppContainer />
-        </PersistGate>
-      </ThemeProvider>
+      <PersistGate loading={<Loading />} persistor={persistor}>
+        <AppContainer />
+      </PersistGate>
     </ReactReduxFirebaseProvider>
   </Provider>
 );

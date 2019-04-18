@@ -3,11 +3,10 @@ import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import {withHandlers, compose} from 'recompose';
 import {connect} from 'react-redux';
-import {withFirestore} from 'react-redux-firebase';
+import {withFirebase, withFirestore} from 'react-redux-firebase';
 import COLORS from '../constants/colors';
 import {AppText} from './TextComponents';
-
-const Logo = require('../assets/images/logo.png');
+import Logo from '../assets/images/logo.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,30 +47,38 @@ SaveCupForm.propTypes = {
 };
 
 const enhance = compose(
+  withFirestore,
   connect(({firebase: {auth}}) => ({
     auth,
   })),
-  withFirestore,
   withHandlers({
-    onSaveCupFormSubmit: props => () => {
-      const currentUID = props.auth.uid;
-      const ref = props.firestore.collection('users').doc(currentUID + '/consumption/cups');
-      props.firestore
+    onSaveCupFormSubmit: ({auth, firestore}) => () => {
+      const currentUID = auth.uid;
+      const userRef = firestore.collection('users').doc(`${currentUID}`);
+      const currentTimeInUnixEpoch = new Date().valueOf();
+      firestore
         .runTransaction(async transaction => {
-          const doc = await transaction.get(ref);
+          const doc = await transaction.get(userRef);
 
-          if (!doc.exists) {
-            transaction.set(ref, {total: 1});
-          }
+          const newTotal = doc.exists ? doc.data().consumption.total + 1 : 1;
 
-          const newTotal = doc.data().total + 1;
-          transaction.update(ref, {total: newTotal});
+          const data = {
+            consumption: {
+              total: newTotal,
+              most_recent_consumption: currentTimeInUnixEpoch,
+              history: {
+                [currentTimeInUnixEpoch]: newTotal,
+              },
+            },
+          };
+
+          transaction.set(userRef, data, {merge: true});
+
+          return newTotal;
         })
-        // .then(newTotal => {
-        //   console.log(newTotal);
-        // })
         .catch(error => {
-          this.setState({errorMessage: error.message});
+          // this.setState({errorMessage: error.message});
+          console.log(error.message);
         });
     },
   })
