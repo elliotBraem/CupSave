@@ -1,15 +1,22 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View, Button, Text} from 'react-native';
+import {StyleSheet, View, Image, Text} from 'react-native';
 import {BarCodeScanner, Permissions} from 'expo';
 import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
+import ScanIcon from '../assets/images/qr-scanner/scan-container.png';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
     backgroundColor: COLORS.primary,
+  },
+  scanIcon: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: '40%',
+    zIndex: 100,
   },
   qrScanner: {
     flex: 1,
@@ -47,6 +54,7 @@ class QRScannerScreen extends Component {
     return (
       <View style={styles.container}>
         <CustomHeader title="QR Scanner" />
+        <Image source={ScanIcon} style={styles.scanIcon} />
         <BarCodeScanner onBarCodeScanned={this.handleBarCodeScanned} style={styles.qrScanner} />
       </View>
     );
