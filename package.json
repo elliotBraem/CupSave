@@ -20,11 +20,6 @@
       "src/assets/fonts"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run format"
-    }
-  },
   "dependencies": {
     "expo": "^32.0.5",
     "firebase": "^5.9.1",
