@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, View, Image, Button} from 'react-native';
+import {StyleSheet, View, Image, Button, Text} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase, isLoaded} from 'react-redux-firebase';
 import {withNavigation} from 'react-navigation';

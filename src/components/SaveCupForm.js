@@ -62,8 +62,6 @@ class SaveCupForm extends Component {
     };
   }
 
-  // state = {drinkValue: '', locationEnabled: true};
-
   toggleLocationEnable() {
     this.setState(prevState => ({
       locationEnabled: !prevState.locationEnabled,

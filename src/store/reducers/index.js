@@ -1,5 +1,7 @@
 import {combineReducers} from 'redux';
 import {firebaseReducer} from 'react-redux-firebase';
+import {firestoreReducer} from 'redux-firestore'; // <- needed if using firestore
+
 import {persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to AsyncStorage for react-native
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
@@ -28,6 +30,7 @@ export default function createRootReducer() {
       },
       firebaseReducer
     ),
+    firestore: firestoreReducer,
     status,
   });
 }

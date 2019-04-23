@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import SaveCupForm from '../components/SaveCupForm';
+import LiveFeed from '../components/LiveFeed';
 import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 
@@ -19,6 +20,7 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <CustomHeader title="Home" />
       <SaveCupForm />
+      <LiveFeed />
     </View>
   );
 };
