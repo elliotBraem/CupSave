@@ -14,6 +14,10 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? 30 : 70 - 24,
     alignContent: 'center',
     flexDirection: 'row',
+    zIndex: 100,
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
   burgerIcon: {
     width: 30,

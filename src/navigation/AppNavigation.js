@@ -31,6 +31,13 @@ const hiddenDrawerItems = ['Settings'];
 // Stack for logged in user
 const AppStack = createDrawerNavigator(
   {
+    QRScanner: {
+      screen: QRScannerScreen,
+      navigationOptions: {
+        drawerLabel: 'QR Scanner',
+        drawerIcon: () => <QRScannerIcon style={styles.icon} />,
+      },
+    },
     Home: {
       screen: HomeScreen,
       navigationOptions: {
@@ -43,13 +50,6 @@ const AppStack = createDrawerNavigator(
       navigationOptions: {
         drawerLabel: 'Profile',
         drawerIcon: () => <ProfileIcon style={styles.icon} />,
-      },
-    },
-    QRScanner: {
-      screen: QRScannerScreen,
-      navigationOptions: {
-        drawerLabel: 'QR Scanner',
-        drawerIcon: () => <QRScannerIcon style={styles.icon} />,
       },
     },
     Map: {
