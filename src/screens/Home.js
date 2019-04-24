@@ -1,5 +1,9 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+import {withFirebase, withFirestore} from 'react-redux-firebase';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
+import {spinnerWhileLoading} from '../utils/components';
 import SaveCupForm from '../components/SaveCupForm';
 import LiveFeed from '../components/LiveFeed';
 import CustomHeader from '../components/CustomHeader';
@@ -25,4 +29,12 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+const enhance = compose(
+  // withFirebase
+  // connect(({firebase: {profile}}) => ({
+  //   profile,
+  // })),
+  // spinnerWhileLoading(['profile'])
+);
+
+export default enhance(HomeScreen);

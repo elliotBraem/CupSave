@@ -10,6 +10,7 @@ export const firebaseConfig = {
 
 export const reactReduxFirebaseConfig = {
   userProfile: 'users', // root that user profiles are written to
+  updateProfileOnLogin: true,
   useFirestoreForProfile: true,
   useFirestoreForStorageMeta: true,
   enableRedirectHandling: false,

@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, ActivityIndicator, StyleSheet} from 'react-native';
 import {withFirebase} from 'react-redux-firebase';
+import {withNavigation} from 'react-navigation';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
+import {spinnerWhileLoading} from '../utils/components';
 
 const styles = StyleSheet.create({
   container: {
@@ -42,4 +46,9 @@ class LoadingScreen extends Component {
   }
 }
 
-export default withFirebase(LoadingScreen);
+const enhance = compose(
+  withFirebase,
+  withNavigation
+);
+
+export default enhance(LoadingScreen);

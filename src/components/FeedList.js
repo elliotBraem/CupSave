@@ -11,14 +11,15 @@ import FeedItem from './FeedItem';
 
 class FeedList extends Component {
   renderItem = ({item}) => <FeedItem {...item} />;
+
   keyExtractor = item => item.key;
 
   render() {
-    const {onPressFooter, ...props} = this.props;
+    const {...props} = this.props;
     return (
       <FlatList
         keyExtractor={this.keyExtractor}
-        ListFooterComponent={footerProps => <Footer {...footerProps} onPress={onPressFooter} />}
+        // ListFooterComponent={footerProps => }
         renderItem={this.renderItem}
         {...props}
       />
