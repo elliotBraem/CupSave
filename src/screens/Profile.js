@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, View, Image, Button} from 'react-native';
+import {StyleSheet, View, Image, Button, Platform} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase, isLoaded} from 'react-redux-firebase';
 import {withNavigation} from 'react-navigation';
@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
     // justifyContent: 'space-between',
     backgroundColor: COLORS.primary,
     alignItems: 'center',
+  },
+  inner: {
+    marginTop: Platform.OS === 'ios' ? 100 : 100 - 24,
   },
   circle: {
     width: 160,
@@ -53,13 +56,15 @@ class ProfileScreen extends PureComponent {
     return (
       <View style={styles.container}>
         <CustomHeader title="Profile" />
-        <Image source={profileImage} style={styles.circle} />
-        <StatsOverview
-          totalCupsSaved={profile.consumption.total}
-          level={profile.level}
-          drinkSize={profile.cup_volume_oz}
-        />
-        <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
+        <View style={styles.inner}>
+          <Image source={profileImage} style={styles.circle} />
+          <StatsOverview
+            totalCupsSaved={profile.consumption.total}
+            level={profile.level}
+            drinkSize={profile.cup_volume_oz}
+          />
+          <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
+        </View>
       </View>
     );
   }

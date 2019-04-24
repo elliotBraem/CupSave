@@ -6,6 +6,11 @@ import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
   container: {
     flex: 1,
     justifyContent: 'space-between',
@@ -90,7 +95,7 @@ class MapScreen extends Component {
     const {userLocation} = this.state;
     return (
       <View style={styles.container}>
-        <CustomHeader title="Map" />
+        <CustomHeader title="Map" style={styles.header} />
         {/* <Text style={styles.header}>Map</Text>
         <Button title="Menu" onPress={() => navigation.openDrawer()} style={styles.btnStyle} />
         <Button title="Get Location" onPress={() => this.getUserLocation()} style={styles.btnStyle} /> */}
