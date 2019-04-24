@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, View, Image, Button, Platform} from 'react-native';
+import {StyleSheet, View, Image, Button, Platform, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase, isLoaded} from 'react-redux-firebase';
 import {withNavigation} from 'react-navigation';
@@ -25,12 +25,30 @@ const styles = StyleSheet.create({
   circle: {
     width: 160,
     height: 160,
+    overflow: 'hidden',
     alignSelf: 'center',
     marginBottom: 20,
     borderRadius: 80,
-    backgroundColor: 'black',
+    backgroundColor: COLORS.secondary,
+    shadowColor: COLORS.secondary,
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 100,
   },
+  image: {
+    width: 160,
+    height: 160,
+  }
 });
+
+// SettingsButton.propTypes = {
+//   navigation: PropTypes.shape({
+//     navigate: PropTypes.func.isRequired,
+//   }).isRequired,
+// };
 
 class ProfileScreen extends PureComponent {
   static propTypes = {
@@ -57,7 +75,9 @@ class ProfileScreen extends PureComponent {
       <View style={styles.container}>
         <CustomHeader title="Profile" />
         <View style={styles.inner}>
-          <Image source={profileImage} style={styles.circle} />
+          <View style={styles.circle}>
+            <Image source={profileImage} style={styles.image} />
+          </View>
           <StatsOverview
             totalCupsSaved={profile.consumption.total}
             level={profile.level}
