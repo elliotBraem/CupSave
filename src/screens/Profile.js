@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, View, Image, Button, Platform, TouchableOpacity} from 'react-native';
+import {StyleSheet, ScrollView, View, Image, Button, Platform, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import {withFirebase, isLoaded} from 'react-redux-firebase';
 import {withNavigation} from 'react-navigation';
@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import COLORS from '../constants/colors';
 import CustomHeader from '../components/CustomHeader';
 import StatsOverview from '../components/StatsOverview';
+import ProfileStats from '../components/ProfileStats';
 import Loading from '../components/Loading';
 
 const profileImage = require('../assets/images/profileicon.png');
@@ -17,9 +18,9 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'space-between',
     backgroundColor: COLORS.primary,
-    alignItems: 'center',
   },
   inner: {
+    alignItems: 'center',
     marginTop: Platform.OS === 'ios' ? 100 : 100 - 24,
   },
   circle: {
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   image: {
     width: 160,
     height: 160,
-  }
+  },
 });
 
 // SettingsButton.propTypes = {
@@ -74,7 +75,7 @@ class ProfileScreen extends PureComponent {
     return (
       <View style={styles.container}>
         <CustomHeader title="Profile" />
-        <View style={styles.inner}>
+        <ScrollView contentContainerStyle={styles.inner}>
           <View style={styles.circle}>
             <Image source={profileImage} style={styles.image} />
           </View>
@@ -84,7 +85,8 @@ class ProfileScreen extends PureComponent {
             drinkSize={profile.cup_volume_oz}
           />
           <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
-        </View>
+          <ProfileStats totalCupsSaved={profile.consumption.total} />
+        </ScrollView>
       </View>
     );
   }
