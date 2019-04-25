@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import {Text, StyleSheet, View, Image} from 'react-native';
+import {Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
 import {DrawerItems, SafeAreaView} from 'react-navigation';
 import {withFirebase} from 'react-redux-firebase';
 import Logout from '../assets/images/drawer-icons/logout-icon.svg';
@@ -53,12 +53,12 @@ const CustomDrawer = props => {
         <DrawerItems {...props} />
       </View>
       <View style={styles.bottom}>
-        <View style={styles.innerBottom}>
+        <TouchableOpacity onPress={() => props.firebase.logout()} style={styles.innerBottom}>
           <Logout style={{width: 20, height: 20}} />
           <Text style={styles.logout} onPress={() => props.firebase.logout()}>
             Log out
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
