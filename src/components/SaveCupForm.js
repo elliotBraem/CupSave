@@ -15,6 +15,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: COLORS.white,
     alignItems: 'center',
+    shadowColor: COLORS.secondary,
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
   },
   button: {
     marginTop: 10,
@@ -25,6 +32,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: COLORS.secondary,
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
   },
   logoIcon: {
     height: 45,
