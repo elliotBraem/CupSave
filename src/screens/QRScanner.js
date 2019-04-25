@@ -7,6 +7,11 @@ import COLORS from '../constants/colors';
 import ScanIcon from '../assets/images/qr-scanner/scan-container.png';
 
 const styles = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
   container: {
     flex: 1,
     justifyContent: 'space-between',
@@ -53,7 +58,7 @@ class QRScannerScreen extends Component {
     }
     return (
       <View style={styles.container}>
-        <CustomHeader title="QR Scanner" />
+        <CustomHeader title="QR Scanner" style={styles.header} />
         <Image source={ScanIcon} style={styles.scanIcon} />
         <BarCodeScanner onBarCodeScanned={this.handleBarCodeScanned} style={styles.qrScanner} />
       </View>
