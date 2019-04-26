@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 const HomeScreen = () => {
   return (
     <View style={styles.container}>
-      <CustomHeader title="Home" style={styles.header} />
+      <CustomHeader title="Home" />
       <View style={styles.inner}>
         <SaveCupForm />
       </View>
