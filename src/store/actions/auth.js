@@ -120,6 +120,27 @@ export function dbLogin(email, password) {
 }
 
 /**
+ * Login to Firebase with Email/Password
+ */
+export function dbFacebookLogin() {
+  return async (dispatch, getState) => {
+    await dispatch(authLoading());
+
+    try {
+      const user = await authService.loginWithFacebook();
+
+      const userData = await userService.getUserData(user.email);
+
+      await dispatch(getUserData(userData));
+
+      return dispatch(login(user));
+    } catch (error) {
+      return dispatch(authError(error.message));
+    }
+  };
+}
+
+/**
  * Sign Up to Firebase
  */
 export function dbSignUp(email, password) {

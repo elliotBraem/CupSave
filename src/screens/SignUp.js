@@ -46,6 +46,7 @@ class SignUpScreen extends Component {
     signup: PropTypes.func.isRequired,
     resetPassword: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    loginWithFacebook: PropTypes.func.isRequired,
   };
 
   static navigationOptions = {
@@ -74,6 +75,17 @@ class SignUpScreen extends Component {
       }
     }
   };
+
+  handleFacebookSignUp = async () => {
+      const {navigation, loginWithFacebook, auth} = this.props;
+      await loginWithFacebook();
+
+      if (auth.error) {
+        this.setState({errorMessage: auth.error});
+      } else {
+        navigation.navigate('App');
+      }
+    };
 
   render() {
     const {navigation} = this.props;
@@ -109,6 +121,7 @@ class SignUpScreen extends Component {
         />
         <View style={styles.buttons}>
           <Button title="Submit" onPress={this.handleSignUp} style={styles.button} />
+          <Button title="Sign up with Facebook" onPress={this.handleFacebookSignUp} style={styles.button} />
           <Button
             title="Already have an account? Login"
             onPress={() => navigation.navigate('Login')}
@@ -124,6 +137,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     signup: (email, password) => dispatch(authActions.dbSignUp(email, password)),
     resetPassword: (email, password) => dispatch(authActions.dbResetPassword(email, password)),
+    loginWithFacebook: () => dispatch(authActions.dbFacebookLogin()),
   };
 };
 
