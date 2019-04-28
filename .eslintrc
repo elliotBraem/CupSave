@@ -1,6 +1,14 @@
 {
-  "extends": ["airbnb", "prettier", "prettier/react"],
-  "plugins": ["react", "babel", "prettier"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react"
+  ],
+  "plugins": [
+    "react",
+    "babel",
+    "prettier"
+  ],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
@@ -27,7 +35,14 @@
       }
     ],
     "no-underscore-dangle": "off",
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
     "no-console": "warn",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "react/prefer-stateless-function": "off"
   }
 }

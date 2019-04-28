@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, TextInput, Alert, Button, KeyboardAvoidingView, Image} from 'react-native';
 import PropTypes from 'prop-types';
-import {withFirebase} from 'react-redux-firebase';
+import {connect} from 'react-redux';
 import REGEX from '../constants/regex';
 import COLORS from '../constants/colors';
+import * as authActions from '../store/actions/auth';
 
 const Logo = require('../assets/images/logo.png');
 
@@ -15,11 +16,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.white,
     borderTopWidth: 50,
-    borderTopColor: COLORS.white
+    borderTopColor: COLORS.white,
   },
   outerLogoContainer: {
     marginHorizontal: '10%',
-    flex: .5,
+    flex: 0.5,
     flexDirection: 'row',
     backgroundColor: COLORS.secondary,
     justifyContent: 'center',
@@ -28,11 +29,11 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
   logoContainer: {
-    flex: .7,
+    flex: 0.7,
     marginLeft: '5%',
   },
   logo: {
-    flex:1,
+    flex: 1,
     height: null,
     width: null,
     resizeMode: 'contain',
@@ -41,32 +42,32 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-around',
     alignItems: 'center',
-    margin: '5%'
+    margin: '5%',
   },
   logoText: {
     fontSize: 22,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   spaceContainer: {
-    flex: .05,
+    flex: 0.05,
     justifyContent: 'center',
   },
   subtextContainer: {
-    flex: .6,
+    flex: 0.6,
     justifyContent: 'center',
   },
   subtext: {
     alignSelf: 'center',
   },
   form: {
-    flex: .6,
+    flex: 0.6,
     justifyContent: 'space-between',
     width: '80%',
     alignSelf: 'center',
   },
   inputStyle: {
-    flex: .8,
-//    height: 40,
+    flex: 0.8,
+    //    height: 40,
     width: '100%',
     borderColor: 'gray',
     borderWidth: 1,
@@ -86,73 +87,40 @@ const styles = StyleSheet.create({
   },
 });
 
-
 class SignUpScreen extends Component {
-  static navigationOptions = {
-    title: 'SignUp',
-  };
-
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
-    firebase: PropTypes.shape({
-      login: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
+    signup: PropTypes.func.isRequired,
+    resetPassword: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-  }
+  static navigationOptions = {
+    title: 'SignUp',
+  };
 
   state = {email: '', password: '', confirmedPassword: '', errorMessage: null};
 
-  handleSignUp = () => {
+  // TODO: add resetPassword
+
+  handleSignUp = async () => {
     const {email, password, confirmedPassword} = this.state;
-    const {navigation, firebase} = this.props;
+    const {navigation, signup, auth} = this.props;
+
     if (email.trim() === '' || password.trim() === '') {
       Alert.alert('ERROR:', 'Username / password cannot be empty');
     } else if (confirmedPassword !== password) {
       Alert.alert('ERROR:', 'Password does not match confirmed password');
     } else {
-      const currentTimeInUnixEpoch = new Date().valueOf();
+      await signup(email, password);
 
-      const isUniversity = new RegExp(REGEX.UNIVERSITY_EMAIL).test(email);
-
-      const badges = {
-        '6W2UJvCl9AKy3X97jhZ0': true, // Hello World badge
-      };
-
-      if (isUniversity) {
-        badges.rJ7XjWH9a336tPj9caEB = true;
+      if (auth.error) {
+        this.setState({errorMessage: auth.error});
+      } else {
+        navigation.navigate('Home');
       }
-
-      firebase
-        .createUser(
-          {
-            email,
-            password,
-          },
-          {
-            email,
-            badges,
-            consumption: {
-              total: 0,
-              most_recent_consumption: currentTimeInUnixEpoch,
-              history: {
-                [currentTimeInUnixEpoch]: 0,
-              },
-            },
-            city: '',
-            level: 0,
-            friends: {
-              byZi8ywta1hgA9oTc6YwHEDrrHU2: true, // Test user
-            },
-            cup_volume_oz: 16,
-          }
-        )
-        .then(() => navigation.navigate('Home'))
-        .catch(error => this.setState({errorMessage: error.message}));
     }
   };
 
@@ -167,11 +135,10 @@ class SignUpScreen extends Component {
             <Image source={Logo} style={styles.logo} />
           </View>
           <View style={styles.logoTextContainer}>
-            <Text style={{color: COLORS.primary, ...styles.logoText}} > Welcome to CupSave! </Text>
+            <Text style={{color: COLORS.primary, ...styles.logoText}}> Welcome to CupSave! </Text>
           </View>
         </View>
-        <View style={styles.spaceContainer}>
-        </View>
+        <View style={styles.spaceContainer} />
         <View style={styles.form}>
           {errorMessage && <Text style={{color: 'red'}}>{errorMessage}</Text>}
           <TextInput
@@ -198,12 +165,7 @@ class SignUpScreen extends Component {
             onChangeText={confirmedPasswordInput => this.setState({confirmedPassword: confirmedPasswordInput})}
           />
           <View style={styles.btnContainer}>
-            <Button 
-              title="Sign Up" 
-              style={styles.btnStyle} 
-              color={COLORS.primary} 
-              onPress={this.handleSignUp} 
-            />
+            <Button title="Sign Up" style={styles.btnStyle} color={COLORS.primary} onPress={this.handleSignUp} />
           </View>
           <View style={styles.subtextContainer}>
             <Text style={styles.subtext}>Already have an account?</Text>
@@ -211,8 +173,8 @@ class SignUpScreen extends Component {
           <View style={styles.btnContainer}>
             <Button
               title="Back to login"
-              style={styles.btnStyle} 
-              color={COLORS.primary} 
+              style={styles.btnStyle}
+              color={COLORS.primary}
               onPress={() => navigation.navigate('Login')}
             />
           </View>
@@ -222,4 +184,22 @@ class SignUpScreen extends Component {
   }
 }
 
-export default withFirebase(SignUpScreen);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    signup: (email, password) => dispatch(authActions.dbSignUp(email, password)),
+    resetPassword: (email, password) => dispatch(authActions.dbResetPassword(email, password)),
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth || {};
+
+  return {
+    auth,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUpScreen);

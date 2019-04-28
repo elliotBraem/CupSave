@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Platform} from 'react-native';
 import PropTypes from 'prop-types';
-import {compose} from 'recompose';
 import {withNavigation} from 'react-navigation';
 import BurgerIcon from '../assets/images/drawer-icons/burger-icon.svg';
 import {HeaderTitle} from './TextComponents';
@@ -14,6 +13,10 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? 30 : 70 - 24,
     alignContent: 'center',
     flexDirection: 'row',
+    zIndex: 100,
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
   burgerIcon: {
     width: 30,
@@ -39,6 +42,4 @@ CustomHeader.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-const enhance = compose(withNavigation);
-
-export default enhance(CustomHeader);
+export default withNavigation(CustomHeader);
