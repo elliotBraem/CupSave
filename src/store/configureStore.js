@@ -10,7 +10,7 @@ export default function configureStore(initialState = {}) {
   const config = {
     key: 'root',
     storage,
-    blacklist: ['status', 'locations'],
+    blacklist: ['status', 'locations', 'firebase', 'rehydrated'],
   };
 
   // Middleware configuration
