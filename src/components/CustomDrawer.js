@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, {Component} from 'react';
 import {Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
 import {DrawerItems, SafeAreaView} from 'react-navigation';
-import {withFirebase} from 'react-redux-firebase';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import Logout from '../assets/images/drawer-icons/logout-icon.svg';
 import COLORS from '../constants/colors';
+import * as authActions from '../store/actions/auth';
 
 const profileImage = require('../assets/images/profileicon.png');
 
@@ -42,26 +44,65 @@ const styles = StyleSheet.create({
   },
 });
 
-const CustomDrawer = props => {
-  return (
-    <SafeAreaView style={styles.container} forceInset={{top: 'always', horizontal: 'never'}}>
-      <View style={styles.headerContainer}>
-        <Image source={profileImage} style={styles.profileImage} />
-        <Text style={styles.headerText}>First M. Last</Text>
-      </View>
-      <View>
-        <DrawerItems {...props} />
-      </View>
-      <View style={styles.bottom}>
-        <TouchableOpacity onPress={() => props.firebase.logout()} style={styles.innerBottom}>
-          <Logout style={{width: 20, height: 20}} />
-          <Text style={styles.logout} onPress={() => props.firebase.logout()}>
-            Log out
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
-  );
+class CustomDrawer extends Component {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
+    auth: PropTypes.shape({
+      isAuthenticated: PropTypes.bool.isRequired,
+    }).isRequired,
+    logout: PropTypes.func.isRequired,
+  };
+
+  state = {errorMessage: null};
+
+  handleLogout = async () => {
+    const {logout, navigation, auth} = this.props;
+    await logout();
+    if (auth.error) {
+      this.setState({errorMessage: auth.error});
+    } else {
+      navigation.navigate('Auth');
+    }
+  };
+
+  render() {
+    const {logout, ...props} = this.props;
+    return (
+      <SafeAreaView style={styles.container} forceInset={{top: 'always', horizontal: 'never'}}>
+        <View style={styles.headerContainer}>
+          <Image source={profileImage} style={styles.profileImage} />
+          <Text style={styles.headerText}>First M. Last</Text>
+        </View>
+        <View>
+          <DrawerItems {...props} />
+        </View>
+        <View style={styles.bottom}>
+          <TouchableOpacity onPress={this.handleLogout} style={styles.innerBottom}>
+            <Logout style={{width: 20, height: 20}} />
+            <Text style={styles.logout}>Log out</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    logout: () => dispatch(authActions.dbLogout()),
+  };
 };
 
-export default withFirebase(CustomDrawer);
+const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth || {};
+  return {
+    auth,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CustomDrawer);

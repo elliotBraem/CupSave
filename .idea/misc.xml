@@ -27,6 +27,9 @@
   <component name="MacroExpansionManager">
     <option name="directoryName" value="fdsokwvn" />
   </component>
+  <component name="ProjectRootManager">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
   <component name="designer2.settings">
     <option name="autodetectServerAddress" value="true" />
     <option name="serverIp" value="localhost" />

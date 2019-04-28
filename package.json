@@ -1,6 +1,6 @@
 {
   "name": "cupsave",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "main": "./node_modules/expo/AppEntry.js",
   "scripts": {
@@ -11,9 +11,11 @@
     "test": "jest -u --watchAll",
     "testWithCoverage": "jest --verbose --updateSnapshot --watch --coverage && open ./coverage/lcov-report/index.html",
     "reinit": "watchman watch-del-all && rm -rf node_modules package-lock.json && npm i && npm run clearcache",
+    "reinit:windows": "watchman watch-del-all && del-cli node_modules package-lock.json && npm i && npm run clearcache:windows",
     "clearcache": "rm -rf /tmp/metro-bundler-cache-* /tmp/haste-map-react-native-packager-*",
-    "lint": "eslint --cache --ext .js,.jsx --fix \"./src/\"",
-    "format": "prettier --write \"**/*.{css,gql,graphql,html,js,jsx,json,less,md,mdx,scss,ts,tsx,vue,yaml,yml}\""
+    "clearcache:windows": "del-cli /tmp/metro-bundler-cache-* /tmp/haste-map-react-native-packager-*",
+    "lint": "eslint --cache --fix \"**/*.{js,jsx}\"",
+    "format": "prettier --write \"**/*.{css,html,js,jsx,json,md,scss,yaml,yml}\""
   },
   "rnpm": {
     "assets": [
@@ -23,22 +25,18 @@
   "dependencies": {
     "expo": "^32.0.5",
     "firebase": "^5.9.1",
-    "husky": "^1.3.1",
-    "lodash": "^4.17.11",
+    "immer": "^3.1.1",
     "prop-types": "^15.7.2",
-    "react": "^16.8.1",
+    "react": "^16.8.6",
     "react-dom": "^16.8.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-maps": "^0.24.2",
-    "react-native-svg-transformer": "^0.12.1",
+    "react-native-svg-transformer": "^0.13.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.2.tar.gz",
     "react-navigation": "^3.5.1",
-    "react-redux": "^6.0.0",
-    "react-redux-firebase": "^3.0.0-alpha.10",
+    "react-redux": "6.0.1",
     "react-router-dom": "^5.0.0",
     "react-test-renderer": "^16.8.6",
-    "recompose": "^0.30.0",
     "redux": "^4.0.1",
-    "redux-firestore": "^0.7.2",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "remote-redux-devtools": "^0.5.16"
@@ -56,10 +54,15 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
     "expo-cli": "^2.15.0",
-    "husky": "^1.3.1",
+    "husky": "^2.1.0",
     "jest-expo": "^32.0.0",
     "prettier": "^1.17.0",
     "schedule": "0.4.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format"
+    }
   },
   "jest": {
     "preset": "jest-expo"

@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, Alert, Button, TextInput} from 'react-native';
-import {withFirebase} from 'react-redux-firebase';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import COLORS from '../constants/colors';
+import * as authActions from '../store/actions/auth';
+import Loading from '../components/Loading';
 
 const styles = StyleSheet.create({
   container: {
@@ -60,62 +62,64 @@ class SettingsScreen extends Component {
       openDrawer: PropTypes.func.isRequired,
       navigate: PropTypes.func.isRequired,
     }).isRequired,
-    firebase: PropTypes.shape({
-      login: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
+    updateProfile: PropTypes.func.isRequired,
+    reAuthenticate: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-  }
-
-  state = {currentPassword: '', newPassword: '', newEmail: '', errorMessage: null};
-
-  reauthenticate = currentPassword => {
-    const {firebase} = this.props;
-    const user = firebase.auth().currentUser;
-    const cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
-    return user.reauthenticateWithCredential(cred);
+  state = {
+    currentPassword: '',
+    newPassword: '',
+    newEmail: '',
+    errorMessage: null,
   };
 
-  handlePasswordChange = () => {
+  handlePasswordSubmit = async () => {
     const {currentPassword, newPassword} = this.state;
-    const {navigation, firebase} = this.props;
+    const {navigation, reAuthenticate, updateProfile, auth} = this.props;
 
     if (currentPassword.trim() === '' || newPassword.trim() === '') {
       Alert.alert('Invalid Parameters:', 'old password / new password cannot be empty');
     } else {
-      this.reauthenticate(currentPassword)
-        .then(() => {
-          const user = firebase.auth().currentUser;
-          user.updatePassword(newPassword);
-        })
-        .catch(error => this.setState({errorMessage: error.message}))
-        .then(() => navigation.navigate('Home'))
-        .catch(error => this.setState({errorMessage: error.message}));
+      await reAuthenticate(currentPassword);
+
+      await updateProfile({email: auth.email, password: newPassword, changePassword: true});
+
+      if (auth.error) {
+        this.setState({errorMessage: auth.error});
+      } else {
+        navigation.navigate('Home');
+      }
     }
   };
 
-  handleEmailChange = () => {
+  handleEmailSubmit = async () => {
     const {currentPassword, newEmail} = this.state;
-    const {navigation, firebase} = this.props;
+    const {navigation, reAuthenticate, updateProfile, auth} = this.props;
 
     if (currentPassword.trim() === '' || newEmail.trim() === '') {
       Alert.alert('Invalid Parameters:', 'password / new email cannot be empty');
     } else {
-      this.reauthenticate(currentPassword)
-        .then(() => {
-          const user = firebase.auth().currentUser;
-          user.updateEmail(newEmail);
-        })
-        .catch(error => this.setState({errorMessage: error.message}))
-        .then(() => navigation.navigate('Home'))
-        .catch(error => this.setState({errorMessage: error.message}));
+      await reAuthenticate(currentPassword);
+
+      await updateProfile({email: newEmail, changeEmail: true});
+
+      if (auth.error) {
+        this.setState({errorMessage: auth.error});
+      } else {
+        navigation.navigate('Home');
+      }
     }
   };
 
   render() {
+    const {auth} = this.props;
     const {errorMessage, currentPassword, newEmail, newPassword} = this.state;
+
+    if (!auth.isLoaded) {
+      return <Loading />;
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.form}>
@@ -137,7 +141,7 @@ class SettingsScreen extends Component {
           />
         </View>
         <View style={styles.btnContainer}>
-          <Button style={styles.btnStyle} onPress={this.handleEmailChange} title="Change Email" />
+          <Button style={styles.btnStyle} onPress={this.handleEmailSubmit} title="Change Email" />
         </View>
         <View style={styles.form}>
           <TextInput
@@ -150,11 +154,29 @@ class SettingsScreen extends Component {
           />
         </View>
         <View style={styles.btnContainer}>
-          <Button style={styles.btnStyle} onPress={this.handlePasswordChange} title="Change Password" />
+          <Button style={styles.btnStyle} onPress={this.handlePasswordSubmit} title="Change Password" />
         </View>
       </View>
     );
   }
 }
 
-export default withFirebase(SettingsScreen);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    updateProfile: formData => dispatch(authActions.dbUpdateProfile(formData)),
+    reAuthenticate: password => dispatch(authActions.dbReauthenticate(password)),
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth || {};
+
+  return {
+    auth,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SettingsScreen);
