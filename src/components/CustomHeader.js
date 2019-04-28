@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Platform} from 'react-native';
 import PropTypes from 'prop-types';
-import {compose} from 'recompose';
 import {withNavigation} from 'react-navigation';
 import BurgerIcon from '../assets/images/drawer-icons/burger-icon.svg';
 import {HeaderTitle} from './TextComponents';
@@ -43,6 +42,4 @@ CustomHeader.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-const enhance = compose(withNavigation);
-
-export default enhance(CustomHeader);
+export default withNavigation(CustomHeader);
