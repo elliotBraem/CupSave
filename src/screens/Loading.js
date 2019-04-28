@@ -17,7 +17,9 @@ class LoadingScreen extends PureComponent {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
-    auth: PropTypes.object.isRequired,
+    auth: PropTypes.shape({
+      isAuthenticated: PropTypes.bool.isRequired,
+    }).isRequired,
   };
 
   componentDidMount() {
@@ -40,13 +42,6 @@ class LoadingScreen extends PureComponent {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    signup: (email, password) => dispatch(authActions.dbSignUp(email, password)),
-    resetPassword: (email, password) => dispatch(authActions.dbResetPassword(email, password)),
-  };
-};
-
 const mapStateToProps = (state, ownProps) => {
   const auth = state.auth || {};
 
@@ -55,7 +50,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoadingScreen);
+export default connect(mapStateToProps)(LoadingScreen);

@@ -24,8 +24,10 @@ const styles = StyleSheet.create({
 class HomeScreen extends PureComponent {
   static propTypes = {
     incrementConsumption: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    fetchAuthData: PropTypes.object.isRequired,
+    auth: PropTypes.shape({
+      isAuthenticated: PropTypes.bool.isRequired,
+    }).isRequired,
+    fetchAuthData: PropTypes.func.isRequired,
   };
 
   componentDidMount = () => {
