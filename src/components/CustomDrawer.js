@@ -58,17 +58,17 @@ class CustomDrawer extends Component {
   state = {errorMessage: null};
 
   handleLogout = async () => {
-    const {logout, navigation, auth} = this.props;
-    await logout();
-    if (auth.error) {
-      this.setState({errorMessage: auth.error});
-    } else {
-      navigation.navigate('Auth');
-    }
+    const {logout, navigation} = this.props;
+    await logout()
+      .then(navigation.navigate('Auth'))
+      .catch(error => {
+        console.log(error);
+        this.setState({errorMessage: error});
+      });
   };
 
   render() {
-    const {logout, ...props} = this.props;
+    const {...props} = this.props;
     return (
       <SafeAreaView style={styles.container} forceInset={{top: 'always', horizontal: 'never'}}>
         <View style={styles.headerContainer}>

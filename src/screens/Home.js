@@ -41,9 +41,9 @@ class HomeScreen extends PureComponent {
   render() {
     const {auth, incrementConsumption} = this.props;
 
-    if (!auth.isLoaded) {
-      return <Loading />;
-    }
+    // if (!auth.isLoaded) {
+    //   return <Loading />;
+    // }
 
     return (
       <View style={styles.container}>
