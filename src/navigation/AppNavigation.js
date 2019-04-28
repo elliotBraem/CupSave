@@ -30,9 +30,6 @@ const hiddenDrawerItems = ['Settings'];
 // Stack for logged in user
 const AppStack = createDrawerNavigator(
   {
-    Settings: {
-      screen: SettingsScreen,
-    },
     Home: {
       screen: HomeScreen,
       navigationOptions: {

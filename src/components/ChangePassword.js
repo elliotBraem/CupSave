@@ -59,7 +59,13 @@ class ChangePassword extends Component {
     } else {
       reAuthenticate(currentPassword)
         .then(() => {
-          updatePassword(newPassword);
+          updatePassword(newPassword)
+            .then(() => {
+              this.setState({errorMessage: 'Password updated!'});
+            })
+            .catch(error => {
+              console.log(error);
+            });
         })
         .catch(error => this.setState({errorMessage: error.message}));
     }
