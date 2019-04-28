@@ -95,6 +95,7 @@ class SignUpScreen extends Component {
     signup: PropTypes.func.isRequired,
     resetPassword: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    loginWithFacebook: PropTypes.func.isRequired,
   };
 
   static navigationOptions = {
@@ -124,45 +125,56 @@ class SignUpScreen extends Component {
     }
   };
 
+  handleFacebookSignUp = async () => {
+      const {navigation, loginWithFacebook, auth} = this.props;
+      await loginWithFacebook();
+
+      if (auth.error) {
+        this.setState({errorMessage: auth.error});
+      } else {
+        navigation.navigate('App');
+      }
+    };
+
   render() {
     const {navigation} = this.props;
     const {errorMessage, email, password, confirmedPassword} = this.state;
 
     return (
-      <KeyboardAvoidingView style={styles.page} keyboardVerticalOffset={-60} behavior="padding" enabled>
-        <View style={styles.outerLogoContainer}>
-          <View style={styles.logoContainer}>
-            <Image source={Logo} style={styles.logo} />
-          </View>
-          <View style={styles.logoTextContainer}>
-            <Text style={{color: COLORS.primary, ...styles.logoText}}> Welcome to CupSave! </Text>
-          </View>
-        </View>
-        <View style={styles.spaceContainer} />
-        <View style={styles.form}>
-          {errorMessage && <Text style={{color: 'red'}}>{errorMessage}</Text>}
-          <TextInput
-            style={styles.inputStyle}
-            autoCapitalize="none"
-            placeholder="Email"
-            value={email}
-            onChangeText={emailInput => this.setState({email: emailInput})}
-          />
-          <TextInput
-            secureTextEntry
-            style={styles.inputStyle}
-            autoCapitalize="none"
-            placeholder="Password"
-            value={password}
-            onChangeText={passwordInput => this.setState({password: passwordInput})}
-          />
-          <TextInput
-            secureTextEntry
-            style={styles.inputStyle}
-            autoCapitalize="none"
-            placeholder="Confirm Password"
-            value={confirmedPassword}
-            onChangeText={confirmedPasswordInput => this.setState({confirmedPassword: confirmedPasswordInput})}
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+        <Text style={styles.header}>Welcome to CupSave!</Text>
+        <Text>Sign Up</Text>
+        {errorMessage && <Text style={{color: 'red'}}>{errorMessage}</Text>}
+        <TextInput
+          style={styles.textInput}
+          autoCapitalize="none"
+          placeholder="Email"
+          value={email}
+          onChangeText={emailInput => this.setState({email: emailInput})}
+        />
+        <TextInput
+          secureTextEntry
+          style={styles.textInput}
+          autoCapitalize="none"
+          placeholder="Password"
+          value={password}
+          onChangeText={passwordInput => this.setState({password: passwordInput})}
+        />
+        <TextInput
+          secureTextEntry
+          placeholder="Confirm Password"
+          autoCapitalize="none"
+          style={styles.textInput}
+          onChangeText={confirmedPasswordInput => this.setState({confirmedPassword: confirmedPasswordInput})}
+          value={confirmedPassword}
+        />
+        <View style={styles.buttons}>
+          <Button title="Submit" onPress={this.handleSignUp} style={styles.button} />
+          <Button title="Sign up with Facebook" onPress={this.handleFacebookSignUp} style={styles.button} />
+          <Button
+            title="Already have an account? Login"
+            onPress={() => navigation.navigate('Login')}
+            style={styles.button}
           />
           <View style={styles.btnContainer}>
             <Button title="Sign Up" style={styles.btnStyle} color={COLORS.primary} onPress={this.handleSignUp} />
@@ -188,6 +200,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     signup: (email, password) => dispatch(authActions.dbSignUp(email, password)),
     resetPassword: (email, password) => dispatch(authActions.dbResetPassword(email, password)),
+    loginWithFacebook: () => dispatch(authActions.dbFacebookLogin()),
   };
 };
 

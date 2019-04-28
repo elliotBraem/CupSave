@@ -109,6 +109,74 @@ export class AuthService {
     });
   };
 
+  /**
+   * Login to Firebase with Email/Password
+   */
+  loginWithFacebook = () => {
+    return new Promise(async (resolve, reject) => {
+      const appId = Expo.Constants.manifest.extra.facebook.appId;
+      const permissions = ['public_profile', 'email']; // required permissions
+
+      const {type, token} = await Expo.Facebook.logInWithReadPermissionsAsync(appId, {permissions});
+
+      switch (type) {
+        case 'success': {
+          await Firebase.auth().setPersistence(Firebase.auth.Auth.Persistence.LOCAL);
+          const credential = Firebase.auth.FacebookAuthProvider.credential(token);
+          const facebookProfile = await Firebase.auth().signInAndRetrieveDataWithCredential(credential);
+
+          // do things with user's facebook profile data here
+          const userRef = FirestoreRef.collection('users').where('email', '==', facebookProfile.user.email);
+          const email = facebookProfile.user.email;
+          userRef.get().then(async querySnapshot => {
+            if (!querySnapshot.empty) {
+              // Contents of first document (only should be 1, emails are unique)
+              return resolve({email});
+            } else {
+              const uid = facebookProfile.user.uid;
+              const currentTimeInUnixEpoch = new Date().valueOf();
+
+              const isUniversity = new RegExp(REGEX.UNIVERSITY_EMAIL).test(email);
+
+              const badges = {
+                '6W2UJvCl9AKy3X97jhZ0': true, // Hello World badge
+              };
+
+              if (isUniversity) {
+                badges.rJ7XjWH9a336tPj9caEB = true;
+              }
+
+              await FirestoreRef.collection('users')
+                .doc(uid)
+                .set({
+                  email,
+                  badges,
+                  consumption: {
+                    total: 0,
+                    most_recent_consumption: currentTimeInUnixEpoch,
+                    history: {
+                      [currentTimeInUnixEpoch]: 0,
+                    },
+                  },
+                  city: '',
+                  level: 0,
+                  friends: {
+                    byZi8ywta1hgA9oTc6YwHEDrrHU2: true, // Test user
+                  },
+                  cup_volume_oz: 16,
+                  signed_up: currentTimeInUnixEpoch,
+                });
+              return resolve({email});
+            }
+          });
+        }
+        case 'cancel': {
+          throw new Error('Error: something went wrong');
+        }
+      }
+    });
+  };
+
   logout = () => {
     return new Promise((resolve, reject) => {
       Firebase.auth()

@@ -95,6 +95,7 @@ class LoginScreen extends Component {
     login: PropTypes.func.isRequired,
     resetPassword: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    loginWithFacebook: PropTypes.func.isRequired,
   };
 
   state = {email: '', password: '', errorMessage: null};
@@ -115,6 +116,17 @@ class LoginScreen extends Component {
       } else {
         navigation.navigate('App');
       }
+    }
+  };
+
+  handleFacebookLogin = async () => {
+    const {navigation, loginWithFacebook, auth} = this.props;
+    await loginWithFacebook();
+
+    if (auth.error) {
+      this.setState({errorMessage: auth.error});
+    } else {
+      navigation.navigate('App');
     }
   };
 
@@ -154,9 +166,8 @@ class LoginScreen extends Component {
             onChangeText={passwordInput => this.setState({password: passwordInput})}
           />
           <View style={styles.btnContainer}>
-            <Button title="Login" style={styles.btnStyle} color={COLORS.primary} onPress={this.handleLogin} />
-          </View>
-          <View style={{marginTop: '2%'}}>
+            <Button title="Login" style={styles.btnStyle} onPress={this.handleLogin} />
+            <Button title="Login with Facebook" style={styles.btnStyle} onPress={this.handleFacebookLogin} />
             <Text style={styles.accountPrompt}>Don&#39;t have an account?</Text>
           </View>
           <View style={styles.btnContainer}>
@@ -177,6 +188,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     login: (email, password) => dispatch(authActions.dbLogin(email, password)),
     resetPassword: (email, password) => dispatch(authActions.dbResetPassword(email, password)),
+    loginWithFacebook: () => dispatch(authActions.dbFacebookLogin()),
   };
 };
 
