@@ -20,9 +20,10 @@ npm run testWithCoverage
 
 https://udacity.github.io/git-styleguide/
 
-## Understanding the File Structure
+## Understanding the File Structure / Monorepo
 
 - `/docs` - Documentation
+- `/location_parser` Program to add businesses from Yelp Dataset to firebase firestore
 - `/src` - Contains the source code for native (ios and android)
   - `/components` - presentational components that sit inside containers. [Read More](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0)
   - `/constants` - Shared variables that don't change
