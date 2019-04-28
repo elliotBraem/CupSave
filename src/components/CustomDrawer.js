@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   headerText: {
-    fontSize: 22,
+    fontSize: 14,
     color: COLORS.white,
   },
   profileImage: {
@@ -68,12 +68,12 @@ class CustomDrawer extends Component {
   };
 
   render() {
-    const {...props} = this.props;
+    const {logout, auth, ...props} = this.props;
     return (
       <SafeAreaView style={styles.container} forceInset={{top: 'always', horizontal: 'never'}}>
         <View style={styles.headerContainer}>
           <Image source={profileImage} style={styles.profileImage} />
-          <Text style={styles.headerText}>First M. Last</Text>
+          <Text style={styles.headerText}>{auth.user.email}</Text>
         </View>
         <View>
           <DrawerItems {...props} />

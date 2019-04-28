@@ -1,40 +1,89 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, TextInput, Alert, Button, KeyboardAvoidingView} from 'react-native';
+import {Text, StyleSheet, View, TextInput, Alert, Button, KeyboardAvoidingView, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import REGEX from '../constants/regex';
+import COLORS from '../constants/colors';
 import * as authActions from '../store/actions/auth';
 
+const Logo = require('../assets/images/logo.png');
+
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 50,
-    paddingTop: 15,
-    paddingLeft: 15,
-    paddingRight: 15,
-    justifyContent: 'center',
+  page: {
     flex: 1,
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor: COLORS.white,
+    borderTopWidth: 50,
+    borderTopColor: COLORS.white,
   },
-  buttons: {
+  outerLogoContainer: {
+    marginHorizontal: '10%',
+    flex: 0.5,
+    flexDirection: 'row',
+    backgroundColor: COLORS.secondary,
+    justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 2,
+    borderRadius: 40,
+  },
+  logoContainer: {
+    flex: 0.7,
+    marginLeft: '5%',
+  },
+  logo: {
+    flex: 1,
+    height: null,
+    width: null,
+    resizeMode: 'contain',
+  },
+  logoTextContainer: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    margin: '5%',
+  },
+  logoText: {
+    fontSize: 22,
+    textAlign: 'center',
+  },
+  spaceContainer: {
+    flex: 0.05,
     justifyContent: 'center',
-    marginBottom: 10,
   },
-  header: {
-    fontSize: 38,
-    marginBottom: 20,
-  },
-  button: {
-    marginBottom: 15,
+  subtextContainer: {
+    flex: 0.6,
     justifyContent: 'center',
   },
-  textInput: {
-    height: 40,
+  subtext: {
+    alignSelf: 'center',
+  },
+  form: {
+    flex: 0.6,
+    justifyContent: 'space-between',
+    width: '80%',
+    alignSelf: 'center',
+  },
+  inputStyle: {
+    flex: 0.8,
+    //    height: 40,
     width: '100%',
     borderColor: 'gray',
     borderWidth: 1,
-    marginTop: 14,
+    marginBottom: '2%',
     alignSelf: 'stretch',
     textAlign: 'center',
+    backgroundColor: COLORS.white,
+  },
+  btnStyle: {
+    width: '100%',
+    alignSelf: 'stretch',
+    textAlign: 'center',
+  },
+  btnContainer: {
+    flex: 1.2,
+    // alignContent: 'space-between',
   },
 });
 
@@ -46,6 +95,7 @@ class SignUpScreen extends Component {
     signup: PropTypes.func.isRequired,
     resetPassword: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    loginWithFacebook: PropTypes.func.isRequired,
   };
 
   static navigationOptions = {
@@ -74,6 +124,17 @@ class SignUpScreen extends Component {
       }
     }
   };
+
+  handleFacebookSignUp = async () => {
+      const {navigation, loginWithFacebook, auth} = this.props;
+      await loginWithFacebook();
+
+      if (auth.error) {
+        this.setState({errorMessage: auth.error});
+      } else {
+        navigation.navigate('App');
+      }
+    };
 
   render() {
     const {navigation} = this.props;
@@ -109,11 +170,26 @@ class SignUpScreen extends Component {
         />
         <View style={styles.buttons}>
           <Button title="Submit" onPress={this.handleSignUp} style={styles.button} />
+          <Button title="Sign up with Facebook" onPress={this.handleFacebookSignUp} style={styles.button} />
           <Button
             title="Already have an account? Login"
             onPress={() => navigation.navigate('Login')}
             style={styles.button}
           />
+          <View style={styles.btnContainer}>
+            <Button title="Sign Up" style={styles.btnStyle} color={COLORS.primary} onPress={this.handleSignUp} />
+          </View>
+          <View style={styles.subtextContainer}>
+            <Text style={styles.subtext}>Already have an account?</Text>
+          </View>
+          <View style={styles.btnContainer}>
+            <Button
+              title="Back to login"
+              style={styles.btnStyle}
+              color={COLORS.primary}
+              onPress={() => navigation.navigate('Login')}
+            />
+          </View>
         </View>
       </KeyboardAvoidingView>
     );
@@ -124,6 +200,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     signup: (email, password) => dispatch(authActions.dbSignUp(email, password)),
     resetPassword: (email, password) => dispatch(authActions.dbResetPassword(email, password)),
+    loginWithFacebook: () => dispatch(authActions.dbFacebookLogin()),
   };
 };
 
