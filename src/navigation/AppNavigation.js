@@ -1,5 +1,4 @@
 import React from 'react';
-import {_} from 'lodash';
 import {StyleSheet} from 'react-native';
 import {createSwitchNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
 import HomeScreen from '../screens/Home';

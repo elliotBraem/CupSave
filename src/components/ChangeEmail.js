@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, Alert, TouchableOpacity, TextInput} from 'react-native';
-import {withFirebase} from 'react-redux-firebase';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import * as authActions from '../store/actions/auth';
 import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
@@ -35,9 +36,9 @@ const styles = StyleSheet.create({
 
 class ChangeEmail extends Component {
   static propTypes = {
-    firebase: PropTypes.shape({
-      auth: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
+    updateProfile: PropTypes.func.isRequired,
+    updateEmail: PropTypes.func.isRequired,
+    reAuthenticate: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -49,24 +50,23 @@ class ChangeEmail extends Component {
     };
   }
 
-  reauthenticate = currentPassword => {
-    const {firebase} = this.props;
-    const user = firebase.auth().currentUser;
-    const cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
-    return user.reauthenticateWithCredential(cred);
-  };
-
-  handleEmailChange = () => {
+  handleEmailChange = async () => {
     const {currentPassword, newEmail} = this.state;
-    const {firebase} = this.props;
+    const {updateProfile, updateEmail, reAuthenticate} = this.props;
 
     if (currentPassword.trim() === '' || newEmail.trim() === '') {
       Alert.alert('Invalid Parameters:', 'password / new email cannot be empty');
     } else {
-      this.reauthenticate(currentPassword)
+      reAuthenticate(currentPassword)
         .then(() => {
-          const user = firebase.auth().currentUser;
-          user.updateEmail(newEmail);
+          updateProfile({email: newEmail});
+          updateEmail(newEmail)
+            .then(() => {
+              this.setState({errorMessage: 'Email updated!'});
+            })
+            .catch(error => {
+              console.log(error);
+            });
         })
         .catch(error => this.setState({errorMessage: error.message}));
     }
@@ -92,7 +92,7 @@ class ChangeEmail extends Component {
           onChangeText={newEmailInput => this.setState({newEmail: newEmailInput})}
           value={newEmail}
         />
-        <TouchableOpacity style={styles.btnStyle} onPress={this.handlePasswordChange}>
+        <TouchableOpacity style={styles.btnStyle} onPress={this.handleEmailChange}>
           <Text>Change Email</Text>
         </TouchableOpacity>
       </View>
@@ -100,4 +100,23 @@ class ChangeEmail extends Component {
   }
 }
 
-export default withFirebase(ChangeEmail);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    updateProfile: formData => dispatch(authActions.dbUpdateProfile(formData)),
+    updateEmail: newEmail => dispatch(authActions.dbUpdateEmail(newEmail)),
+    reAuthenticate: password => dispatch(authActions.dbReauthenticate(password)),
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth || {};
+
+  return {
+    auth,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ChangeEmail);

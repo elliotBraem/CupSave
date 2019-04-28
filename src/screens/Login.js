@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Text, StyleSheet, View, Alert, KeyboardAvoidingView, Image, Button, TextInput} from 'react-native';
 import PropTypes from 'prop-types';
-import {withFirebase} from 'react-redux-firebase';
+
+import * as authActions from '../store/actions/auth';
 
 const Logo = require('../assets/images/logo.png');
 
@@ -58,31 +60,29 @@ class LoginScreen extends Component {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
-    firebase: PropTypes.shape({
-      login: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
+    login: PropTypes.func.isRequired,
+    resetPassword: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   state = {email: '', password: '', errorMessage: null};
 
-  handleLogin = () => {
+  // TODO: add resetPassword
+
+  handleLogin = async () => {
     const {email, password} = this.state;
-    const {navigation, firebase} = this.props;
+    const {navigation, login, auth} = this.props;
 
     if (email.trim() === '' || password.trim() === '') {
       Alert.alert('Invalid Parameters:', 'Username / Password cannot be empty');
     } else {
-      firebase
-        .login({
-          email,
-          password,
-        })
-        .then(() => navigation.navigate('App'))
-        .catch(error => this.setState({errorMessage: error.message}));
+      await login(email, password);
+
+      if (auth.error) {
+        this.setState({errorMessage: auth.error});
+      } else {
+        navigation.navigate('App');
+      }
     }
   };
 
@@ -125,4 +125,22 @@ class LoginScreen extends Component {
   }
 }
 
-export default withFirebase(LoginScreen);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    login: (email, password) => dispatch(authActions.dbLogin(email, password)),
+    resetPassword: (email, password) => dispatch(authActions.dbResetPassword(email, password)),
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth || {};
+
+  return {
+    auth,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginScreen);

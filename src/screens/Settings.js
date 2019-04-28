@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet, View, Platform} from 'react-native';
 import CustomHeader from '../components/CustomHeader';
-import COLORS from '../constants/colors';
 import ChangePassword from '../components/ChangePassword';
 import ChangeEmail from '../components/ChangeEmail';
+import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
   container: {

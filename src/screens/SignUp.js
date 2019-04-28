@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, TextInput, Alert, Button, KeyboardAvoidingView} from 'react-native';
 import PropTypes from 'prop-types';
-import {withFirebase} from 'react-redux-firebase';
-import REGEX from '../constants/regex';
+import {connect} from 'react-redux';
+import * as authActions from '../store/actions/auth';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,71 +39,39 @@ const styles = StyleSheet.create({
 });
 
 class SignUpScreen extends Component {
-  static navigationOptions = {
-    title: 'SignUp',
-  };
-
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
-    firebase: PropTypes.shape({
-      login: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
+    signup: PropTypes.func.isRequired,
+    resetPassword: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-  }
+  static navigationOptions = {
+    title: 'SignUp',
+  };
 
   state = {email: '', password: '', confirmedPassword: '', errorMessage: null};
 
-  handleSignUp = () => {
+  // TODO: add resetPassword
+
+  handleSignUp = async () => {
     const {email, password, confirmedPassword} = this.state;
-    const {navigation, firebase} = this.props;
+    const {navigation, signup, auth} = this.props;
+
     if (email.trim() === '' || password.trim() === '') {
       Alert.alert('ERROR:', 'Username / password cannot be empty');
     } else if (confirmedPassword !== password) {
       Alert.alert('ERROR:', 'Password does not match confirmed password');
     } else {
-      const currentTimeInUnixEpoch = new Date().valueOf();
+      await signup(email, password);
 
-      const isUniversity = new RegExp(REGEX.UNIVERSITY_EMAIL).test(email);
-
-      const badges = {
-        '6W2UJvCl9AKy3X97jhZ0': true, // Hello World badge
-      };
-
-      if (isUniversity) {
-        badges.rJ7XjWH9a336tPj9caEB = true;
+      if (auth.error) {
+        this.setState({errorMessage: auth.error});
+      } else {
+        navigation.navigate('Home');
       }
-
-      firebase
-        .createUser(
-          {
-            email,
-            password,
-          },
-          {
-            email,
-            badges,
-            consumption: {
-              total: 0,
-              most_recent_consumption: currentTimeInUnixEpoch,
-              history: {
-                [currentTimeInUnixEpoch]: 0,
-              },
-            },
-            city: '',
-            level: 0,
-            friends: {
-              byZi8ywta1hgA9oTc6YwHEDrrHU2: true, // Test user
-            },
-            cup_volume_oz: 16,
-          }
-        )
-        .then(() => navigation.navigate('Home'))
-        .catch(error => this.setState({errorMessage: error.message}));
     }
   };
 
@@ -140,7 +108,7 @@ class SignUpScreen extends Component {
           value={confirmedPassword}
         />
         <View style={styles.buttons}>
-          <Button title="Sign Up" onPress={this.handleSignUp} style={styles.button} />
+          <Button title="Submit" onPress={this.handleSignUp} style={styles.button} />
           <Button
             title="Already have an account? Login"
             onPress={() => navigation.navigate('Login')}
@@ -152,4 +120,22 @@ class SignUpScreen extends Component {
   }
 }
 
-export default withFirebase(SignUpScreen);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    signup: (email, password) => dispatch(authActions.dbSignUp(email, password)),
+    resetPassword: (email, password) => dispatch(authActions.dbResetPassword(email, password)),
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth || {};
+
+  return {
+    auth,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUpScreen);

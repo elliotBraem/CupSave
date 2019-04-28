@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, View, Platform} from 'react-native';
 import CustomHeader from '../components/CustomHeader';
@@ -15,11 +15,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class AboutUsScreen extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+class AboutUsScreen extends PureComponent {
   static propTypes = {
     navigation: PropTypes.shape({
       openDrawer: PropTypes.func.isRequired,
@@ -31,8 +27,7 @@ class AboutUsScreen extends Component {
     return (
       <View style={styles.container}>
         <CustomHeader title="About Us" />
-        <View style={styles.header}>
-        </View>
+        <View style={styles.header} />
       </View>
     );
   }

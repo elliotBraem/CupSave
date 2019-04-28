@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, Alert, TouchableOpacity, TextInput} from 'react-native';
-import {withFirebase} from 'react-redux-firebase';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import * as authActions from '../store/actions/auth';
 import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
@@ -36,9 +37,8 @@ const styles = StyleSheet.create({
 
 class ChangePassword extends Component {
   static propTypes = {
-    firebase: PropTypes.shape({
-      auth: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
+    updatePassword: PropTypes.func.isRequired,
+    reAuthenticate: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -50,24 +50,16 @@ class ChangePassword extends Component {
     };
   }
 
-  reauthenticate = currentPassword => {
-    const {firebase} = this.props;
-    const user = firebase.auth().currentUser;
-    const cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
-    return user.reauthenticateWithCredential(cred);
-  };
-
   handlePasswordChange = () => {
     const {currentPassword, newPassword} = this.state;
-    const {firebase} = this.props;
+    const {reAuthenticate, updatePassword} = this.props;
 
     if (currentPassword.trim() === '' || newPassword.trim() === '') {
       Alert.alert('Invalid Parameters:', 'old password / new password cannot be empty');
     } else {
-      this.reauthenticate(currentPassword)
+      reAuthenticate(currentPassword)
         .then(() => {
-          const user = firebase.auth().currentUser;
-          user.updatePassword(newPassword);
+          updatePassword(newPassword);
         })
         .catch(error => this.setState({errorMessage: error.message}));
     }
@@ -102,4 +94,22 @@ class ChangePassword extends Component {
   }
 }
 
-export default withFirebase(ChangePassword);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    updatePassword: newPassword => dispatch(authActions.dbUpdatePassword(newPassword)),
+    reAuthenticate: password => dispatch(authActions.dbReauthenticate(password)),
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth || {};
+
+  return {
+    auth,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ChangePassword);
