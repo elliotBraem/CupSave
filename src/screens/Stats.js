@@ -65,7 +65,7 @@ class Stats extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Welcome to the Stats Page You Goddam Hero You</Text>
+        <Text style={styles.header}>Welcome to the Stats Page You Hero You</Text>
         <View style={styles.buttons}>
           <Button onPress={() => navigation.openDrawer()} style={styles.button} title="Menu" />
         </View>

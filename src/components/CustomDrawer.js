@@ -2,7 +2,6 @@
 import React from 'react';
 import {Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
 import {DrawerItems, SafeAreaView} from 'react-navigation';
-import {withFirebase} from 'react-redux-firebase';
 import Logout from '../assets/images/drawer-icons/logout-icon.svg';
 import COLORS from '../constants/colors';
 
@@ -53,15 +52,15 @@ const CustomDrawer = props => {
         <DrawerItems {...props} />
       </View>
       <View style={styles.bottom}>
-        <TouchableOpacity onPress={() => props.firebase.logout()} style={styles.innerBottom}>
-          <Logout style={{width: 20, height: 20}} />
-          <Text style={styles.logout} onPress={() => props.firebase.logout()}>
-            Log out
-          </Text>
-        </TouchableOpacity>
+        {/* <TouchableOpacity onPress={() => props.firebase.logout()} style={styles.innerBottom}> */}
+        {/*  <Logout style={{width: 20, height: 20}} /> */}
+        {/*  <Text style={styles.logout} onPress={() => props.firebase.logout()}> */}
+        {/*    Log out */}
+        {/*  </Text> */}
+        {/* </TouchableOpacity> */}
       </View>
     </SafeAreaView>
   );
 };
 
-export default withFirebase(CustomDrawer);
+export default CustomDrawer;

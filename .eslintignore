@@ -1,5 +1,8 @@
 .idea/
 .expo/
+node_modules/
+
+location_parser/business.json
 
 # Ignore built files
 package-lock.json

@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, ActivityIndicator, StyleSheet} from 'react-native';
-import {withFirebase} from 'react-redux-firebase';
+import {connect} from 'react-redux';
+import * as authActions from '../store/actions/auth';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,25 +12,22 @@ const styles = StyleSheet.create({
   },
 });
 
-class LoadingScreen extends Component {
+class LoadingScreen extends PureComponent {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
-    firebase: PropTypes.shape({
-      auth: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
+    auth: PropTypes.object.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
-    const {firebase, navigation} = this.props;
-    firebase.auth().onAuthStateChanged(user => {
-      navigation.navigate(user ? 'App' : 'Auth');
-    });
+    const {navigation, auth} = this.props;
+
+    if (auth.isAuthenticated) {
+      navigation.navigate('App');
+    } else {
+      navigation.navigate('Auth');
+    }
   }
 
   render() {
@@ -42,4 +40,22 @@ class LoadingScreen extends Component {
   }
 }
 
-export default withFirebase(LoadingScreen);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    signup: (email, password) => dispatch(authActions.dbSignUp(email, password)),
+    resetPassword: (email, password) => dispatch(authActions.dbResetPassword(email, password)),
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth || {};
+
+  return {
+    auth,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoadingScreen);
