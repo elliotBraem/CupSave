@@ -27,6 +27,18 @@ export const resetPassword = () => {
   };
 };
 
+export const updatePassword = () => {
+  return {
+    type: 'AUTH_DETAILS_UPDATE',
+  };
+};
+
+export const updateEmail = () => {
+  return {
+    type: 'AUTH_DETAILS_UPDATE',
+  };
+};
+
 export const logout = () => {
   return {
     type: 'AUTH_RESET',
@@ -87,7 +99,7 @@ export function dbReauthenticate(password) {
 
       // TODO: will this work with facebook? maybe get providerId from auth props object
       const cred = Firebase.auth.EmailAuthProvider.credential(user.email, password);
-      return user.reauthenticateWithCredential(cred);
+      return user.reauthenticateAndRetrieveDataWithCredential(cred);
     } catch (error) {
       return dispatch(authError(error.message));
     }
@@ -164,6 +176,38 @@ export function dbResetPassword(email) {
     try {
       await authService.resetPassword(email);
       return dispatch(resetPassword());
+    } catch (error) {
+      return dispatch(authError(error.message));
+    }
+  };
+}
+
+/**
+ * Update Password
+ */
+export function dbUpdatePassword(newPassword) {
+  return async (dispatch, getState) => {
+    await dispatch(authLoading());
+
+    try {
+      await authService.updatePassword(newPassword);
+      return dispatch(updatePassword());
+    } catch (error) {
+      return dispatch(authError(error.message));
+    }
+  };
+}
+
+/**
+ * Update Email
+ */
+export function dbUpdateEmail(newEmail) {
+  return async (dispatch, getState) => {
+    await dispatch(authLoading());
+
+    try {
+      await authService.updateEmail(newEmail);
+      return dispatch(updateEmail());
     } catch (error) {
       return dispatch(authError(error.message));
     }

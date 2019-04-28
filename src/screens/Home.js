@@ -47,7 +47,7 @@ class HomeScreen extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <CustomHeader title="Home" style={styles.header} />
+        <CustomHeader title="Home" />
         <View style={styles.inner}>
           <SaveCupForm onSaveCupFormSubmit={incrementConsumption} />
         </View>
