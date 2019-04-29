@@ -126,15 +126,15 @@ class SignUpScreen extends Component {
   };
 
   handleFacebookSignUp = async () => {
-      const {navigation, loginWithFacebook, auth} = this.props;
-      await loginWithFacebook();
+    const {navigation, loginWithFacebook, auth} = this.props;
+    await loginWithFacebook();
 
-      if (auth.error) {
-        this.setState({errorMessage: auth.error});
-      } else {
-        navigation.navigate('App');
-      }
-    };
+    if (auth.error) {
+      this.setState({errorMessage: auth.error});
+    } else {
+      navigation.navigate('App');
+    }
+  };
 
   render() {
     const {navigation} = this.props;

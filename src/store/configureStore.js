@@ -1,7 +1,7 @@
 import {applyMiddleware, createStore} from 'redux';
 import {composeWithDevTools} from 'remote-redux-devtools';
 import {persistCombineReducers, persistStore} from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // default: localStorage
+import storage from 'redux-persist/lib/storage'; // default: AsyncStorage
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 
@@ -10,7 +10,7 @@ export default function configureStore(initialState = {}) {
   const config = {
     key: 'root',
     storage,
-    blacklist: ['status', 'locations', 'firebase', 'rehydrated'],
+    blacklist: ['locations'], // Too many locations for AsyncStorage
   };
 
   // Middleware configuration
