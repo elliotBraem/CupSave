@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, View, Image, Text} from 'react-native';
 import {BarCodeScanner, Permissions} from 'expo';
 import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import ScanIcon from '../assets/images/qr-scanner/scan-container.png';
+import {connect} from 'react-redux';
+import * as authActions from '../store/actions/auth';
 
 const styles = StyleSheet.create({
   header: {
@@ -28,12 +30,21 @@ const styles = StyleSheet.create({
   },
 });
 
-class QRScannerScreen extends Component {
+class QRScannerScreen extends PureComponent {
   static propTypes = {
-    navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
-      navigate: PropTypes.func.isRequired,
+    incrementConsumption: PropTypes.func.isRequired,
+    auth: PropTypes.shape({
+      isAuthenticated: PropTypes.bool.isRequired,
     }).isRequired,
+    fetchAuthData: PropTypes.func.isRequired,
+  };
+
+  componentDidMount = () => {
+    const {fetchAuthData, auth} = this.props;
+
+    if (!auth.isAuthenticated) {
+      fetchAuthData();
+    }
   };
 
   state = {hasCameraPermission: null};
@@ -48,6 +59,7 @@ class QRScannerScreen extends Component {
   };
 
   render() {
+    const {auth, incrementConsumption} = this.props;
     const {hasCameraPermission} = this.state;
 
     if (hasCameraPermission === null) {
@@ -66,4 +78,22 @@ class QRScannerScreen extends Component {
   }
 }
 
-export default QRScannerScreen;
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    incrementConsumption: () => dispatch(authActions.dbIncrementConsumption()),
+    fetchAuthData: () => dispatch(authActions.dbOnAuthorizeStateChange()),
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth || {};
+
+  return {
+    auth,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QRScannerScreen);
