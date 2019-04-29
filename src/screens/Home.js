@@ -1,13 +1,13 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {withFirebase, withFirestore} from 'react-redux-firebase';
-import {compose} from 'redux';
+import React, {PureComponent} from 'react';
+import {StyleSheet, View, Platform} from 'react-native';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {spinnerWhileLoading} from '../utils/components';
 import SaveCupForm from '../components/SaveCupForm';
 import LiveFeed from '../components/LiveFeed';
 import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
+import * as authActions from '../store/actions/auth';
+import Loading from '../components/Loading';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,24 +17,62 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.primary,
   },
+  inner: {
+    marginTop: Platform.OS === 'ios' ? 100 : 100 - 24,
+  },
 });
 
-const HomeScreen = () => {
-  return (
-    <View style={styles.container}>
-      <CustomHeader title="Home" />
-      <SaveCupForm />
-      <LiveFeed />
-    </View>
-  );
+class HomeScreen extends PureComponent {
+  static propTypes = {
+    incrementConsumption: PropTypes.func.isRequired,
+    auth: PropTypes.shape({
+      isAuthenticated: PropTypes.bool.isRequired,
+    }).isRequired,
+    fetchAuthData: PropTypes.func.isRequired,
+  };
+
+  componentDidMount = () => {
+    const {fetchAuthData, auth} = this.props;
+
+    if (!auth.isAuthenticated) {
+      fetchAuthData();
+    }
+  };
+
+  render() {
+    const {auth, incrementConsumption} = this.props;
+
+    // if (!auth.isLoaded) {
+    //   return <Loading />;
+    // }
+
+    return (
+      <View style={styles.container}>
+        <CustomHeader title="Home" />
+        <View style={styles.inner}>
+          <SaveCupForm onSaveCupFormSubmit={incrementConsumption} />
+        </View>
+      </View>
+    );
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    incrementConsumption: () => dispatch(authActions.dbIncrementConsumption()),
+    fetchAuthData: () => dispatch(authActions.dbOnAuthorizeStateChange()),
+  };
 };
 
-const enhance = compose(
-  // withFirebase
-  // connect(({firebase: {profile}}) => ({
-  //   profile,
-  // })),
-  // spinnerWhileLoading(['profile'])
-);
+const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth || {};
 
-export default enhance(HomeScreen);
+  return {
+    auth,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeScreen);

@@ -12,6 +12,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: COLORS.secondary,
   },
+  statSubtext: {
+    fontSize: 12,
+  },
   headerTitle: {
     fontSize: 20,
     color: COLORS.white,
@@ -28,6 +31,10 @@ export const AppText = props => {
 
 export const StatText = props => {
   return <Text style={styles.statText}>{props.children}</Text>;
+};
+
+export const StatSubtext = props => {
+  return <Text style={styles.statSubtext}>{props.children}</Text>;
 };
 
 export const HeaderTitle = props => {

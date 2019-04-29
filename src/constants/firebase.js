@@ -1,5 +1,5 @@
 // Firebase creds got from console.firebase.google.com
-export const firebaseConfig = {
+const firebaseConfig = {
   apiKey: 'AIzaSyCKHQbALlbnESV0U3hSA8kQXLFyBLvMFFk',
   authDomain: 'cupsave-e9b32.firebaseapp.com',
   databaseURL: 'https://cupsave-e9b32.firebaseio.com',
@@ -8,13 +8,4 @@ export const firebaseConfig = {
   messagingSenderId: '1058030936457',
 };
 
-export const reactReduxFirebaseConfig = {
-  userProfile: 'users', // root that user profiles are written to
-  updateProfileOnLogin: true,
-  useFirestoreForProfile: true,
-  useFirestoreForStorageMeta: true,
-  enableRedirectHandling: false,
-  enableLogging: false,
-};
-
-export default {firebaseConfig, reactReduxFirebaseConfig};
+export default firebaseConfig;

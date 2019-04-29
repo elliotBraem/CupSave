@@ -1,11 +1,8 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, ActivityIndicator, StyleSheet} from 'react-native';
-import {withFirebase} from 'react-redux-firebase';
-import {withNavigation} from 'react-navigation';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
-import {spinnerWhileLoading} from '../utils/components';
+import * as authActions from '../store/actions/auth';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,25 +12,24 @@ const styles = StyleSheet.create({
   },
 });
 
-class LoadingScreen extends Component {
+class LoadingScreen extends PureComponent {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
-    firebase: PropTypes.shape({
-      auth: PropTypes.func.isRequired,
-    }).isRequired, // from withFirebase
+    auth: PropTypes.shape({
+      isAuthenticated: PropTypes.bool.isRequired,
+    }).isRequired,
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
-    const {firebase, navigation} = this.props;
-    firebase.auth().onAuthStateChanged(user => {
-      navigation.navigate(user ? 'App' : 'Auth');
-    });
+    const {navigation, auth} = this.props;
+
+    if (auth.isAuthenticated) {
+      navigation.navigate('App');
+    } else {
+      navigation.navigate('Auth');
+    }
   }
 
   render() {
@@ -46,9 +42,12 @@ class LoadingScreen extends Component {
   }
 }
 
-const enhance = compose(
-  withFirebase,
-  withNavigation
-);
+const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth || {};
 
-export default enhance(LoadingScreen);
+  return {
+    auth,
+  };
+};
+
+export default connect(mapStateToProps)(LoadingScreen);
