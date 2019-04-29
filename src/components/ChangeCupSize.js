@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, Alert, TouchableOpacity, TextInput, Platform, YellowBox} from 'react-native';
-import { Menu, MenuProvider, MenuOptions, MenuOption, MenuTrigger} from "react-native-popup-menu";
+import {Text, StyleSheet, View, TouchableOpacity, Picker} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as authActions from '../store/actions/auth';
@@ -9,6 +8,7 @@ import COLORS from '../constants/colors';
 const styles = StyleSheet.create({
   container: {
     flex: 0,
+    width: '90%',
     justifyContent: 'flex-start',
     backgroundColor: COLORS.white,
     padding: 20,
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 12,
+    marginBottom: 20,
   },
   inputStyle: {
     height: 40,
@@ -33,85 +34,53 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  headerText: {
-    fontSize: 20,
-    margin: 10,
-    fontWeight: "bold"
-  },
-  menuContent: {
-    color: "#000",
-    fontWeight: "bold",
-    padding: 2,
-    fontSize: 20
-  }
 });
 
 class ChangeCupSize extends Component {
   static propTypes = {
-    updateProfile: PropTypes.func.isRequired,
+    updateCupSize: PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
-    YellowBox.ignoreWarnings([
-      'Warning: isMounted(...) is deprecated', 'Module RCTImageLoader'
-    ]);
     this.state = {
-      errorMessage: null,
-      CupSize: null,
+      cupSize: 0,
     };
   }
 
   handleCupChange = async () => {
-    const {updateProfile, auth} = this.props;
-    const {CupSize} = this.state;
-    updateProfile({cupVolumeOz: CupSize}).then(() => { console.log("success");  console.log(auth);}).catch( error => { console.log(error); });
+    const {cupSize} = this.state;
+    const {updateCupSize} = this.props;
+    updateCupSize(cupSize);
   };
 
   render() {
-    const {errorMessage, CupSize} = this.state;
+    const {cupSize} = this.state;
     return (
-      <MenuProvider style={{ flexDirection: "column", padding: 30 }}>
-        <View style={styles.container}>
-        <Menu onSelect={value => this.setState({CupSize: value})}>
-
-          <MenuTrigger  >
-          <Text style={styles.headerText}>{CupSize}oz</Text>
-          </MenuTrigger  >
-
-          <MenuOptions>
-            <MenuOption value={12}>
-              <Text style={styles.menuContent}>12oz</Text>
-            </MenuOption>
-            <MenuOption value={16}>
-              <Text style={styles.menuContent}>16oz</Text>
-            </MenuOption>
-            <MenuOption value={20}>
-              <Text style={styles.menuContent}>20oz</Text>
-            </MenuOption>
-          </MenuOptions>
-
-        </Menu>
+      <View style={styles.container}>
+        <Picker selectedValue={cupSize} onValueChange={(itemValue, itemIndex) => this.setState({cupSize: itemValue})}>
+          <Picker.Item label="12oz" value={12} />
+          <Picker.Item label="16oz" value={16} />
+          <Picker.Item label="20oz" value={20} />
+          <Picker.Item label="32oz" value={32} />
+        </Picker>
         <TouchableOpacity style={styles.btnStyle} onPress={this.handleCupChange}>
           <Text>Change Cup Size</Text>
         </TouchableOpacity>
-        </ View>
-      </MenuProvider>
+      </View>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    updateProfile: formData => dispatch(authActions.dbUpdateProfile(formData)),
+    updateCupSize: newCupSize => dispatch(authActions.dbUpdateCupSize(newCupSize)),
   };
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const auth = state.auth || {};
-
   return {
-    auth,
+    cupSize: state.auth.cupVolumeOz || 16,
   };
 };
 

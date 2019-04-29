@@ -9,13 +9,12 @@ import COLORS from '../constants/colors';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: COLORS.primary,
   },
   inner: {
     marginTop: Platform.OS === 'ios' ? 100 : 100 - 24,
-    flex: 1,
-    width: '80%',
+    paddingBottom: Platform.OS === 'ios' ? 120 : 120 - 24,
+    alignItems: 'center',
   },
 });
 
@@ -23,7 +22,7 @@ const SettingsScreen = () => {
   return (
     <View style={styles.container}>
       <CustomHeader title="Settings" />
-      <ScrollView style={styles.inner}>
+      <ScrollView contentContainerStyle={styles.inner}>
         <ChangeCupSize />
         <ChangePassword />
         <ChangeEmail />
