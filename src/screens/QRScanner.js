@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View, Image, Text} from 'react-native';
+import {Alert, StyleSheet, View, Image, Text} from 'react-native';
 import {BarCodeScanner, Permissions} from 'expo';
+import {connect} from 'react-redux';
 import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import ScanIcon from '../assets/images/qr-scanner/scan-container.png';
-import {connect} from 'react-redux';
 import * as authActions from '../store/actions/auth';
 
 const styles = StyleSheet.create({
@@ -36,18 +36,9 @@ class QRScannerScreen extends PureComponent {
     auth: PropTypes.shape({
       isAuthenticated: PropTypes.bool.isRequired,
     }).isRequired,
-    fetchAuthData: PropTypes.func.isRequired,
   };
 
-  componentDidMount = () => {
-    const {fetchAuthData, auth} = this.props;
-
-    if (!auth.isAuthenticated) {
-      fetchAuthData();
-    }
-  };
-
-  state = {hasCameraPermission: null};
+  state = {hasCameraPermission: null, isScanned: false};
 
   async componentDidMount() {
     const {status} = await Permissions.askAsync(Permissions.CAMERA);
@@ -55,7 +46,19 @@ class QRScannerScreen extends PureComponent {
   }
 
   handleBarCodeScanned = ({type, data}) => {
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    const {incrementConsumption} = this.props;
+    // const {isScanned} = this.state;
+    // if (!isScanned) {
+    //   incrementConsumption();
+    // }
+    // this.setState({isScanned: true});
+    Alert.alert('Barcode Scanned', `Bar code with type ${type} and data ${data} has been scanned!`, [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+      },
+      {text: 'OK', onPress: () => incrementConsumption()},
+    ]);
   };
 
   render() {
