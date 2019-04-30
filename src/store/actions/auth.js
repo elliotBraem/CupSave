@@ -229,7 +229,7 @@ export function dbIncrementConsumption() {
 
         const userData = await userService.getUserData(user.email);
 
-        return dispatch(getUserData(userData));
+        return dispatch(updateProfile(userData));
       }
       return dispatch(authError(ErrorMessages.default));
     } catch (error) {
@@ -250,7 +250,7 @@ export function dbUpdateCupSize(newCupSize) {
 
         const userData = await userService.getUserData(user.email);
 
-        return dispatch(getUserData(userData));
+        return dispatch(updateProfile(userData));
       }
       return dispatch(authError(ErrorMessages.default));
     } catch (error) {

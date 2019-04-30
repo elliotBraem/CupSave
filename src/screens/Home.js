@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, View, Platform} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class HomeScreen extends PureComponent {
+class HomeScreen extends Component {
   static propTypes = {
     incrementConsumption: PropTypes.func.isRequired,
     auth: PropTypes.shape({
@@ -41,9 +41,9 @@ class HomeScreen extends PureComponent {
   render() {
     const {auth, incrementConsumption} = this.props;
 
-    // if (!auth.isLoaded) {
-    //   return <Loading />;
-    // }
+    if (!auth.isLoaded) {
+      return <Loading />;
+    }
 
     return (
       <View style={styles.container}>
@@ -65,6 +65,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state, ownProps) => {
   const auth = state.auth || {};
+
+  console.log(auth.isLoaded);
 
   return {
     auth,

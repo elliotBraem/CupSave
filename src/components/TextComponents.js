@@ -4,7 +4,7 @@ import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
   normalText: {
-    // fontFamily: 'Open-Sans',
+    fontFamily: 'open-sans-regular',
     fontSize: 22,
     color: COLORS.white,
   },

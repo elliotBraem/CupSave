@@ -1,12 +1,14 @@
+/* global navigator */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, View} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {connect} from 'react-redux';
 import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import * as locationsActions from '../store/actions/locations';
 import Loading from '../components/Loading';
+import mapStyle from '../constants/mapStyle';
 
 const styles = StyleSheet.create({
   header: {
@@ -47,10 +49,13 @@ class MapScreen extends Component {
     userLocation: null,
   };
 
-  componentDidMount() {
-    const {fetchLocations} = this.props;
+  constructor(props) {
+    super(props);
+    const {fetchLocations, locations} = props;
 
-    fetchLocations();
+    if (!locations.isLoaded) {
+      fetchLocations();
+    }
 
     this.getUserLocation();
   }
@@ -71,11 +76,11 @@ class MapScreen extends Component {
     );
   };
 
-  getUserMap = ({userLocation}) => {
+  getUserMap = ({userLocation, locations}) => {
     let userLocationMarker = null;
 
     if (userLocation) {
-      userLocationMarker = <MapView.Marker coordinate={userLocation} />;
+      userLocationMarker = <Marker coordinate={userLocation} />;
     }
 
     return (
@@ -89,8 +94,20 @@ class MapScreen extends Component {
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}
+          customMapStyle={mapStyle}
           region={userLocation}>
           {userLocationMarker}
+          {locations.length > 0 &&
+            locations.map(marker => (
+              <Marker
+                key={marker._id}
+                coordinate={{
+                  latitude: marker.latitude,
+                  longitude: marker.longitude,
+                }}
+                title={marker.name}
+              />
+            ))}
         </MapView>
       </View>
     );
@@ -100,11 +117,11 @@ class MapScreen extends Component {
     const {locations} = this.props;
     const {userLocation} = this.state;
 
-    if (!locations.isLoaded) {
+    if (!locations.isLoaded || locations.length === 0) {
       return <Loading />;
     }
 
-    const UserMap = this.getUserMap({style: styles.map, userLocation});
+    const UserMap = this.getUserMap({style: styles.map, userLocation, locations});
 
     return (
       <View style={styles.container}>
@@ -126,6 +143,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state, ownProps) => {
   const locations = state.locations || {};
+
+  console.log(locations);
 
   return {
     locations,
