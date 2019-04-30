@@ -110,7 +110,7 @@ describe('actions', () => {
 // badgesError
 describe('actions', () => {
   it('', () => {
-    const message = "";
+    const message = '';
     const expectedAction = {
       payload: message,
       type: TYPES2.BADGES_ERROR,
@@ -144,7 +144,7 @@ describe('actions', () => {
 // locationsError
 describe('actions', () => {
   it('', () => {
-    const message = "";
+    const message = '';
     const expectedAction = {
       payload: message,
       type: TYPES3.LOCATIONS_ERROR,
@@ -179,7 +179,7 @@ describe('actions', () => {
 // userError
 describe('actions', () => {
   it('', () => {
-    const message = "";
+    const message = '';
     const expectedAction = {
       payload: message,
       type: TYPES4.USERS_ERROR,
@@ -187,4 +187,3 @@ describe('actions', () => {
     expect(ACTIONS4.userError(message)).toEqual(expectedAction);
   });
 });
-
