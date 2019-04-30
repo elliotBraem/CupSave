@@ -4,7 +4,7 @@ import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
   normalText: {
-    // fontFamily: 'Open-Sans',
+    fontFamily: 'open-sans-regular',
     fontSize: 22,
     color: COLORS.white,
   },
@@ -23,20 +23,21 @@ const styles = StyleSheet.create({
     color: COLORS.white,
   },
   worldCounterText: {
+    fontFamily: 'open-sans-italic',
     color: COLORS.white,
-    fontStyle: 'italic',
     fontSize: 18,
     marginTop: 20,
   },
   saveACupText: {
+    fontFamily: 'open-sans-bold',
     marginTop: 40,
     color: COLORS.primary,
     fontSize: 48,
     paddingRight: 60,
   },
   saveTheWorldText: {
+    fontFamily: 'open-sans-italic',
     color: COLORS.white,
-    fontStyle: 'italic',
     fontSize: 48,
     paddingLeft: 40,
   },

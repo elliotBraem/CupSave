@@ -40,7 +40,7 @@ export const authReducer = (state = new AuthState(), action) => {
 
     case 'AUTH_DETAILS_UPDATE': {
       return produce(state, draft => {
-        draft.user = Object.assign(draft.user, payload);
+        draft.user = {...state.user, ...payload};
         draft.isLoaded = true;
       });
     }

@@ -1,14 +1,14 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, ScrollView, View, Image, Button, Platform} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import COLORS from '../constants/colors';
 import CustomHeader from '../components/CustomHeader';
 import StatsOverview from '../components/StatsOverview';
 import ProfileStats from '../components/ProfileStats';
 import Loading from '../components/Loading';
 import * as authActions from '../store/actions/auth';
 import * as badgesActions from '../store/actions/badges';
+import COLORS from '../constants/colors';
 
 const profileImage = require('../assets/images/profileicon.png');
 
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ProfileScreen extends PureComponent {
+class ProfileScreen extends Component {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
@@ -54,7 +54,8 @@ class ProfileScreen extends PureComponent {
       error: PropTypes.string,
       badgeList: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
-    auth: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+    userIsLoaded: PropTypes.bool.isRequired,
     fetchAuthData: PropTypes.func.isRequired,
     fetchBadges: PropTypes.func.isRequired,
   };
@@ -62,9 +63,9 @@ class ProfileScreen extends PureComponent {
   constructor(props) {
     super(props);
 
-    const {badges, auth, fetchBadges, fetchAuthData} = props;
+    const {badges, user, fetchBadges, fetchAuthData, userIsLoaded} = props;
 
-    if (!auth.user || Object.keys(auth.user).length === 0) {
+    if (!userIsLoaded || !user || Object.keys(user).length === 0) {
       fetchAuthData();
     }
 
@@ -73,16 +74,10 @@ class ProfileScreen extends PureComponent {
     }
   }
 
-  componentDidMount = () => {
-    const {fetchAuthData} = this.props;
-
-    fetchAuthData();
-  };
-
   render() {
-    const {navigation, auth, badges} = this.props;
+    const {navigation, user, badges, userIsLoaded} = this.props;
 
-    if (!auth.isLoaded || !badges.isLoaded) {
+    if (!userIsLoaded || !badges.isLoaded) {
       return <Loading />;
     }
 
@@ -93,13 +88,9 @@ class ProfileScreen extends PureComponent {
           <View style={styles.circle}>
             <Image source={profileImage} style={styles.image} />
           </View>
-          <StatsOverview
-            totalCupsSaved={auth.user.consumption.total}
-            level={auth.user.level}
-            drinkSize={auth.user.cup_volume_oz}
-          />
+          <StatsOverview totalCupsSaved={user.consumption.total} level={user.level} drinkSize={user.cup_volume_oz} />
           <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
-          <ProfileStats totalCupsSaved={auth.user.consumption.total} badges={badges} />
+          <ProfileStats totalCupsSaved={user.consumption.total} badges={badges} />
         </ScrollView>
       </View>
     );
@@ -114,11 +105,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const auth = state.auth || {};
+  const user = state.auth.user || {};
+  const userIsLoaded = state.auth.isLoaded || false;
   const badges = state.badges || {};
 
   return {
-    auth,
+    user,
+    userIsLoaded,
     badges,
   };
 };

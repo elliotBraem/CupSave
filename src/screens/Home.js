@@ -8,7 +8,7 @@ import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import * as authActions from '../store/actions/auth';
 import Logo from '../assets/images/logo.png';
-import {AppText, WorldCounterText, SaveACupText, SaveTheWorldText} from '../components/TextComponents';
+import {WorldCounterText, SaveACupText, SaveTheWorldText} from '../components/TextComponents';
 import Loading from '../components/Loading';
 
 const styles = StyleSheet.create({
@@ -114,6 +114,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state, ownProps) => {
   const auth = state.auth || {};
+
+  console.log(auth.isLoaded);
 
   return {
     auth,
