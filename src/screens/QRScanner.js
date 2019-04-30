@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View, Image, Text} from 'react-native';
+import {Alert, StyleSheet, View, Image, Text} from 'react-native';
 import {BarCodeScanner, Permissions} from 'expo';
+import {connect} from 'react-redux';
 import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import ScanIcon from '../assets/images/qr-scanner/scan-container.png';
+import * as authActions from '../store/actions/auth';
 
 const styles = StyleSheet.create({
   header: {
@@ -30,9 +32,9 @@ const styles = StyleSheet.create({
 
 class QRScannerScreen extends Component {
   static propTypes = {
-    navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
-      navigate: PropTypes.func.isRequired,
+    incrementConsumption: PropTypes.func.isRequired,
+    auth: PropTypes.shape({
+      isAuthenticated: PropTypes.bool.isRequired,
     }).isRequired,
   };
 
@@ -44,7 +46,14 @@ class QRScannerScreen extends Component {
   }
 
   handleBarCodeScanned = ({type, data}) => {
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    const {incrementConsumption} = this.props;
+    Alert.alert('Barcode Scanned', `Bar code with type ${type} and data ${data} has been scanned!`, [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+      },
+      {text: 'OK', onPress: () => incrementConsumption()},
+    ]);
   };
 
   render() {
@@ -60,10 +69,32 @@ class QRScannerScreen extends Component {
       <View style={styles.container}>
         <CustomHeader title="QR Scanner" style={styles.header} />
         <Image source={ScanIcon} style={styles.scanIcon} />
-        <BarCodeScanner onBarCodeScanned={this.handleBarCodeScanned} style={styles.qrScanner} />
+        <BarCodeScanner
+          onBarCodeScanned={this.handleBarCodeScanned}
+          barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+          style={styles.qrScanner}
+        />
       </View>
     );
   }
 }
 
-export default QRScannerScreen;
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    incrementConsumption: () => dispatch(authActions.dbIncrementConsumption()),
+    fetchAuthData: () => dispatch(authActions.dbOnAuthorizeStateChange()),
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const auth = state.auth || {};
+
+  return {
+    auth,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QRScannerScreen);
