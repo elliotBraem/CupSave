@@ -40,11 +40,11 @@ const MaterialsContainer = ({totalCupsSaved}) => (
       <View style={styles.title}>
         <TitleText>Materials Saved</TitleText>
       </View>
-    <WasteOverview
-      paper={(totalCupsSaved * 0.0264555).toFixed(5)}
-      cardboard={(totalCupsSaved * 0.00661387).toFixed(5)}
-      plastic={(totalCupsSaved * 0.00683433).toFixed(5)}
-    />
+      <WasteOverview
+        paper={(totalCupsSaved * 0.0264555).toFixed(5)}
+        cardboard={(totalCupsSaved * 0.00661387).toFixed(5)}
+        plastic={(totalCupsSaved * 0.00683433).toFixed(5)}
+      />
     </View>
   </View>
 );

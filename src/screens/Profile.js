@@ -103,7 +103,7 @@ class ProfileScreen extends PureComponent {
           />
           <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
           <ProfileStats totalCupsSaved={auth.user.consumption.total} badges={badges} />
-          <MaterialsContainer totalCupsSaved={adjustedCups}/>
+          <MaterialsContainer totalCupsSaved={adjustedCups} />
         </ScrollView>
       </View>
     );
