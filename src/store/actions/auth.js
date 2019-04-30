@@ -27,18 +27,6 @@ export const resetPassword = () => {
   };
 };
 
-export const updatePassword = () => {
-  return {
-    type: 'AUTH_DETAILS_UPDATE',
-  };
-};
-
-export const updateEmail = () => {
-  return {
-    type: 'AUTH_DETAILS_UPDATE',
-  };
-};
-
 export const logout = () => {
   return {
     type: 'AUTH_RESET',
@@ -204,38 +192,6 @@ export function dbResetPassword(email) {
 }
 
 /**
- * Update Password
- */
-export function dbUpdatePassword(newPassword) {
-  return async (dispatch, getState) => {
-    await dispatch(authLoading());
-
-    try {
-      await authService.updatePassword(newPassword);
-      return dispatch(updatePassword());
-    } catch (error) {
-      return dispatch(authError(error.message));
-    }
-  };
-}
-
-/**
- * Update Email
- */
-export function dbUpdateEmail(newEmail) {
-  return async (dispatch, getState) => {
-    await dispatch(authLoading());
-
-    try {
-      await authService.updateEmail(newEmail);
-      return dispatch(updateEmail());
-    } catch (error) {
-      return dispatch(authError(error.message));
-    }
-  };
-}
-
-/**
  * Update Profile
  */
 export function dbUpdateProfile(formData) {
@@ -270,6 +226,27 @@ export function dbIncrementConsumption() {
 
       if (user) {
         await authService.incrementConsumption(user.uid);
+
+        const userData = await userService.getUserData(user.email);
+
+        return dispatch(getUserData(userData));
+      }
+      return dispatch(authError(ErrorMessages.default));
+    } catch (error) {
+      return dispatch(authError(error.message));
+    }
+  };
+}
+
+export function dbUpdateCupSize(newCupSize) {
+  return async (dispatch, getState) => {
+    await dispatch(authLoading());
+
+    try {
+      const user = await Firebase.auth().currentUser;
+
+      if (user) {
+        await authService.updateCupSize(newCupSize, user.uid);
 
         const userData = await userService.getUserData(user.email);
 
