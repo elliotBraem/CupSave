@@ -23,6 +23,7 @@
     ]
   },
   "dependencies": {
+    "dotenv": "^7.0.0",
     "expo": "^32.0.5",
     "firebase": "^5.9.1",
     "immer": "^3.1.1",

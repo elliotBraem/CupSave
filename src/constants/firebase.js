@@ -1,11 +1,13 @@
+require('dotenv').config();
+
 // Firebase creds got from console.firebase.google.com
 const firebaseConfig = {
-  apiKey: 'AIzaSyCKHQbALlbnESV0U3hSA8kQXLFyBLvMFFk',
-  authDomain: 'cupsave-e9b32.firebaseapp.com',
-  databaseURL: 'https://cupsave-e9b32.firebaseio.com',
-  projectId: 'cupsave-e9b32',
-  storageBucket: 'cupsave-e9b32.appspot.com',
-  messagingSenderId: '1058030936457',
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  databaseURL: process.env.DATABASE_URL,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
 };
 
 export default firebaseConfig;
