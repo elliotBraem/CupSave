@@ -7,6 +7,7 @@ import WasteItem from './WasteItem';
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 15,
     width: '95%',
     height: 90,
     backgroundColor: COLORS.white,
@@ -32,33 +33,11 @@ const styles = StyleSheet.create({
 
 const WasteOverview = ({waste, polyPlastic, C02e}) => (
   <View style={styles.container}>
-    <BarChart
-      style={{
-        marginVertical: 8,
-        borderRadius: 16,
-      }}
-      data={{
-        labels: ['Waste Saved', 'Polyurethane Plastic Saved', 'C02e Saved'],
-        datasets: [
-          {
-            data: [`${waste}`, `${polyPlastic}`, `${C02e}`],
-          },
-        ],
-      }}
-      width={Dimensions.get('window').width}
-      height={220}
-      yAxisLabel={'lbs.'}
-      chartConfig={{
-        backgroundColor: '#e26a00',
-        backgroundGradientFrom: '#fb8c00',
-        backgroundGradientTo: '#ffa726',
-        decimalPlaces: 2, // optional, defaults to 2dp
-        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        style: {
-          borderRadius: 16,
-        },
-      }}
-    />
+    <WasteItem title="Waste saved" value={`${waste} lbs.`} />
+    <View style={styles.divider} />
+    <WasteItem title="Plastic saved" value={`${polyPlastic} lbs.`} />
+    <View style={styles.divider} />
+    <WasteItem title="C02e saved" value={`${C02e} lbs.`} />
   </View>
 );
 
