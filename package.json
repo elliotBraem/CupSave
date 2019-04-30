@@ -23,7 +23,6 @@
     ]
   },
   "dependencies": {
-    "dotenv": "^7.0.0",
     "expo": "^32.0.5",
     "firebase": "^5.9.1",
     "immer": "^3.1.1",
@@ -58,7 +57,9 @@
     "expo-cli": "^2.15.0",
     "husky": "^2.1.0",
     "jest-expo": "^32.0.0",
+    "metro-react-native-babel-preset": "^0.53.1",
     "prettier": "^1.17.0",
+    "react-native-dotenv": "^0.2.0",
     "schedule": "0.4.0"
   },
   "husky": {
