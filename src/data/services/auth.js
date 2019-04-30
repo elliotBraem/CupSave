@@ -4,7 +4,6 @@ import ErrorMessages from '../../constants/errors';
 
 import Firebase, {FirestoreRef} from '../index';
 import REGEX from '../../constants/regex';
-import googleConfig from '../../constants/maps';
 
 export class AuthService {
   signUp = (email, password) => {
@@ -135,42 +134,41 @@ export class AuthService {
             if (!querySnapshot.empty) {
               // Contents of first document (only should be 1, emails are unique)
               return resolve({email});
-            } 
-              const uid = facebookProfile.user.uid;
-              const currentTimeInUnixEpoch = new Date().valueOf();
+            }
+            const uid = facebookProfile.user.uid;
+            const currentTimeInUnixEpoch = new Date().valueOf();
 
-              const isUniversity = new RegExp(REGEX.UNIVERSITY_EMAIL).test(email);
+            const isUniversity = new RegExp(REGEX.UNIVERSITY_EMAIL).test(email);
 
-              const badges = {
-                '6W2UJvCl9AKy3X97jhZ0': true, // Hello World badge
-              };
+            const badges = {
+              '6W2UJvCl9AKy3X97jhZ0': true, // Hello World badge
+            };
 
-              if (isUniversity) {
-                badges.rJ7XjWH9a336tPj9caEB = true;
-              }
+            if (isUniversity) {
+              badges.rJ7XjWH9a336tPj9caEB = true;
+            }
 
-              await FirestoreRef.collection('users')
-                .doc(uid)
-                .set({
-                  email,
-                  badges,
-                  consumption: {
-                    total: 0,
-                    most_recent_consumption: currentTimeInUnixEpoch,
-                    history: {
-                      [currentTimeInUnixEpoch]: 0,
-                    },
+            await FirestoreRef.collection('users')
+              .doc(uid)
+              .set({
+                email,
+                badges,
+                consumption: {
+                  total: 0,
+                  most_recent_consumption: currentTimeInUnixEpoch,
+                  history: {
+                    [currentTimeInUnixEpoch]: 0,
                   },
-                  city: '',
-                  level: 0,
-                  friends: {
-                    byZi8ywta1hgA9oTc6YwHEDrrHU2: true, // Test user
-                  },
-                  cup_volume_oz: 16,
-                  signed_up: currentTimeInUnixEpoch,
-                });
-              return resolve({email});
-            
+                },
+                city: '',
+                level: 0,
+                friends: {
+                  byZi8ywta1hgA9oTc6YwHEDrrHU2: true, // Test user
+                },
+                cup_volume_oz: 16,
+                signed_up: currentTimeInUnixEpoch,
+              });
+            return resolve({email});
           });
         }
         case 'cancel': {
