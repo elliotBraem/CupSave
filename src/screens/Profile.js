@@ -1,10 +1,11 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, View, Image, Button, Platform} from 'react-native';
+import {StyleSheet, ScrollView, View, Image, Button, Platform} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import COLORS from '../constants/colors';
 import CustomHeader from '../components/CustomHeader';
 import StatsOverview from '../components/StatsOverview';
+import ProfileStats from '../components/ProfileStats';
 import Loading from '../components/Loading';
 import * as authActions from '../store/actions/auth';
 import * as badgesActions from '../store/actions/badges';
@@ -16,10 +17,10 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'space-between',
     backgroundColor: COLORS.primary,
-    alignItems: 'center',
   },
   inner: {
-    marginTop: Platform.OS === 'ios' ? 100 : 100 - 24,
+    alignItems: 'center',
+    paddingTop: Platform.OS === 'ios' ? 100 : 100 - 24,
   },
   circle: {
     width: 160,
@@ -42,12 +43,6 @@ const styles = StyleSheet.create({
     height: 160,
   },
 });
-
-// SettingsButton.propTypes = {
-//   navigation: PropTypes.shape({
-//     navigate: PropTypes.func.isRequired,
-//   }).isRequired,
-// };
 
 class ProfileScreen extends PureComponent {
   static propTypes = {
@@ -94,7 +89,7 @@ class ProfileScreen extends PureComponent {
     return (
       <View style={styles.container}>
         <CustomHeader title="Profile" />
-        <View style={styles.inner}>
+        <ScrollView contentContainerStyle={styles.inner}>
           <View style={styles.circle}>
             <Image source={profileImage} style={styles.image} />
           </View>
@@ -104,7 +99,8 @@ class ProfileScreen extends PureComponent {
             drinkSize={auth.user.cup_volume_oz}
           />
           <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
-        </View>
+          <ProfileStats totalCupsSaved={auth.user.consumption.total} badges={badges} />
+        </ScrollView>
       </View>
     );
   }
