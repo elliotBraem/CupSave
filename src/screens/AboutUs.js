@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View, Platform, Text} from 'react-native';
+import {StyleSheet, View, Platform} from 'react-native';
 import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import {AppText} from '../components/TextComponents';
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   inner: {
-    marginTop: Platform.OS === 'ios' ? 100 : 100 - 24,
+    paddingTop: Platform.OS === 'ios' ? 100 : 100 - 24,
     paddingLeft: 10,
     paddingRight: 10,
   },
@@ -37,7 +37,7 @@ class AboutUsScreen extends PureComponent {
         <CustomHeader title="About Us" />
         <View style={styles.header}>
           <View style={styles.inner}>
-            <Text style={styles.paragraphText}>
+            <AppText style={styles.paragraphText}>
               Every year the United States alone throws away 50 billion disposable coffee cups. The majority of these
               coffee cups end up in landfills, in incinerators, and in our oceans. A simple yet effective response to
               this problem is to use reusable cups, a solution that many people already implement in their day to day
@@ -45,10 +45,10 @@ class AboutUsScreen extends PureComponent {
               ecological footprint of disposable coffee cups saved by purchasing drinks with a personal mug. The
               application will list participating cafes in a map format, let users log in with different devices, and
               scan café-specific QR codes when purchasing their drinks.
-            </Text>
-            <Text style={styles.paragraphText}>
+            </AppText>
+            <AppText style={styles.paragraphText}>
               Developed by: Elliot Braem, Zach Kremer, Jake Braun, Bennet Bremer, Harris Thompson, Matthew Strimaitis
-            </Text>
+            </AppText>
           </View>
         </View>
       </View>

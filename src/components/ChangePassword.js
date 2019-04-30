@@ -8,6 +8,7 @@ import COLORS from '../constants/colors';
 const styles = StyleSheet.create({
   container: {
     flex: 0,
+    width: '90%',
     justifyContent: 'flex-start',
     backgroundColor: COLORS.white,
     padding: 20,
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
 
 class ChangePassword extends Component {
   static propTypes = {
-    updatePassword: PropTypes.func.isRequired,
+    updateProfile: PropTypes.func.isRequired,
     reAuthenticate: PropTypes.func.isRequired,
   };
 
@@ -52,14 +53,14 @@ class ChangePassword extends Component {
 
   handlePasswordChange = () => {
     const {currentPassword, newPassword} = this.state;
-    const {reAuthenticate, updatePassword} = this.props;
+    const {reAuthenticate, updateProfile} = this.props;
 
     if (currentPassword.trim() === '' || newPassword.trim() === '') {
       Alert.alert('Invalid Parameters:', 'old password / new password cannot be empty');
     } else {
       reAuthenticate(currentPassword)
         .then(() => {
-          updatePassword(newPassword)
+          updateProfile({password: newPassword})
             .then(() => {
               this.setState({errorMessage: 'Password updated!'});
             })
@@ -102,7 +103,7 @@ class ChangePassword extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    updatePassword: newPassword => dispatch(authActions.dbUpdatePassword(newPassword)),
+    updateProfile: formData => dispatch(authActions.dbUpdateProfile(formData)),
     reAuthenticate: password => dispatch(authActions.dbReauthenticate(password)),
   };
 };

@@ -8,6 +8,7 @@ import COLORS from '../constants/colors';
 const styles = StyleSheet.create({
   container: {
     flex: 0,
+    width: '90%',
     justifyContent: 'flex-start',
     backgroundColor: COLORS.white,
     padding: 20,
@@ -59,8 +60,7 @@ class ChangeEmail extends Component {
     } else {
       reAuthenticate(currentPassword)
         .then(() => {
-          updateProfile({email: newEmail});
-          updateEmail(newEmail)
+          updateProfile({email: newEmail})
             .then(() => {
               this.setState({errorMessage: 'Email updated!'});
             })

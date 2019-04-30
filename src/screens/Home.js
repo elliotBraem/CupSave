@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   inner: {
-    marginTop: Platform.OS === 'ios' ? 100 : 100 - 24,
+    paddingTop: Platform.OS === 'ios' ? 100 : 100 - 24,
   },
 });
 
