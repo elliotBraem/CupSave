@@ -32,29 +32,28 @@ const styles = StyleSheet.create({
 
 const WasteOverview = ({waste, polyPlastic, C02e}) => (
   <View style={styles.container}>
-    <BarChart
+    <StackedBarChart
       style={{
         marginVertical: 8,
         borderRadius: 16,
+        marginHorizontal: 20,
       }}
       data={{
-        labels: ['Waste\nSaved', 'Polyurethane Plastic Saved', 'C02e Saved'],
-        datasets: [
-          {
-            data: [`${waste}`, `${polyPlastic}`, `${C02e}`],
-          },
-        ],
+        labels: ['Waste Saved', 'C02e Saved'],
+        legend: ['Non-plastic waste', 'Plastic waste', 'C02e'],
+        data: [[`${waste}`, `${polyPlastic}`, null], [null, null, `${C02e}`]],
+        barColors: ['#648381', '#E4FDE1', '#575761'],
       }}
       width={Dimensions.get('window').width}
       height={400}
       yAxisLabel={''}
       chartConfig={{
+        height: 400,
         backgroundColor: COLORS.primary,
         backgroundGradientFrom: COLORS.primary,
         backgroundGradientTo: '#FFBF46',
         decimalPlaces: 3, // optional, defaults to 2dp
-
-        color: (opacity = 1) => `rgba(87, 87, 97, ${opacity})`,
+        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         style: {
           borderRadius: 16,
         },

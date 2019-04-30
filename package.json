@@ -33,6 +33,7 @@
     "react-native-chart-kit": "^2.6.0",
     "react-native-maps": "^0.24.2",
     "react-native-popup-menu": "^0.15.6",
+    "react-native-svg-charts": "^5.2.0",
     "react-native-svg-transformer": "^0.13.0",
     "react-navigation": "^3.5.1",
     "react-redux": "6.0.1",
