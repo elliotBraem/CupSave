@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
 import COLORS from '../constants/colors';
@@ -26,6 +28,10 @@ const styles = StyleSheet.create({
     fontSize: 8,
     color: COLORS.secondary,
   },
+  feedText: {
+    fontSize: 12,
+    color: COLORS.secondary,
+  },
 });
 
 export const AppText = props => {
@@ -50,4 +56,8 @@ export const HeaderTitle = props => {
 
 export const LabelText = props => {
   return <Text style={styles.labelText}>{props.children}</Text>;
+};
+
+export const FeedText = props => {
+  return <Text style={styles.feedText}>{props.children}</Text>;
 };

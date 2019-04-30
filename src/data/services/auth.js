@@ -1,7 +1,10 @@
+import {Location} from 'expo';
+
 import ErrorMessages from '../../constants/errors';
 
 import Firebase, {FirestoreRef} from '../index';
 import REGEX from '../../constants/regex';
+import googleConfig from '../../constants/maps';
 
 export class AuthService {
   signUp = (email, password) => {
@@ -114,7 +117,7 @@ export class AuthService {
    */
   loginWithFacebook = () => {
     return new Promise(async (resolve, reject) => {
-      const appId = Expo.Constants.manifest.extra.facebook.appId;
+      const {appId} = Expo.Constants.manifest.extra.facebook;
       const permissions = ['public_profile', 'email']; // required permissions
 
       const {type, token} = await Expo.Facebook.logInWithReadPermissionsAsync(appId, {permissions});
@@ -127,12 +130,12 @@ export class AuthService {
 
           // do things with user's facebook profile data here
           const userRef = FirestoreRef.collection('users').where('email', '==', facebookProfile.user.email);
-          const email = facebookProfile.user.email;
+          const {email} = facebookProfile.user;
           userRef.get().then(async querySnapshot => {
             if (!querySnapshot.empty) {
               // Contents of first document (only should be 1, emails are unique)
               return resolve({email});
-            } else {
+            } 
               const uid = facebookProfile.user.uid;
               const currentTimeInUnixEpoch = new Date().valueOf();
 
@@ -167,7 +170,7 @@ export class AuthService {
                   signed_up: currentTimeInUnixEpoch,
                 });
               return resolve({email});
-            }
+            
           });
         }
         case 'cancel': {
@@ -242,11 +245,34 @@ export class AuthService {
     });
   };
 
-  incrementConsumption = uid => {
+  incrementConsumption = (drinkValue, locationEnabled, uid) => {
     return new Promise((resolve, reject) => {
       const userRef = FirestoreRef.collection('users').doc(uid);
 
       const currentTimeInUnixEpoch = new Date().valueOf();
+
+      // let locationName = '';
+      // let locationCity = '';
+      let long = 0;
+      let lat = 0;
+
+      // Get the location of user if enabled
+      if (locationEnabled) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            lat = position.coords.latitude;
+            long = position.coords.longitude;
+            // await Location.reverseGeocodeAsync({
+            //   latitude: lat,
+            //   longitude: long,
+            // }).then(location => {
+            //   locationName = location[0].name;
+            //   locationCity = location[0].city;
+            // });
+          },
+          err => console.log(err)
+        );
+      }
 
       return FirestoreRef.runTransaction(async transaction => {
         return transaction
@@ -260,7 +286,15 @@ export class AuthService {
                 total: newTotal,
                 most_recent_consumption: currentTimeInUnixEpoch,
                 history: {
-                  [currentTimeInUnixEpoch]: newTotal,
+                  [currentTimeInUnixEpoch]: {
+                    consumptionNumber: newTotal,
+                    time: currentTimeInUnixEpoch,
+                    drink: drinkValue,
+                    location: {
+                      longitude: long,
+                      latitude: lat,
+                    },
+                  },
                 },
               },
             };

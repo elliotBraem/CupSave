@@ -12,13 +12,11 @@ import Loading from '../components/Loading';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    flexDirection: 'column',
-    alignItems: 'center',
     backgroundColor: COLORS.primary,
   },
   inner: {
     paddingTop: Platform.OS === 'ios' ? 100 : 100 - 24,
+    alignItems: 'center',
   },
 });
 
@@ -27,6 +25,11 @@ class HomeScreen extends PureComponent {
     incrementConsumption: PropTypes.func.isRequired,
     auth: PropTypes.shape({
       isAuthenticated: PropTypes.bool.isRequired,
+      user: PropTypes.shape({
+        consumption: PropTypes.shape({
+          history: PropTypes.object.isRequired,
+        }).isRequired,
+      }).isRequired,
     }).isRequired,
     fetchAuthData: PropTypes.func.isRequired,
   };
@@ -42,15 +45,16 @@ class HomeScreen extends PureComponent {
   render() {
     const {auth, incrementConsumption} = this.props;
 
-    // if (!auth.isLoaded) {
-    //   return <Loading />;
-    // }
+    if (!auth.isLoaded) {
+      return <Loading />;
+    }
 
     return (
       <View style={styles.container}>
         <CustomHeader title="Home" />
         <View style={styles.inner}>
           <SaveCupForm onSaveCupFormSubmit={incrementConsumption} />
+          <LiveFeed feedContent={auth.user.consumption.history} />
         </View>
       </View>
     );
@@ -59,7 +63,8 @@ class HomeScreen extends PureComponent {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    incrementConsumption: () => dispatch(authActions.dbIncrementConsumption()),
+    incrementConsumption: (drinkValue, locationEnabled) =>
+      dispatch(authActions.dbIncrementConsumption(drinkValue, locationEnabled)),
     fetchAuthData: () => dispatch(authActions.dbOnAuthorizeStateChange()),
   };
 };

@@ -1,32 +1,43 @@
 import React, {Component} from 'react';
-import {FlatList} from 'react-native';
-import PropTypes from 'prop-types';
-import {withHandlers, compose} from 'recompose';
-import {connect} from 'react-redux';
-import {withFirebase, withFirestore} from 'react-redux-firebase';
-import COLORS from '../constants/colors';
-import {AppText} from './TextComponents';
-
+import {StyleSheet, FlatList, View} from 'react-native';
 import FeedItem from './FeedItem';
+import COLORS from '../constants/colors';
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: COLORS.primary,
+    borderRadius: 12,
+    width: '95%',
+    padding: 10,
+    height: '100%',
+  },
+  list: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    overflow: 'hidden',
+  },
+});
 
 class FeedList extends Component {
-  renderItem = ({item}) => <FeedItem {...item} />;
+  renderItem = ({item}) => {
+    return <FeedItem {...item[1]} />;
+  };
 
-  keyExtractor = item => item.key;
+  keyExtractor = item => item[0];
 
   render() {
     const {...props} = this.props;
     return (
-      <FlatList
-        keyExtractor={this.keyExtractor}
-        // ListFooterComponent={footerProps => }
-        renderItem={this.renderItem}
-        {...props}
-      />
+      <View style={styles.container}>
+        <FlatList
+          contentContainerStyle={styles.list}
+          keyExtractor={this.keyExtractor}
+          renderItem={this.renderItem}
+          {...props}
+        />
+      </View>
     );
   }
 }
 
-const enhance = compose(withFirebase);
-
-export default enhance(FeedList);
+export default FeedList;

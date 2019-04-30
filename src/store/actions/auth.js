@@ -217,7 +217,7 @@ export function dbUpdateProfile(formData) {
   };
 }
 
-export function dbIncrementConsumption() {
+export function dbIncrementConsumption(drinkValue, locationEnabled) {
   return async (dispatch, getState) => {
     await dispatch(authLoading());
 
@@ -225,7 +225,7 @@ export function dbIncrementConsumption() {
       const user = await Firebase.auth().currentUser;
 
       if (user) {
-        await authService.incrementConsumption(user.uid);
+        await authService.incrementConsumption(drinkValue, locationEnabled, user.uid);
 
         const userData = await userService.getUserData(user.email);
 

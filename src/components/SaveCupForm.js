@@ -67,6 +67,7 @@ class SaveCupForm extends Component {
   constructor(props) {
     super(props);
     this.toggleLocationEnable = this.toggleLocationEnable.bind(this);
+    this.handleOnSaveCup = this.handleOnSaveCup.bind(this);
     this.state = {
       locationEnabled: true,
       drinkValue: '',
@@ -79,13 +80,18 @@ class SaveCupForm extends Component {
     }));
   }
 
-  render() {
+  handleOnSaveCup() {
     const {onSaveCupFormSubmit} = this.props;
+    const {drinkValue, locationEnabled} = this.state;
+    onSaveCupFormSubmit(drinkValue, locationEnabled);
+  }
+
+  render() {
     const {drinkValue, locationEnabled} = this.state;
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={onSaveCupFormSubmit} style={styles.button}>
+        <TouchableOpacity onPress={this.handleOnSaveCup} style={styles.button}>
           <Image source={Logo} style={styles.logoIcon} />
           <AppText>SAVE A CUP</AppText>
         </TouchableOpacity>
