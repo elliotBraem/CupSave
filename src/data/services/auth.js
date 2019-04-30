@@ -273,4 +273,26 @@ export class AuthService {
       throw error;
     });
   };
+
+  updateCupSize = (newCupSize, uid) => {
+    return new Promise((resolve, reject) => {
+      const userRef = FirestoreRef.collection('users').doc(uid);
+
+      return FirestoreRef.runTransaction(async transaction => {
+        return transaction
+          .get(userRef)
+          .then(doc => {
+            // If the document doesn't exist, this is the first consumption, set it to 1
+            const data = {
+              cup_volume_oz: newCupSize,
+            };
+
+            transaction.set(userRef, data, {merge: true});
+          })
+          .then(() => resolve());
+      });
+    }).catch(error => {
+      throw error;
+    });
+  };
 }
