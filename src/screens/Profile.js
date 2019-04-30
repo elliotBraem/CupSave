@@ -10,6 +10,7 @@ import Loading from '../components/Loading';
 import * as authActions from '../store/actions/auth';
 import * as badgesActions from '../store/actions/badges';
 import WasteOverview from '../components/WasteOverview';
+import MaterialsContainer from '../components/MaterialsContainer';
 
 const profileImage = require('../assets/images/profileicon.png');
 
@@ -100,13 +101,9 @@ class ProfileScreen extends PureComponent {
             level={auth.user.level}
             drinkSize={auth.user.cup_volume_oz}
           />
-          <WasteOverview
-            paper={(adjustedCups * 0.0264555).toFixed(5)}
-            cardboard={(adjustedCups * 0.00661387).toFixed(5)}
-            plastic={(adjustedCups * 0.00683433).toFixed(5)}
-          />
           <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
           <ProfileStats totalCupsSaved={auth.user.consumption.total} badges={badges} />
+          <MaterialsContainer totalCupsSaved={adjustedCups}/>
         </ScrollView>
       </View>
     );
