@@ -1,14 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import COLORS from '../constants/colors';
 import BadgesList from './BadgesList';
 import {TitleText} from './TextComponents';
+import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
-    width: 350,
+    width: '95%',
     height: 130,
     backgroundColor: COLORS.white,
     borderRadius: 12,
