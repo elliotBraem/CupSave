@@ -9,6 +9,7 @@ import ProfileStats from '../components/ProfileStats';
 import Loading from '../components/Loading';
 import * as authActions from '../store/actions/auth';
 import * as badgesActions from '../store/actions/badges';
+import WasteOverview from '../components/WasteOverview';
 
 const profileImage = require('../assets/images/profileicon.png');
 
@@ -81,6 +82,7 @@ class ProfileScreen extends PureComponent {
 
   render() {
     const {navigation, auth, badges} = this.props;
+    const adjustedCups = auth.user.consumption.total / 12;
 
     if (!auth.isLoaded || !badges.isLoaded) {
       return <Loading />;
@@ -97,6 +99,11 @@ class ProfileScreen extends PureComponent {
             totalCupsSaved={auth.user.consumption.total}
             level={auth.user.level}
             drinkSize={auth.user.cup_volume_oz}
+          />
+          <WasteOverview
+            waste={(adjustedCups * 0.0374786).toFixed(5)}
+            polyPlastic={(adjustedCups * 0.00881849).toFixed(5)}
+            C02e={(adjustedCups * 0.061724).toFixed(5)}
           />
           <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
           <ProfileStats totalCupsSaved={auth.user.consumption.total} badges={badges} />

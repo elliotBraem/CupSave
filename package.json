@@ -30,6 +30,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.2.tar.gz",
+    "react-native-chart-kit": "^2.6.0",
     "react-native-maps": "^0.24.2",
     "react-native-popup-menu": "^0.15.6",
     "react-native-svg-transformer": "^0.13.0",
