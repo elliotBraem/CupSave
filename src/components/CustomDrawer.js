@@ -13,6 +13,7 @@ const profileImage = require('../assets/images/profileicon.png');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    fontFamily: 'open-sans-regular',
   },
   headerContainer: {
     marginLeft: 20,
