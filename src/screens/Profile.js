@@ -101,9 +101,9 @@ class ProfileScreen extends PureComponent {
             drinkSize={auth.user.cup_volume_oz}
           />
           <WasteOverview
-            waste={(adjustedCups * 0.0374786).toFixed(5)}
-            polyPlastic={(adjustedCups * 0.00881849).toFixed(5)}
-            C02e={(adjustedCups * 0.061724).toFixed(5)}
+            paper={(adjustedCups * 0.0264555).toFixed(5)}
+            cardboard={(adjustedCups * 0.00661387).toFixed(5)}
+            plastic={(adjustedCups * 0.00683433).toFixed(5)}
           />
           <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
           <ProfileStats totalCupsSaved={auth.user.consumption.total} badges={badges} />

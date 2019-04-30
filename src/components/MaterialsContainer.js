@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
 import COLORS from '../constants/colors';
 import TotalCarbonSavedStat from './TotalCarbonSavedStat';
+import WasteOverview from './WasteOverview';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,14 +25,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const MaterialsContainer = ({totalCupsSaved}) => (
+const MaterialsContainer = ({adjustedCups}) => (
   <View style={styles.container}>
-    <TotalCarbonSavedStat totalCupsSaved={totalCupsSaved} />
+    <WasteOverview
+      paper={(adjustedCups * 0.0264555).toFixed(5)}
+      cardboard={(adjustedCups * 0.00661387).toFixed(5)}
+      plastic={(adjustedCups * 0.00683433).toFixed(5)}
+    />
   </View>
 );
 
 MaterialsContainer.propTypes = {
-  totalCupsSaved: PropTypes.number.isRequired,
+  adjustedCups: PropTypes.number.isRequired,
 };
 
 export default MaterialsContainer;

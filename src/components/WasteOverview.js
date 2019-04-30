@@ -30,48 +30,51 @@ const styles = StyleSheet.create({
   graphStyle: {},
 });
 
-const WasteOverview = ({waste, polyPlastic, C02e}) => (
-  <View style={styles.container}>
-    <StackedBarChart
+const WasteOverview = ({paper, plastic, cardboard}) => (
+  <View style={{marginTop: 10, marginBottom: 10}}>
+    <BarChart
       style={{
         marginVertical: 8,
         borderRadius: 16,
         marginHorizontal: 20,
       }}
       data={{
-        labels: ['Waste Saved', 'C02e Saved'],
-        legend: ['Non-plastic waste', 'Plastic waste', 'C02e'],
-        data: [[`${waste}`, `${polyPlastic}`, null], [null, null, `${C02e}`]],
-        barColors: ['#648381', '#E4FDE1', '#575761'],
+        labels: ['Paper saved', 'Cardboard saved', 'Plastic saved'],
+        datasets: [
+          {
+            data: [`${paper}`, `${plastic}`, cardboard],
+          },
+        ],
       }}
-      width={Dimensions.get('window').width}
+      width={Dimensions.get('window').width - 18}
       height={400}
-      yAxisLabel={''}
+      yAxisLabel={'lbs: '}
       chartConfig={{
         height: 400,
         backgroundColor: COLORS.primary,
         backgroundGradientFrom: COLORS.primary,
-        backgroundGradientTo: '#FFBF46',
+        backgroundGradientTo: '#507DBC',
         decimalPlaces: 3, // optional, defaults to 2dp
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         style: {
           borderRadius: 16,
         },
       }}
+      fromZero={true}
     />
   </View>
 );
 
 WasteOverview.propTypes = {
-  waste: PropTypes.string,
-  polyPlastic: PropTypes.string,
-  C02e: PropTypes.string,
+  paper: PropTypes.string,
+  plastic: PropTypes.string,
+  cardboard: PropTypes.string,
 };
 
 WasteOverview.defaultProps = {
-  waste: 0,
-  polyPlastic: 0,
-  C02e: 0,
+  paper: 0,
+  plastic: 0,
+  cardboard: 0,
 };
 
 export default WasteOverview;
