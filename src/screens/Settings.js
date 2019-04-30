@@ -12,8 +12,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   inner: {
-    marginTop: Platform.OS === 'ios' ? 100 : 100 - 24,
-    paddingBottom: Platform.OS === 'ios' ? 120 : 120 - 24,
+    paddingTop: Platform.OS === 'ios' ? 100 : 100 - 24,
     alignItems: 'center',
   },
 });
