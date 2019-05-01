@@ -7,7 +7,7 @@ import * as authActions from '../store/actions/auth';
 import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
 
-const profileImage = require('../assets/images/profileicon.png');
+const profileImage = '../assets/images/profileicon.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -64,7 +64,7 @@ class ChangeProfilePicture extends Component {
   };
 
   state = {
-    avatar: '',
+    avatar: profileImage,
     errorMessage: null,
   };
 
@@ -86,6 +86,7 @@ class ChangeProfilePicture extends Component {
         allowsEditing: true,
       });
       if (!result.cancelled) {
+        console.log(result);
         this.setState({
           avatar: result,
         });
@@ -111,7 +112,7 @@ class ChangeProfilePicture extends Component {
 
         <View style={styles.circle}>
           {avatar !== null ? (
-            <Image source={{uri: avatar.uri}} style={styles.image} />
+            <Image source={{uri: avatar}} style={styles.image} />
           ) : (
             <Image source={profileImage} style={styles.image} />
           )}

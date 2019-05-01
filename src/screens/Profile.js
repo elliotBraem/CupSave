@@ -10,7 +10,7 @@ import * as badgesActions from '../store/actions/badges';
 import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
 
-const profileImage = require('../assets/images/profileicon.png');
+const profileImage = '../assets/images/profileicon.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -87,7 +87,7 @@ class ProfileScreen extends Component {
     FBStorage.ref()
       .child(`profilePictures/${auth.uid}`)
       .getDownloadURL()
-      .then(image => this.setState({avatar: image}))
+      .then(image => {console.log(image); this.setState({avatar: image})})
       .catch(error => console.log(error.message));
   }
 
@@ -98,13 +98,14 @@ class ProfileScreen extends Component {
     // if (!auth.isLoaded || !badges.isLoaded) {
     //   return <Loading />;
     // }
+    console.log(avatar);
 
     return (
       <View style={styles.container}>
         <CustomHeader title="Profile" />
         <ScrollView contentContainerStyle={styles.inner}>
           <View style={styles.circle}>
-            <Image source={avatar} style={styles.image} />
+            <Image source={{uri: avatar}} style={styles.image} />
           </View>
           <StatsOverview
             totalCupsSaved={auth.user.consumption.total}
