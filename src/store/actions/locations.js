@@ -27,7 +27,7 @@ export const locationsError = message => {
  */
 export function dbGetLocations() {
   return async (dispatch, getState) => {
-    await dispatch(locationsLoading());
+    dispatch(locationsLoading());
 
     try {
       const locations = await locationsService.getAllLocations();

@@ -1,41 +1,38 @@
 import produce from 'immer';
 
-export class UsersState {
-  isLoaded = false;
+export const UsersState = {
+  isLoaded: false,
+  error: null,
+  userMap: {},
+};
 
-  error = null;
-
-  userMap = {};
-}
-
-export const usersReducer = (state = new UsersState(), action) => {
+export const usersReducer = (state = UsersState, action) => {
   const {payload} = action;
-  switch (action.type) {
-    case 'USERS_UPDATE': {
-      return produce(state, draft => {
+  return produce(state, draft => {
+    switch (action.type) {
+      case 'USERS_UPDATE': {
         draft.userMap[payload.email] = payload.user;
         draft.isLoaded = true;
-      });
-    }
+        break;
+      }
 
-    case 'USERS_ERROR': {
-      return produce(state, draft => {
+      case 'USERS_ERROR': {
         draft.error = payload;
         draft.isLoaded = true;
-      });
-    }
+        break;
+      }
 
-    case 'USERS_LOADING': {
-      return produce(state, draft => {
+      case 'USERS_LOADING': {
         draft.isLoaded = false;
-      });
-    }
+        break;
+      }
 
-    case 'USERS_RESET': {
-      return new UsersState();
-    }
+      case 'USERS_RESET': {
+        return UsersState;
+      }
 
-    default:
-      return state;
-  }
+      default:
+        return state;
+    }
+  });
 };

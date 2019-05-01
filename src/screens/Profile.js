@@ -9,6 +9,7 @@ import * as authActions from '../store/actions/auth';
 import * as badgesActions from '../store/actions/badges';
 import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
+import LoadingComponent from '../components/Loading';
 
 const profileImage = require('../assets/images/profileicon.png');
 
@@ -55,7 +56,6 @@ class ProfileScreen extends Component {
       badgeList: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
     auth: PropTypes.object.isRequired,
-    userIsLoaded: PropTypes.bool.isRequired,
     fetchAuthData: PropTypes.func.isRequired,
     fetchBadges: PropTypes.func.isRequired,
   };
@@ -75,6 +75,7 @@ class ProfileScreen extends Component {
 
     this.state = {
       avatar: profileImage,
+      custom: false,
     };
   }
 
@@ -84,24 +85,33 @@ class ProfileScreen extends Component {
     FBStorage.ref()
       .child(`profilePictures/${auth.uid}`)
       .getDownloadURL()
-      .then(image => this.setState({avatar: image}))
+      .then(image =>
+        this.setState({
+          avatar: image,
+          custom: true,
+        })
+      )
       .catch(error => console.log(error.message));
   }
 
   render() {
     const {navigation, auth, badges} = this.props;
-    const {avatar} = this.state;
+    const {avatar, custom} = this.state;
 
-    // if (!auth.isLoaded || !badges.isLoaded) {
-    //   return <Loading />;
-    // }
+    if (!auth.isLoaded || !badges.isLoaded) {
+      return <LoadingComponent />;
+    }
 
     return (
       <View style={styles.container}>
         <CustomHeader title="Profile" />
         <ScrollView contentContainerStyle={styles.inner}>
           <View style={styles.circle}>
-            <Image source={avatar} style={styles.image} />
+            {custom === false ? (
+              <Image source={avatar} style={styles.image} />
+            ) : (
+              <Image source={{uri: avatar}} style={styles.image} />
+            )}
           </View>
           <StatsOverview
             totalCupsSaved={auth.user.consumption.total}

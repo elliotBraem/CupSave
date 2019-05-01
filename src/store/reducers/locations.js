@@ -1,41 +1,38 @@
 import produce from 'immer';
 
-export class LocationsState {
-  isLoaded = false;
+export const LocationsState = {
+  isLoaded: false,
+  error: null,
+  locationList: [],
+};
 
-  error = null;
-
-  locationList = [];
-}
-
-export const locationsReducer = (state = new LocationsState(), action) => {
+export const locationsReducer = (state = LocationsState, action) => {
   const {payload} = action;
-  switch (action.type) {
-    case 'LOCATIONS_UPDATE': {
-      return produce(state, draft => {
+  return produce(state, draft => {
+    switch (action.type) {
+      case 'LOCATIONS_UPDATE': {
         draft.locationList = payload;
         draft.isLoaded = true;
-      });
-    }
+        break;
+      }
 
-    case 'LOCATIONS_ERROR': {
-      return produce(state, draft => {
+      case 'LOCATIONS_ERROR': {
         draft.error = payload;
         draft.isLoaded = true;
-      });
-    }
+        break;
+      }
 
-    case 'LOCATIONS_LOADING': {
-      return produce(state, draft => {
+      case 'LOCATIONS_LOADING': {
         draft.isLoaded = false;
-      });
-    }
+        break;
+      }
 
-    case 'LOCATIONS_RESET': {
-      return new LocationsState();
-    }
+      case 'LOCATIONS_RESET': {
+        return LocationsState;
+      }
 
-    default:
-      return state;
-  }
+      default:
+        return state;
+    }
+  });
 };

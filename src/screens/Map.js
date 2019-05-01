@@ -1,14 +1,12 @@
-/* global navigator */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, View} from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {connect} from 'react-redux';
-import {Permissions} from 'expo';
+import {MapView, Permissions, Location} from 'expo';
 import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import * as locationsActions from '../store/actions/locations';
-import Loading from '../components/Loading';
+import LoadingComponent from '../components/Loading';
 import mapStyle from '../constants/mapStyle';
 
 const styles = StyleSheet.create({
@@ -32,6 +30,13 @@ const styles = StyleSheet.create({
   },
 });
 
+const deltas = {
+  latitudeDelta: 0.0622,
+  longitudeDelta: 0.0421,
+};
+
+const Marker = MapView.Marker;
+
 class MapScreen extends Component {
   static propTypes = {
     navigation: PropTypes.shape({
@@ -47,7 +52,7 @@ class MapScreen extends Component {
   };
 
   state = {
-    userLocation: null,
+    region: null,
   };
 
   constructor(props) {
@@ -57,84 +62,80 @@ class MapScreen extends Component {
     if (!locations.isLoaded) {
       fetchLocations();
     }
-
-    this.getUserLocation();
   }
 
   async componentDidMount() {
     await Permissions.askAsync(Permissions.LOCATION);
+    this.getUserLocation();
   }
 
-  getUserLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        this.setState({
-          userLocation: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            latitudeDelta: 0.0622,
-            longitudeDelta: 0.0421,
-          },
-        });
-      },
-      err => console.log(err)
-    );
+  renderMarkers = () => {
+    const {locations} = this.props;
+
+    console.log(locations.map((location, i) => <li>{location.name}</li>));
+
+    // const test = locations.map(location => (
+    //   <Marker
+    //     key={location._id}
+    //     title={location.name || ''}
+    //     coordinate={{latitude: location.latitude, longitude: location.longitude}}
+    //   />
+    // ));
+
+    //console.log(test);
+
+    return <MapView.Marker key="1" title="test" coordinate={{latitude: 50, longitude: 50}} />
+
+    if (locations) {
+      return locations.map(location => (
+        <MapView.Marker
+          key={location._id}
+          title={location.name || ''}
+          coordinate={{latitude: location.latitude, longitude: location.longitude}}
+        />
+      ));
+    }
   };
 
-  getUserMap = ({userLocation, locations}) => {
-    let userLocationMarker = null;
+  getUserLocation = async () => {
+    const location = await Location.getCurrentPositionAsync({});
 
-    if (userLocation) {
-      userLocationMarker = <Marker coordinate={userLocation} />;
-    }
+    const region = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      ...deltas,
+    };
 
-    return (
-      <View style={styles.mapContainer}>
-        <MapView
-          style={styles.map}
-          provider={PROVIDER_GOOGLE}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}
-          customMapStyle={mapStyle}
-          region={userLocation}>
-          {userLocationMarker}
-          {locations.length > 0 &&
-            locations.map(marker => (
-              <Marker
-                key={marker._id}
-                coordinate={{
-                  latitude: marker.latitude,
-                  longitude: marker.longitude,
-                }}
-                title={marker.name}
-              />
-            ))}
-        </MapView>
-      </View>
-    );
+    await this.setState({region});
   };
 
   render() {
     const {locations} = this.props;
-    const {userLocation} = this.state;
+    const {region} = this.state;
 
-    if (!locations.isLoaded || locations.length === 0) {
-      return <Loading />;
+    const initialRegion = {
+      latitude: 37.78825,
+      longitude: -122.4324,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121,
+    };
+
+    if (!locations.isLoaded) {
+      return <LoadingComponent />;
     }
-
-    const UserMap = this.getUserMap({style: styles.map, userLocation, locations});
 
     return (
       <View style={styles.container}>
         <CustomHeader title="Map" style={styles.header} />
-        {/* <Text style={styles.header}>Map</Text>
-        <Button title="Menu" onPress={() => navigation.openDrawer()} style={styles.btnStyle} />
-        <Button title="Get Location" onPress={() => this.getUserLocation()} style={styles.btnStyle} /> */}
-        <UserMap />
+        <MapView
+          style={styles.map}
+          customMapStyle={mapStyle}
+          region={region}
+          initialRegion={{...initialRegion, ...deltas}}
+          showsUserLocation
+          showsMyLocationButton>
+          {this.renderMarkers()}
+        </MapView>
       </View>
     );
   }
@@ -148,8 +149,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state, ownProps) => {
   const locations = state.locations || {};
-
-  console.log(locations);
 
   return {
     locations,

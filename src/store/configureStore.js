@@ -10,7 +10,7 @@ export default function configureStore(initialState = {}) {
   const config = {
     key: 'root',
     storage,
-    blacklist: ['locations'], // Too many locations for AsyncStorage
+    // blacklist: ['locations'], // Too many locations for AsyncStorage
   };
 
   // Middleware configuration

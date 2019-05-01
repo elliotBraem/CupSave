@@ -1,41 +1,38 @@
 import produce from 'immer';
 
-export class BadgesState {
-  isLoaded = false;
+export const BadgesState = {
+  isLoaded: false,
+  error: null,
+  badgeList: [],
+};
 
-  error = null;
-
-  badgeList = [];
-}
-
-export const badgesReducer = (state = new BadgesState(), action) => {
+export const badgesReducer = (state = BadgesState, action) => {
   const {payload} = action;
-  switch (action.type) {
-    case 'BADGES_UPDATE': {
-      return produce(state, draft => {
+  return produce(state, draft => {
+    switch (action.type) {
+      case 'BADGES_UPDATE': {
         draft.badgeList = payload;
         draft.isLoaded = true;
-      });
-    }
+        break;
+      }
 
-    case 'BADGES_ERROR': {
-      return produce(state, draft => {
+      case 'BADGES_ERROR': {
         draft.error = payload;
         draft.isLoaded = true;
-      });
-    }
+        break;
+      }
 
-    case 'BADGES_LOADING': {
-      return produce(state, draft => {
+      case 'BADGES_LOADING': {
         draft.isLoaded = false;
-      });
-    }
+        break;
+      }
 
-    case 'BADGES_RESET': {
-      return new BadgesState();
-    }
+      case 'BADGES_RESET': {
+        return BadgesState;
+      }
 
-    default:
-      return state;
-  }
+      default:
+        return state;
+    }
+  });
 };
