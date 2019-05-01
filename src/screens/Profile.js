@@ -11,7 +11,7 @@ import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
 import LoadingComponent from '../components/Loading';
 
-const profileImage = require('../assets/images/profileicon.png');
+const profileImage = '../assets/images/profileicon.png';
 
 const styles = StyleSheet.create({
   container: {

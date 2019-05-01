@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   outerLogoContainer: {
     marginHorizontal: '10%',
-    flex: 0.8,
+    flex: 0.6,
     flexDirection: 'row',
     backgroundColor: COLORS.secondary,
     justifyContent: 'center',
@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   inputStyle: {
-    flex: 0.8,
-    //    height: 40,
+    //    flex: 0.8,
+    height: 40,
     width: '100%',
     borderColor: 'gray',
     borderWidth: 1,
@@ -78,8 +78,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   btnContainer: {
-    flex: 1,
+    flex: 0.5,
+    height: 40,
     // alignContent: 'space-between',
+  },
+  space: {
+    height: 40,
   },
   accountPrompt: {
     margin: 15,
@@ -135,7 +139,7 @@ class LoginScreen extends Component {
     const {errorMessage, email, password} = this.state;
 
     return (
-      <KeyboardAvoidingView style={styles.page} keyboardVerticalOffset={-80} behavior="padding" enable>
+      <KeyboardAvoidingView style={styles.page} keyboardVerticalOffset={-100} behavior="padding" enable>
         <View style={styles.outerLogoContainer}>
           <View style={styles.logoContainer}>
             <Image source={Logo} style={styles.logo} />
@@ -166,8 +170,18 @@ class LoginScreen extends Component {
             onChangeText={passwordInput => this.setState({password: passwordInput})}
           />
           <View style={styles.btnContainer}>
-            <Button title="Login" style={styles.btnStyle} onPress={this.handleLogin} />
-            <Button title="Login with Facebook" style={styles.btnStyle} onPress={this.handleFacebookLogin} />
+            <Button title="Login" style={styles.btnStyle} color={COLORS.primary} onPress={this.handleLogin} />
+          </View>
+          <View style={styles.space} />
+          <View style={styles.btnContainer}>
+            <Button
+              title="Login with Facebook"
+              color={COLORS.facebookBlue}
+              style={styles.btnStyle}
+              onPress={this.handleFacebookLogin}
+            />
+          </View>
+          <View style={{marginTop: '2%'}}>
             <Text style={styles.accountPrompt}>Don&#39;t have an account?</Text>
           </View>
           <View style={styles.btnContainer}>

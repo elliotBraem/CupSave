@@ -21,6 +21,7 @@ class Root extends React.Component {
     await Font.loadAsync({
       /* eslint-disable global-require */
       'open-sans-light': require('./assets/fonts/OpenSans/OpenSans-Light.ttf'),
+      'open-sans-italic': require('./assets/fonts/OpenSans/OpenSans-Italic.ttf'),
       'open-sans-regular': require('./assets/fonts/OpenSans/OpenSans-Regular.ttf'),
       'open-sans-semibold': require('./assets/fonts/OpenSans/OpenSans-SemiBold.ttf'),
       'open-sans-bold': require('./assets/fonts/OpenSans/OpenSans-Bold.ttf'),

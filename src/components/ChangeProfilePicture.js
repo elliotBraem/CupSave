@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {Text, StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {ImagePicker} from 'expo';
+import {ImagePicker, Permissions} from 'expo';
 import * as authActions from '../store/actions/auth';
 import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
 
-const profileImage = require('../assets/images/profileicon.png');
+const profileImage = '../assets/images/profileicon.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 12,
+    marginBottom: 20,
   },
   btnStyle: {
     height: 40,
@@ -30,13 +31,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 20,
   },
   circle: {
     width: 160,
     height: 160,
     overflow: 'hidden',
     alignSelf: 'center',
-    marginBottom: 20,
     borderRadius: 80,
     backgroundColor: COLORS.secondary,
     shadowColor: COLORS.secondary,
@@ -56,7 +57,10 @@ const styles = StyleSheet.create({
 class ChangeProfilePicture extends Component {
   static propTypes = {
     updateProfile: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
+    auth: PropTypes.shape({
+      uid: PropTypes.string.isRequired,
+      user: PropTypes.object.isRequired,
+    }).isRequired,
   };
 
   state = {
@@ -77,6 +81,8 @@ class ChangeProfilePicture extends Component {
   }
 
   handleChooseProfilePictureChange = async () => {
+    const {status} = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === 'granted') {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaType: 'photo',
       allowsEditing: true,
@@ -87,6 +93,8 @@ class ChangeProfilePicture extends Component {
         avatar: result.uri,
         newAvatar: true,
       });
+    } else {
+      this.setState({errorMessage: 'Location permission not granted'});
     }
   };
 

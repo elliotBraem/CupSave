@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
   logoContainer: {
-    flex: 0.7,
+    flex: 1.5,
     marginLeft: '5%',
   },
   logo: {
@@ -53,21 +53,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   subtextContainer: {
-    flex: 0.6,
+    flex: 0.3,
     justifyContent: 'center',
   },
   subtext: {
     alignSelf: 'center',
   },
   form: {
-    flex: 0.6,
+    flex: 0.8,
     justifyContent: 'space-between',
     width: '80%',
     alignSelf: 'center',
   },
   inputStyle: {
-    flex: 0.8,
-    //    height: 40,
+    //    flex: 0.8,
+    height: 40,
     width: '100%',
     borderColor: 'gray',
     borderWidth: 1,
@@ -82,8 +82,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   btnContainer: {
-    flex: 1.2,
+    flex: 0.5,
+    height: 40,
     // alignContent: 'space-between',
+  },
+  space: {
+    height: 40,
   },
 });
 
@@ -141,43 +145,53 @@ class SignUpScreen extends Component {
     const {errorMessage, email, password, confirmedPassword} = this.state;
 
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-        <Text style={styles.header}>Welcome to CupSave!</Text>
-        <Text>Sign Up</Text>
-        {errorMessage && <Text style={{color: 'red'}}>{errorMessage}</Text>}
-        <TextInput
-          style={styles.textInput}
-          autoCapitalize="none"
-          placeholder="Email"
-          value={email}
-          onChangeText={emailInput => this.setState({email: emailInput})}
-        />
-        <TextInput
-          secureTextEntry
-          style={styles.textInput}
-          autoCapitalize="none"
-          placeholder="Password"
-          value={password}
-          onChangeText={passwordInput => this.setState({password: passwordInput})}
-        />
-        <TextInput
-          secureTextEntry
-          placeholder="Confirm Password"
-          autoCapitalize="none"
-          style={styles.textInput}
-          onChangeText={confirmedPasswordInput => this.setState({confirmedPassword: confirmedPasswordInput})}
-          value={confirmedPassword}
-        />
-        <View style={styles.buttons}>
-          <Button title="Submit" onPress={this.handleSignUp} style={styles.button} />
-          <Button title="Sign up with Facebook" onPress={this.handleFacebookSignUp} style={styles.button} />
-          <Button
-            title="Already have an account? Login"
-            onPress={() => navigation.navigate('Login')}
-            style={styles.button}
+      <KeyboardAvoidingView style={styles.page} keyboardVerticalOffset={-60} behavior="padding" enabled>
+        <View style={styles.outerLogoContainer}>
+          <View style={styles.logoContainer}>
+            <Image source={Logo} style={styles.logo} />
+          </View>
+          <View style={styles.logoTextContainer}>
+            <Text style={{color: COLORS.primary, ...styles.logoText}}> Welcome to CupSave! </Text>
+          </View>
+        </View>
+        <View style={styles.spaceContainer} />
+        <View style={styles.form}>
+          {errorMessage && <Text style={{color: 'red'}}>{errorMessage}</Text>}
+          <TextInput
+            style={styles.inputStyle}
+            autoCapitalize="none"
+            placeholder="Email"
+            value={email}
+            onChangeText={emailInput => this.setState({email: emailInput})}
+          />
+          <TextInput
+            secureTextEntry
+            style={styles.inputStyle}
+            autoCapitalize="none"
+            placeholder="Password"
+            value={password}
+            onChangeText={passwordInput => this.setState({password: passwordInput})}
+          />
+          <TextInput
+            secureTextEntry
+            placeholder="Confirm Password"
+            autoCapitalize="none"
+            style={styles.inputStyle}
+            onChangeText={confirmedPasswordInput => this.setState({confirmedPassword: confirmedPasswordInput})}
+            value={confirmedPassword}
           />
           <View style={styles.btnContainer}>
             <Button title="Sign Up" style={styles.btnStyle} color={COLORS.primary} onPress={this.handleSignUp} />
+          </View>
+          <View style={styles.space} />
+
+          <View style={styles.btnContainer}>
+            <Button
+              title="Sign up with Facebook"
+              style={styles.btnStyle}
+              color={COLORS.facebookBlue}
+              onPress={this.handleFacebookSignUp}
+            />
           </View>
           <View style={styles.subtextContainer}>
             <Text style={styles.subtext}>Already have an account?</Text>

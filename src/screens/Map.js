@@ -47,10 +47,6 @@ class MapScreen extends Component {
     locations: PropTypes.object.isRequired,
   };
 
-  static navigationOptions = {
-    // title: 'Map',
-  };
-
   state = {
     region: null,
   };

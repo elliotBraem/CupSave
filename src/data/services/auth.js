@@ -35,9 +35,7 @@ export class AuthService {
                 consumption: {
                   total: 0,
                   most_recent_consumption: currentTimeInUnixEpoch,
-                  history: {
-                    [currentTimeInUnixEpoch]: 0,
-                  },
+                  history: {},
                 },
                 city: '',
                 level: 0,
@@ -273,11 +271,25 @@ export class AuthService {
     });
   };
 
-  incrementConsumption = uid => {
+  incrementConsumption = (drinkValue, locationEnabled, uid) => {
     return new Promise((resolve, reject) => {
       const userRef = FBFirestore.collection('users').doc(uid);
 
       const currentTimeInUnixEpoch = new Date().valueOf();
+
+      let long = 0;
+      let lat = 0;
+
+      // Get the location of user if enabled
+      if (locationEnabled) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            lat = position.coords.latitude;
+            long = position.coords.longitude;
+          },
+          err => console.log(err)
+        );
+      }
 
       return FBFirestore.runTransaction(async transaction => {
         return transaction
@@ -291,7 +303,15 @@ export class AuthService {
                 total: newTotal,
                 most_recent_consumption: currentTimeInUnixEpoch,
                 history: {
-                  [currentTimeInUnixEpoch]: newTotal,
+                  [currentTimeInUnixEpoch]: {
+                    consumptionNumber: newTotal,
+                    time: currentTimeInUnixEpoch,
+                    drink: drinkValue,
+                    location: {
+                      longitude: long,
+                      latitude: lat,
+                    },
+                  },
                 },
               },
             };

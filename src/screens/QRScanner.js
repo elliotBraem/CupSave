@@ -47,13 +47,18 @@ class QRScannerScreen extends Component {
 
   handleBarCodeScanned = ({type, data}) => {
     const {incrementConsumption} = this.props;
-    Alert.alert('Barcode Scanned', `Bar code with type ${type} and data ${data} has been scanned!`, [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-      },
-      {text: 'OK', onPress: () => incrementConsumption()},
-    ]);
+    const barcodeObject = JSON.parse(data);
+    Alert.alert(
+      'Barcode Scanned',
+      `Bar code with drink ${barcodeObject.drinkValue} from ${barcodeObject.locationValue} has been scanned!`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+        },
+        {text: 'OK', onPress: () => incrementConsumption(barcodeObject.drinkValue, true)},
+      ]
+    );
   };
 
   render() {
@@ -81,7 +86,8 @@ class QRScannerScreen extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    incrementConsumption: () => dispatch(authActions.dbIncrementConsumption()),
+    incrementConsumption: (drinkValue, locationEnabled) =>
+      dispatch(authActions.dbIncrementConsumption(drinkValue, locationEnabled)),
     fetchAuthData: () => dispatch(authActions.dbOnAuthorizeStateChange()),
   };
 };
