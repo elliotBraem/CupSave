@@ -1,18 +1,19 @@
-import React, {PureComponent} from 'react';
-import {StyleSheet, ScrollView, View, Image, Button, Platform} from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, ScrollView, View, Image, Button, Platform, Text} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import COLORS from '../constants/colors';
 import CustomHeader from '../components/CustomHeader';
 import StatsOverview from '../components/StatsOverview';
 import ProfileStats from '../components/ProfileStats';
-import Loading from '../components/Loading';
 import * as authActions from '../store/actions/auth';
 import * as badgesActions from '../store/actions/badges';
 import WasteOverview from '../components/WasteOverview';
 import MaterialsContainer from '../components/MaterialsContainer';
+import COLORS from '../constants/colors';
+import {FBStorage} from '../data';
+import LoadingComponent from '../components/Loading';
 
-const profileImage = require('../assets/images/profileicon.png');
+const profileImage = '../assets/images/profileicon.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ProfileScreen extends PureComponent {
+class ProfileScreen extends Component {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
@@ -66,27 +67,42 @@ class ProfileScreen extends PureComponent {
 
     const {badges, auth, fetchBadges, fetchAuthData} = props;
 
-    if (!auth.user || Object.keys(auth.user).length === 0) {
+    if (!auth.isLoaded || Object.keys(auth.user).length === 0) {
       fetchAuthData();
     }
 
     if (!badges.isLoaded) {
       fetchBadges();
     }
+
+    this.state = {
+      avatar: profileImage,
+      custom: false,
+    };
   }
 
-  componentDidMount = () => {
-    const {fetchAuthData} = this.props;
+  componentDidMount() {
+    const {auth} = this.props;
 
-    fetchAuthData();
-  };
+    FBStorage.ref()
+      .child(`profilePictures/${auth.uid}`)
+      .getDownloadURL()
+      .then(image =>
+        this.setState({
+          avatar: image,
+          custom: true,
+        })
+      )
+      .catch(error => console.log(error.message));
+  }
 
   render() {
     const {navigation, auth, badges} = this.props;
-    const adjustedCups = auth.user.consumption.total / 12;
+    const adjustedCups = auth.user.consumption.total * auth.user.cup_volume_size / 12;
+    const {avatar, custom} = this.state;
 
     if (!auth.isLoaded || !badges.isLoaded) {
-      return <Loading />;
+      return <LoadingComponent />;
     }
 
     return (
@@ -94,7 +110,11 @@ class ProfileScreen extends PureComponent {
         <CustomHeader title="Profile" />
         <ScrollView contentContainerStyle={styles.inner}>
           <View style={styles.circle}>
-            <Image source={profileImage} style={styles.image} />
+            {custom === false ? (
+              <Image source={avatar} style={styles.image} />
+            ) : (
+              <Image source={{uri: avatar}} style={styles.image} />
+            )}
           </View>
           <StatsOverview
             totalCupsSaved={auth.user.consumption.total}
