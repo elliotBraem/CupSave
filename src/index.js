@@ -9,8 +9,8 @@ import AppContainer from './navigation/AppNavigation';
 
 class Root extends React.Component {
   static propTypes = {
-    store: PropTypes.shape({}).isRequired,
-    persistor: PropTypes.shape({}).isRequired,
+    store: PropTypes.object.isRequired,
+    persistor: PropTypes.object.isRequired,
   };
 
   state = {

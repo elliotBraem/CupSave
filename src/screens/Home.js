@@ -41,9 +41,9 @@ class HomeScreen extends Component {
   render() {
     const {auth, incrementConsumption} = this.props;
 
-    if (!auth.isLoaded) {
-      return <Loading />;
-    }
+    // if (!auth.isLoaded) {
+    //   return <Loading />;
+    // }
 
     return (
       <View style={styles.container}>
@@ -65,8 +65,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state, ownProps) => {
   const auth = state.auth || {};
-
-  console.log(auth.isLoaded);
 
   return {
     auth,

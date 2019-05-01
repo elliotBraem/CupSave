@@ -13,10 +13,7 @@ export const badgesReducer = (state = new BadgesState(), action) => {
   switch (action.type) {
     case 'BADGES_UPDATE': {
       return produce(state, draft => {
-        const newBadges = [...state.badgeList, ...payload];
-
-        draft.badgeList = newBadges.filter((badge, index, self) => index === self.findIndex(c => c._id === badge._id));
-
+        draft.badgeList = payload;
         draft.isLoaded = true;
       });
     }

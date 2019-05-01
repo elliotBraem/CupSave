@@ -77,9 +77,9 @@ class ProfileScreen extends Component {
   render() {
     const {navigation, user, badges, userIsLoaded} = this.props;
 
-    if (!userIsLoaded || !badges.isLoaded) {
-      return <Loading />;
-    }
+    // if (!userIsLoaded || !badges.isLoaded) {
+    //   return <Loading />;
+    // }
 
     return (
       <View style={styles.container}>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {StyleSheet, View} from 'react-native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {connect} from 'react-redux';
+import {Permissions} from 'expo';
 import CustomHeader from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import * as locationsActions from '../store/actions/locations';
@@ -58,6 +59,10 @@ class MapScreen extends Component {
     }
 
     this.getUserLocation();
+  }
+
+  async componentDidMount() {
+    await Permissions.askAsync(Permissions.LOCATION);
   }
 
   getUserLocation = () => {
