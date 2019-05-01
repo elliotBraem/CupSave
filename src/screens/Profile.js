@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, ScrollView, View, Image, Button, Platform} from 'react-native';
+import {StyleSheet, ScrollView, View, Image, Button, Platform, Text} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import CustomHeader from '../components/CustomHeader';
@@ -9,6 +9,7 @@ import * as authActions from '../store/actions/auth';
 import * as badgesActions from '../store/actions/badges';
 import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
+import LoadingComponent from '../components/Loading';
 
 const profileImage = '../assets/images/profileicon.png';
 
@@ -54,11 +55,7 @@ class ProfileScreen extends Component {
       error: PropTypes.string,
       badgeList: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
-    auth: PropTypes.shape({
-      isLoaded: PropTypes.bool.isRequired,
-      user: PropTypes.object.isRequired,
-      uid: PropTypes.string.isRequired,
-    }).isRequired,
+    auth: PropTypes.object.isRequired,
     fetchAuthData: PropTypes.func.isRequired,
     fetchBadges: PropTypes.func.isRequired,
   };
@@ -78,6 +75,7 @@ class ProfileScreen extends Component {
 
     this.state = {
       avatar: profileImage,
+      custom: false,
     };
   }
 
@@ -87,25 +85,33 @@ class ProfileScreen extends Component {
     FBStorage.ref()
       .child(`profilePictures/${auth.uid}`)
       .getDownloadURL()
-      .then(image => {console.log(image); this.setState({avatar: image})})
+      .then(image =>
+        this.setState({
+          avatar: image,
+          custom: true,
+        })
+      )
       .catch(error => console.log(error.message));
   }
 
   render() {
     const {navigation, auth, badges} = this.props;
-    const {avatar} = this.state;
+    const {avatar, custom} = this.state;
 
-    // if (!auth.isLoaded || !badges.isLoaded) {
-    //   return <Loading />;
-    // }
-    console.log(avatar);
+    if (!auth.isLoaded || !badges.isLoaded) {
+      return <LoadingComponent />;
+    }
 
     return (
       <View style={styles.container}>
         <CustomHeader title="Profile" />
         <ScrollView contentContainerStyle={styles.inner}>
           <View style={styles.circle}>
-            <Image source={{uri: avatar}} style={styles.image} />
+            {custom === false ? (
+              <Image source={avatar} style={styles.image} />
+            ) : (
+              <Image source={{uri: avatar}} style={styles.image} />
+            )}
           </View>
           <StatsOverview
             totalCupsSaved={auth.user.consumption.total}

@@ -4,7 +4,7 @@ import Root from './src';
 import configureStore from './src/store/configureStore';
 
 const {persistor, store} = configureStore();
-// persistor.purge(); // Debug to clear persist
+// persistor.purge(); // un-comment and run to clear persisted redux data
 
 const App = () => {
   return <Root store={store} persistor={persistor} />;

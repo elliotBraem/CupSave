@@ -6,7 +6,7 @@ export class UsersService {
     return new Promise((resolve, reject) => {
       const userProfileRef = FBFirestore.collection('users').where('email', '==', email);
 
-      userProfileRef
+      return userProfileRef
         .get()
         .then(querySnapshot => {
           if (!querySnapshot.empty) {

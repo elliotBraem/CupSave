@@ -64,7 +64,7 @@ class HomeScreen extends Component {
   componentDidMount = () => {
     const {fetchAuthData, auth} = this.props;
 
-    if (!auth.isAuthenticated) {
+    if (!auth.isAuthenticated || !auth.isLoaded) {
       fetchAuthData();
     }
   };
@@ -78,9 +78,9 @@ class HomeScreen extends Component {
     const {auth, incrementConsumption} = this.props;
     const {isModalVisible} = this.state;
 
-    // if (!auth.isLoaded) {
-    //   return <Loading />;
-    // }
+    if (!auth.isLoaded) {
+      return <Loading />;
+    }
 
     return (
       <View style={styles.container}>

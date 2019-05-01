@@ -61,6 +61,7 @@ class CustomDrawer extends Component {
 
   state = {
     avatar: profileImage,
+    custom: false,
     errorMessage: null,
   };
 
@@ -70,7 +71,12 @@ class CustomDrawer extends Component {
     FBStorage.ref()
       .child(`profilePictures/${auth.uid}`)
       .getDownloadURL()
-      .then(image => this.setState({avatar: image}))
+      .then(image =>
+        this.setState({
+          avatar: image,
+          custom: true,
+        })
+      )
       .catch(error => console.log(error.message));
   }
 
@@ -86,11 +92,16 @@ class CustomDrawer extends Component {
 
   render() {
     const {logout, auth, ...props} = this.props;
-    const {avatar} = this.state;
+    const {custom, avatar} = this.state;
+
     return (
       <SafeAreaView style={styles.container} forceInset={{top: 'always', horizontal: 'never'}}>
         <View style={styles.headerContainer}>
-          <Image source={{uri: avatar}} style={styles.profileImage} />
+          {custom === false ? (
+            <Image source={avatar} style={styles.profileImage} />
+          ) : (
+            <Image source={{uri: avatar}} style={styles.profileImage} />
+          )}
           <Text style={styles.headerText}>{auth.user.email}</Text>
         </View>
         <View>
