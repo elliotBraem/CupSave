@@ -27,14 +27,14 @@ export const badgesError = message => {
  */
 export function dbGetBadges() {
   return async (dispatch, getState) => {
-    await dispatch(badgesLoading());
+    dispatch(badgesLoading());
 
     try {
       const badges = await badgesService.getAllBadges();
 
-      return dispatch(getBadges(badges));
+      dispatch(getBadges(badges));
     } catch (error) {
-      return dispatch(badgesError(error.message));
+      dispatch(badgesError(error.message));
     }
   };
 }

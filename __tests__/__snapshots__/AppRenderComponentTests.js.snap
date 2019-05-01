@@ -5,6 +5,7 @@ exports[`AppText test against snapshot 1`] = `
   style={
     Object {
       "color": "#ffffff",
+      "fontFamily": "open-sans-regular",
       "fontSize": 22,
     }
   }
@@ -104,6 +105,7 @@ exports[`SaveCupForm test against snapshot 1`] = `
       style={
         Object {
           "color": "#ffffff",
+          "fontFamily": "open-sans-regular",
           "fontSize": 22,
         }
       }

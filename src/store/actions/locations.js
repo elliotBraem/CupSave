@@ -25,16 +25,16 @@ export const locationsError = message => {
 /**
  * Get Locations
  */
-export function dbGetLocations() {
+export function dbGetLocations(latitude, longitude) {
   return async (dispatch, getState) => {
-    await dispatch(locationsLoading());
+    dispatch(locationsLoading());
 
     try {
-      const locations = await locationsService.getAllLocations();
+      const locations = await locationsService.getSurroundingLocations(latitude, longitude);
 
-      return dispatch(getLocations(locations));
+      dispatch(getLocations(locations));
     } catch (error) {
-      return dispatch(locationsError(error.message));
+      dispatch(locationsError(error.message));
     }
   };
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import COLORS from '../constants/colors';
@@ -44,17 +44,28 @@ const styles = StyleSheet.create({
   },
 });
 
-const SaveCupForm = ({onSaveCupFormSubmit}) => (
-  <View style={styles.container}>
-    <TouchableOpacity onPress={onSaveCupFormSubmit} style={styles.button}>
-      <Image source={Logo} style={styles.logoIcon} />
-      <AppText>SAVE A CUP</AppText>
-    </TouchableOpacity>
-  </View>
-);
+class SaveCupForm extends PureComponent {
+  static propTypes = {
+    onSaveCupFormSubmit: PropTypes.func.isRequired,
+    handleModal: PropTypes.func.isRequired,
+  };
 
-SaveCupForm.propTypes = {
-  onSaveCupFormSubmit: PropTypes.func.isRequired,
+  onHandleCupSave = () => {
+    const {onSaveCupFormSubmit, handleModal} = this.props;
+    onSaveCupFormSubmit();
+    handleModal();
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity onPress={this.onHandleCupSave} style={styles.button}>
+          <Image source={Logo} style={styles.logoIcon} />
+          <AppText>SAVE A CUP</AppText>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 };
 
 export default SaveCupForm;
