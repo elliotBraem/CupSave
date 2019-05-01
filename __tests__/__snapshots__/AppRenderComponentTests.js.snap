@@ -1,0 +1,283 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppText test against snapshot 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#ffffff",
+      "fontFamily": "open-sans-regular",
+      "fontSize": 22,
+    }
+  }
+/>
+`;
+
+exports[`HeaderTitle test against snapshot 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#ffffff",
+      "fontSize": 20,
+    }
+  }
+/>
+`;
+
+exports[`Loading test against snapshot 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "flexDirection": "column",
+      "justifyContent": "center",
+    }
+  }
+>
+  <ActivityIndicator
+    animating={true}
+    color="#79db85"
+    hidesWhenStopped={true}
+    size="large"
+  />
+</View>
+`;
+
+exports[`SaveCupForm test against snapshot 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#ffffff",
+      "borderRadius": 12,
+      "height": 130,
+      "shadowColor": "#1A1A1A",
+      "shadowOffset": Object {
+        "height": 3,
+        "width": 3,
+      },
+      "shadowOpacity": 0.3,
+      "shadowRadius": 12,
+      "width": 300,
+    }
+  }
+>
+  <View
+    accessible={true}
+    isTVSelectable={true}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#79db85",
+        "borderRadius": 12,
+        "flexDirection": "row",
+        "height": 70,
+        "justifyContent": "center",
+        "marginTop": 10,
+        "opacity": 1,
+        "shadowColor": "#1A1A1A",
+        "shadowOffset": Object {
+          "height": 3,
+          "width": 3,
+        },
+        "shadowOpacity": 0.3,
+        "shadowRadius": 12,
+        "width": 270,
+      }
+    }
+  >
+    <Image
+      source={1}
+      style={
+        Object {
+          "height": 45,
+          "marginRight": 30,
+          "width": 30,
+        }
+      }
+    />
+    <Text
+      style={
+        Object {
+          "color": "#ffffff",
+          "fontFamily": "open-sans-regular",
+          "fontSize": 22,
+        }
+      }
+    >
+      SAVE A CUP
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`StatSubtext test against snapshot 1`] = `
+<Text
+  style={
+    Object {
+      "fontSize": 12,
+    }
+  }
+/>
+`;
+
+exports[`StatText test against snapshot 1`] = `
+<Text
+  style={
+    Object {
+      "color": "#1A1A1A",
+      "fontSize": 24,
+    }
+  }
+/>
+`;
+
+exports[`StatsOverview test against snapshot 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#ffffff",
+      "borderRadius": 12,
+      "flexDirection": "row",
+      "height": 90,
+      "justifyContent": "space-evenly",
+      "shadowColor": "#1A1A1A",
+      "shadowOffset": Object {
+        "height": 3,
+        "width": 3,
+      },
+      "shadowOpacity": 0.3,
+      "shadowRadius": 12,
+      "width": "95%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "column",
+        "height": "60%",
+        "justifyContent": "space-between",
+        "width": "33%",
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "fontSize": 12,
+        }
+      }
+    >
+      My drink size
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#1A1A1A",
+          "fontSize": 24,
+        }
+      }
+    >
+      16oz
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "borderLeftColor": "#d4d4d4",
+        "borderLeftWidth": 1,
+        "height": 70,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "column",
+        "height": "60%",
+        "justifyContent": "space-between",
+        "width": "33%",
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "fontSize": 12,
+        }
+      }
+    >
+      Total cups saved
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#1A1A1A",
+          "fontSize": 24,
+        }
+      }
+    >
+      0
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "borderLeftColor": "#d4d4d4",
+        "borderLeftWidth": 1,
+        "height": 70,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "column",
+        "height": "60%",
+        "justifyContent": "space-between",
+        "width": "33%",
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "fontSize": 12,
+        }
+      }
+    >
+      Level
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#1A1A1A",
+          "fontSize": 24,
+        }
+      }
+    >
+      0
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`TitleText test against snapshot 1`] = `
+<Text
+  style={
+    Object {
+      "fontSize": 16,
+    }
+  }
+/>
+`;
