@@ -11,25 +11,31 @@ const styles = StyleSheet.create({
     color: COLORS.white,
   },
   statText: {
+    fontFamily: 'open-sans-regular',
     fontSize: 24,
     color: COLORS.secondary,
   },
   statSubtext: {
+    fontFamily: 'open-sans-light',
     fontSize: 12,
   },
   titleText: {
+    fontFamily: 'open-sans-semibold',
     fontSize: 16,
   },
   headerTitle: {
     fontSize: 20,
+    fontFamily: 'open-sans-semibold',
     color: COLORS.white,
   },
   labelText: {
     fontSize: 8,
+    fontFamily: 'open-sans-regular',
     color: COLORS.secondary,
   },
   feedText: {
     fontSize: 12,
+    fontFamily: 'open-sans-regular',
     color: COLORS.secondary,
   },
   worldCounterText: {

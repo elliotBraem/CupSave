@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   },
   title: {
     marginLeft: 20,
-    fontSize: 16,
     marginBottom: 2,
     alignSelf: 'flex-start',
   },
