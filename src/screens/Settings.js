@@ -1,10 +1,11 @@
 import React from 'react';
 import {StyleSheet, View, Platform, ScrollView} from 'react-native';
-import CustomHeader from '../components/CustomHeader';
+import Header from '../components/CustomHeader';
 import ChangePassword from '../components/ChangePassword';
 import ChangeEmail from '../components/ChangeEmail';
 import ChangeCupSize from '../components/ChangeCupSize';
 import COLORS from '../constants/colors';
+import ChangeProfilePicture from '../components/ChangeProfilePicture';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,8 +21,9 @@ const styles = StyleSheet.create({
 const SettingsScreen = () => {
   return (
     <View style={styles.container}>
-      <CustomHeader title="Settings" />
+      <Header title="Settings" />
       <ScrollView contentContainerStyle={styles.inner}>
+        <ChangeProfilePicture />
         <ChangeCupSize />
         <ChangePassword />
         <ChangeEmail />

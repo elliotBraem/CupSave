@@ -17,6 +17,7 @@ import ProfileIcon from '../assets/images/drawer-icons/profile-icon.svg';
 import QRScannerIcon from '../assets/images/drawer-icons/qr-scanner-icon.svg';
 import MapIcon from '../assets/images/drawer-icons/map-icon.svg';
 import AboutIcon from '../assets/images/drawer-icons/about-icon.svg';
+import Header from '../components/CustomHeader';
 
 const styles = StyleSheet.create({
   icon: {

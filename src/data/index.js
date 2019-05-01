@@ -23,8 +23,8 @@ try {
 }
 
 // Initialize firestore service on firebase instance
-export const FirestoreRef = FirebaseModule.firestore();
+export const FBFirestore = FirebaseModule.firestore();
 
-export const StorageRef = FirebaseModule.storage();
+export const FBStorage = FirebaseModule.storage();
 
 export default FirebaseModule;

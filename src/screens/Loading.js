@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {View, Text, ActivityIndicator, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
-import * as authActions from '../store/actions/auth';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,7 +11,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class LoadingScreen extends PureComponent {
+export class LoadingScreen extends PureComponent {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,

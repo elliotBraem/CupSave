@@ -24,14 +24,14 @@ export const userError = message => {
 
 export function dbGetUser(email) {
   return async (dispatch, getState) => {
-    await dispatch(userLoading());
+    dispatch(userLoading());
 
     try {
       const userData = await userService.getUserData(email);
 
-      return dispatch(getUser(email, userData));
+      dispatch(getUser(email, userData));
     } catch (error) {
-      return dispatch(userError(error.message));
+      dispatch(userError(error.message));
     }
   };
 }

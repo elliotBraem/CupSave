@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
 import {StyleSheet, View, Platform} from 'react-native';
-import CustomHeader from '../components/CustomHeader';
+import Header from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import {AppText} from '../components/TextComponents';
 
@@ -23,18 +22,11 @@ const styles = StyleSheet.create({
   },
 });
 
-class AboutUsScreen extends PureComponent {
-  static propTypes = {
-    navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
-  };
-
+export class AboutUsScreen extends PureComponent {
   render() {
     return (
       <View style={styles.container}>
-        <CustomHeader title="About Us" />
+        <Header title="About Us" />
         <View style={styles.header}>
           <View style={styles.inner}>
             <AppText style={styles.paragraphText}>

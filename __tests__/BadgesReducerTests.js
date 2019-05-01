@@ -10,14 +10,17 @@ describe('badges reducer', () => {
   });
   it('should handle BADGES_UPDATE', () => {
     expect(
-      badgesReducer({
-        isLoaded: false,
-        error: null,
-        badgeList: ['oldBadge1', 'oldBades2'],
-      }, {
-        type: 'BADGES_UPDATE',
-        payload: ['newBadge1', 'newBadge2'],
-      })
+      badgesReducer(
+        {
+          isLoaded: false,
+          error: null,
+          badgeList: ['oldBadge1', 'oldBades2'],
+        },
+        {
+          type: 'BADGES_UPDATE',
+          payload: ['newBadge1', 'newBadge2'],
+        }
+      )
     ).toEqual({
       isLoaded: true,
       error: null,
@@ -48,7 +51,7 @@ describe('badges reducer', () => {
     expect(
       badgesReducer([], {
         type: 'BADGES_RESET',
-      })).toEqual(new BadgesState());
+      })
+    ).toEqual(new BadgesState());
   });
-
 });

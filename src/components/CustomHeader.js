@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {StyleSheet, View, Platform} from 'react-native';
 import PropTypes from 'prop-types';
 import {withNavigation} from 'react-navigation';
@@ -26,20 +26,23 @@ const styles = StyleSheet.create({
   },
 });
 
-const CustomHeader = ({navigation, title}) => {
-  return (
-    <View style={styles.container}>
-      <BurgerIcon style={styles.burgerIcon} onPress={() => navigation.toggleDrawer()} />
-      <HeaderTitle style={styles.headerTitle}>{title}</HeaderTitle>
-    </View>
-  );
-};
+export class CustomHeader extends PureComponent {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      toggleDrawer: PropTypes.func.isRequired,
+    }).isRequired,
+    title: PropTypes.string.isRequired,
+  };
 
-CustomHeader.propTypes = {
-  navigation: PropTypes.shape({
-    toggleDrawer: PropTypes.func.isRequired,
-  }).isRequired,
-  title: PropTypes.string.isRequired,
-};
+  render() {
+    const {navigation, title} = this.props;
+    return (
+      <View style={styles.container}>
+        <BurgerIcon style={styles.burgerIcon} onPress={() => navigation.toggleDrawer()} />
+        <HeaderTitle style={styles.headerTitle}>{title}</HeaderTitle>
+      </View>
+    );
+  }
+}
 
 export default withNavigation(CustomHeader);

@@ -10,15 +10,18 @@ describe('users reducer', () => {
   });
   it('should handle USERS_UPDATE', () => {
     expect(
-      usersReducer({
-        userMap: {'s@s.com': 'user2',}
-      }, {
-        type: 'USERS_UPDATE',
-        payload: {
-          user: 'user1',
-          email: 't@t.com',
+      usersReducer(
+        {
+          userMap: {'s@s.com': 'user2'},
         },
-      })
+        {
+          type: 'USERS_UPDATE',
+          payload: {
+            user: 'user1',
+            email: 't@t.com',
+          },
+        }
+      )
     ).toEqual({
       isLoaded: true,
       userMap: {'s@s.com': 'user2', 't@t.com': 'user1'},
@@ -48,7 +51,7 @@ describe('users reducer', () => {
     expect(
       usersReducer([], {
         type: 'USERS_RESET',
-      })).toEqual(new UsersState());
+      })
+    ).toEqual(new UsersState());
   });
-
 });
