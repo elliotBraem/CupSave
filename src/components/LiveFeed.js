@@ -32,7 +32,7 @@ const LiveFeed = ({feedContent}) => {
         <View style={styles.title}>
           <TitleText>Live Feed</TitleText>
         </View>
-        <FeedList data={Object.entries(feedContent)} />
+        <FeedList data={Object.entries(feedContent).reverse()} />
       </View>
     </View>
   );
