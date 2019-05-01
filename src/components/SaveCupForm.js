@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
 class SaveCupForm extends Component {
   static propTypes = {
     onSaveCupFormSubmit: PropTypes.func.isRequired,
+    handleModal: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -81,9 +82,10 @@ class SaveCupForm extends Component {
   }
 
   handleOnSaveCup() {
-    const {onSaveCupFormSubmit} = this.props;
+    const {onSaveCupFormSubmit, handleModal} = this.props;
     const {drinkValue, locationEnabled} = this.state;
     onSaveCupFormSubmit(drinkValue, locationEnabled);
+    handleModal();
   }
 
   render() {

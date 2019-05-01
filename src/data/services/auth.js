@@ -1,6 +1,8 @@
+/* global XMLHttpRequest */
+import {Constants, Facebook} from 'expo';
 import ErrorMessages from '../../constants/errors';
 
-import Firebase, {FirestoreRef} from '../index';
+import Firebase, {FBFirestore, FBStorage} from '../index';
 import REGEX from '../../constants/regex';
 
 export class AuthService {
@@ -25,7 +27,7 @@ export class AuthService {
               badges.rJ7XjWH9a336tPj9caEB = true;
             }
 
-            await FirestoreRef.collection('users')
+            await FBFirestore.collection('users')
               .doc(uid)
               .set({
                 email,
@@ -77,7 +79,7 @@ export class AuthService {
 
               if (userDetails && userDetails.uid) {
                 // Update last logged in data
-                await FirestoreRef.collection('users')
+                await FBFirestore.collection('users')
                   .doc(userDetails.uid)
                   .update({
                     last_logged_in: currentTimeInUnixEpoch,
@@ -114,10 +116,10 @@ export class AuthService {
    */
   loginWithFacebook = () => {
     return new Promise(async (resolve, reject) => {
-      const {appId} = Expo.Constants.manifest.extra.facebook;
+      const {appId} = Constants.manifest.extra.facebook;
       const permissions = ['public_profile', 'email']; // required permissions
 
-      const {type, token} = await Expo.Facebook.logInWithReadPermissionsAsync(appId, {permissions});
+      const {type, token} = await Facebook.logInWithReadPermissionsAsync(appId, {permissions});
 
       switch (type) {
         case 'success': {
@@ -126,14 +128,14 @@ export class AuthService {
           const facebookProfile = await Firebase.auth().signInAndRetrieveDataWithCredential(credential);
 
           // do things with user's facebook profile data here
-          const userRef = FirestoreRef.collection('users').where('email', '==', facebookProfile.user.email);
+          const userRef = FBFirestore.collection('users').where('email', '==', facebookProfile.user.email);
           const {email} = facebookProfile.user;
           userRef.get().then(async querySnapshot => {
             if (!querySnapshot.empty) {
               // Contents of first document (only should be 1, emails are unique)
               return resolve({email});
             }
-            const uid = facebookProfile.user.uid;
+            const {uid} = facebookProfile.user;
             const currentTimeInUnixEpoch = new Date().valueOf();
 
             const isUniversity = new RegExp(REGEX.UNIVERSITY_EMAIL).test(email);
@@ -146,7 +148,7 @@ export class AuthService {
               badges.rJ7XjWH9a336tPj9caEB = true;
             }
 
-            await FirestoreRef.collection('users')
+            await FBFirestore.collection('users')
               .doc(uid)
               .set({
                 email,
@@ -168,8 +170,12 @@ export class AuthService {
               });
             return resolve({email});
           });
+          break;
         }
         case 'cancel': {
+          throw new Error('Error: something went wrong');
+        }
+        case 'default': {
           throw new Error('Error: something went wrong');
         }
       }
@@ -205,11 +211,11 @@ export class AuthService {
   };
 
   updateProfile = (formData, uid) => {
-    const {email, password, changeEmail, changePassword} = formData;
+    const {email, password, changeEmail, changePassword, avatar} = formData;
 
     return new Promise((resolve, reject) => {
       // Go to Firebase
-      return FirestoreRef.collection('users')
+      return FBFirestore.collection('users')
         .doc(uid)
         .update({
           email,
@@ -233,6 +239,32 @@ export class AuthService {
               });
           }
 
+          if (avatar && Firebase.auth().currentUser !== null) {
+            // Why are we using XMLHttpRequest? See:
+            // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+            const blob = await new Promise((resolve, reject) => {
+              const xhr = new XMLHttpRequest();
+              xhr.onload = () => {
+                resolve(xhr.response);
+              };
+              xhr.onerror = () => {
+                reject(new TypeError('Network request failed'));
+              };
+              xhr.responseType = 'blob';
+              xhr.open('GET', avatar.uri, true);
+              xhr.send(null);
+            });
+
+            await FBStorage.ref()
+              .child(`profilePictures/${uid}`)
+              .put(blob)
+              .catch(error => {
+                reject(new Error(error.message));
+              });
+
+            blob.close();
+          }
+
           return resolve();
         })
         .catch(error => {
@@ -243,7 +275,7 @@ export class AuthService {
 
   incrementConsumption = (drinkValue, locationEnabled, uid) => {
     return new Promise((resolve, reject) => {
-      const userRef = FirestoreRef.collection('users').doc(uid);
+      const userRef = FBFirestore.collection('users').doc(uid);
 
       const currentTimeInUnixEpoch = new Date().valueOf();
 
@@ -261,7 +293,7 @@ export class AuthService {
         );
       }
 
-      return FirestoreRef.runTransaction(async transaction => {
+      return FBFirestore.runTransaction(async transaction => {
         return transaction
           .get(userRef)
           .then(doc => {
@@ -297,9 +329,9 @@ export class AuthService {
 
   updateCupSize = (newCupSize, uid) => {
     return new Promise((resolve, reject) => {
-      const userRef = FirestoreRef.collection('users').doc(uid);
+      const userRef = FBFirestore.collection('users').doc(uid);
 
-      return FirestoreRef.runTransaction(async transaction => {
+      return FBFirestore.runTransaction(async transaction => {
         return transaction
           .get(userRef)
           .then(doc => {

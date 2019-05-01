@@ -16,7 +16,7 @@ export const login = user => {
 
 export const updateProfile = user => {
   return {
-    type: 'AUTH_DETAILS_UPDATE',
+    type: 'AUTH_USERS_UPDATE',
     payload: user,
   };
 };
@@ -35,7 +35,7 @@ export const logout = () => {
 
 export const getUserData = user => {
   return {
-    type: 'AUTH_DETAILS_SET',
+    type: 'AUTH_USER_SET',
     payload: user,
   };
 };
@@ -99,22 +99,22 @@ export function dbReauthenticate(password) {
  */
 export function dbLogin(email, password) {
   return async (dispatch, getState) => {
-    await dispatch(authLoading());
+    dispatch(authLoading());
 
     try {
       const user = await authService.login(email, password);
 
       const userData = await userService.getUserData(user.email);
 
-      await dispatch(getUserData(userData));
-
       if (!user.emailVerified) {
         console.log('Account email is not verified, new email sent.');
       }
 
-      return dispatch(login(user));
+      dispatch(getUserData(userData));
+
+      dispatch(login(user));
     } catch (error) {
-      return dispatch(authError(error.message));
+      dispatch(authError(error.message));
     }
   };
 }
@@ -124,18 +124,18 @@ export function dbLogin(email, password) {
  */
 export function dbFacebookLogin() {
   return async (dispatch, getState) => {
-    await dispatch(authLoading());
+    dispatch(authLoading());
 
     try {
       const user = await authService.loginWithFacebook();
 
       const userData = await userService.getUserData(user.email);
 
-      await dispatch(getUserData(userData));
+      dispatch(getUserData(userData));
 
-      return dispatch(login(user));
+      dispatch(login(user));
     } catch (error) {
-      return dispatch(authError(error.message));
+      dispatch(authError(error.message));
     }
   };
 }
@@ -145,16 +145,16 @@ export function dbFacebookLogin() {
  */
 export function dbSignUp(email, password) {
   return async (dispatch, getState) => {
-    await dispatch(authLoading());
+    dispatch(authLoading());
 
     try {
       await authService.signUp(email, password);
 
       const userData = await userService.getUserData(email);
 
-      return dispatch(getUserData(userData));
+      dispatch(getUserData(userData));
     } catch (error) {
-      return dispatch(authError(error.message));
+      dispatch(authError(error.message));
     }
   };
 }
@@ -164,13 +164,13 @@ export function dbSignUp(email, password) {
  */
 export function dbLogout() {
   return async (dispatch, getState) => {
-    await dispatch(authLoading());
+    dispatch(authLoading());
 
     try {
-      await authService.logout();
-      return dispatch(logout());
+      authService.logout();
+      dispatch(logout());
     } catch (error) {
-      return dispatch(authError(error.message));
+      dispatch(authError(error.message));
     }
   };
 }
@@ -196,30 +196,26 @@ export function dbResetPassword(email) {
  */
 export function dbUpdateProfile(formData) {
   return async (dispatch, getState) => {
-    await dispatch(authLoading());
+    dispatch(authLoading());
 
     try {
       const user = await Firebase.auth().currentUser;
+      authService.updateProfile(formData, user.uid);
 
-      if (user) {
-        await authService.updateProfile(formData, user.uid);
+      dispatch(updateProfile({...formData}));
 
-        dispatch(updateProfile({...formData}));
+      const userData = await userService.getUserData(user.email);
 
-        const userData = await userService.getUserData(user.email);
-
-        return dispatch(getUserData(userData));
-      }
-      return dispatch(authError(ErrorMessages.default));
+      dispatch(getUserData(userData));
     } catch (error) {
-      return dispatch(authError(error.message));
+      dispatch(authError(error.message));
     }
   };
 }
 
 export function dbIncrementConsumption(drinkValue, locationEnabled) {
   return async (dispatch, getState) => {
-    await dispatch(authLoading());
+    dispatch(authLoading());
 
     try {
       const user = await Firebase.auth().currentUser;
@@ -229,32 +225,28 @@ export function dbIncrementConsumption(drinkValue, locationEnabled) {
 
         const userData = await userService.getUserData(user.email);
 
-        return dispatch(getUserData(userData));
+        dispatch(updateProfile(userData));
       }
-      return dispatch(authError(ErrorMessages.default));
     } catch (error) {
-      return dispatch(authError(error.message));
+      dispatch(authError(error.message));
     }
   };
 }
 
 export function dbUpdateCupSize(newCupSize) {
   return async (dispatch, getState) => {
-    await dispatch(authLoading());
+    dispatch(authLoading());
 
     try {
       const user = await Firebase.auth().currentUser;
 
-      if (user) {
-        await authService.updateCupSize(newCupSize, user.uid);
+      await authService.updateCupSize(newCupSize, user.uid);
 
-        const userData = await userService.getUserData(user.email);
+      const userData = await userService.getUserData(user.email);
 
-        return dispatch(getUserData(userData));
-      }
-      return dispatch(authError(ErrorMessages.default));
+      dispatch(updateProfile(userData));
     } catch (error) {
-      return dispatch(authError(error.message));
+      dispatch(authError(error.message));
     }
   };
 }

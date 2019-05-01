@@ -14,4 +14,5 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
+  facebookBlue: '#3b5998',
 };
