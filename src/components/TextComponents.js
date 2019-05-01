@@ -22,6 +22,25 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: COLORS.white,
   },
+  worldCounterText: {
+    fontFamily: 'open-sans-italic',
+    color: COLORS.white,
+    fontSize: 18,
+    marginTop: 20,
+  },
+  saveACupText: {
+    fontFamily: 'open-sans-bold',
+    marginTop: 40,
+    color: COLORS.primary,
+    fontSize: 48,
+    paddingRight: 60,
+  },
+  saveTheWorldText: {
+    fontFamily: 'open-sans-italic',
+    color: COLORS.white,
+    fontSize: 48,
+    paddingLeft: 40,
+  },
 });
 
 export const AppText = props => {
@@ -42,4 +61,16 @@ export const TitleText = props => {
 
 export const HeaderTitle = props => {
   return <Text style={styles.headerTitle}>{props.children}</Text>;
+};
+
+export const WorldCounterText = props => {
+  return <Text style={styles.worldCounterText}>{props.children}</Text>;
+};
+
+export const SaveACupText = props => {
+  return <Text style={styles.saveACupText}>{props.children}</Text>;
+};
+
+export const SaveTheWorldText = props => {
+  return <Text style={styles.saveTheWorldText}>{props.children}</Text>;
 };
