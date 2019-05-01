@@ -40,9 +40,16 @@ const FeedItem = ({drink, location}) => {
 FeedItem.propTypes = {
   drink: PropTypes.string.isRequired,
   location: PropTypes.shape({
-    latitude: PropTypes.string.isRequired,
-    longitude: PropTypes.string.isRequired,
-  }).isRequired,
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+  }),
+};
+
+FeedItem.defaultProps = {
+  location: {
+    latitude: 0,
+    longitude: 0,
+  },
 };
 
 export default FeedItem;

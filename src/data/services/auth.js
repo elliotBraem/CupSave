@@ -1,5 +1,3 @@
-import {Location} from 'expo';
-
 import ErrorMessages from '../../constants/errors';
 
 import Firebase, {FirestoreRef} from '../index';
@@ -249,8 +247,6 @@ export class AuthService {
 
       const currentTimeInUnixEpoch = new Date().valueOf();
 
-      // let locationName = '';
-      // let locationCity = '';
       let long = 0;
       let lat = 0;
 
@@ -260,13 +256,6 @@ export class AuthService {
           position => {
             lat = position.coords.latitude;
             long = position.coords.longitude;
-            // await Location.reverseGeocodeAsync({
-            //   latitude: lat,
-            //   longitude: long,
-            // }).then(location => {
-            //   locationName = location[0].name;
-            //   locationCity = location[0].city;
-            // });
           },
           err => console.log(err)
         );
