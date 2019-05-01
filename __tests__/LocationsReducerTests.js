@@ -10,14 +10,17 @@ describe('locations reducer', () => {
   });
   it('should handle BADGES_UPDATE', () => {
     expect(
-      locationsReducer({
-        isLoaded: false,
-        error: null,
-        locationList: ['oldBadge1', 'oldBades2'],
-      }, {
-        type: 'LOCATIONS_UPDATE',
-        payload: ['newBadge1', 'newBadge2'],
-      })
+      locationsReducer(
+        {
+          isLoaded: false,
+          error: null,
+          locationList: ['oldBadge1', 'oldBades2'],
+        },
+        {
+          type: 'LOCATIONS_UPDATE',
+          payload: ['newBadge1', 'newBadge2'],
+        }
+      )
     ).toEqual({
       isLoaded: true,
       error: null,
@@ -48,6 +51,7 @@ describe('locations reducer', () => {
     expect(
       locationsReducer([], {
         type: 'LOCATIONS_RESET',
-      })).toEqual(new LocationsState());
+      })
+    ).toEqual(new LocationsState());
   });
 });

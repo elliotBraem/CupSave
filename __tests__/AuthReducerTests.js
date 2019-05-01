@@ -1,4 +1,4 @@
-import {authReducer, AuthState} from '../src/store/reducers/auth';
+import {authReducer} from '../src/store/reducers/auth';
 import TYPES from '../src/constants/auth';
 
 describe('auth reducer', () => {
@@ -44,22 +44,25 @@ describe('auth reducer', () => {
   });
   it('should handle AUTH_DETAILS_UPDATE', () => {
     expect(
-      authReducer({user:{}}, {
-        type: TYPES.AUTH_DETAILS_UPDATE,
-        payload: {
-          uid: '123456789',
-          providerId: '123456789',
-          displayName: 'Test',
-          email: 'test@test.com',
-        },
-      })
+      authReducer(
+        {user: {}},
+        {
+          type: TYPES.AUTH_DETAILS_UPDATE,
+          payload: {
+            uid: '123456789',
+            providerId: '123456789',
+            displayName: 'Test',
+            email: 'test@test.com',
+          },
+        }
+      )
     ).toEqual({
       isLoaded: true,
       user: {
-          uid: '123456789',
-          providerId: '123456789',
-          displayName: 'Test',
-          email: 'test@test.com',
+        uid: '123456789',
+        providerId: '123456789',
+        displayName: 'Test',
+        email: 'test@test.com',
       },
     });
   });
@@ -85,23 +88,22 @@ describe('auth reducer', () => {
       isAuthenticated: true,
       error: null,
       isLoaded: true,
-      user: {     
-          uid: '123456789',
-          providerId: '123456789',
-          displayName: 'Test',
-          email: 'test@test.com',
+      user: {
+        uid: '123456789',
+        providerId: '123456789',
+        displayName: 'Test',
+        email: 'test@test.com',
       },
-
     });
   });
   it('should handle AUTH_ERROR', () => {
     expect(
       authReducer([], {
         type: TYPES.AUTH_ERROR,
-        payload: "Error here"
+        payload: 'Error here',
       })
     ).toEqual({
-      error: "Error here",
+      error: 'Error here',
       isLoaded: true,
     });
   });
@@ -119,7 +121,7 @@ describe('auth reducer', () => {
       authReducer([], {
         type: TYPES.AUTH_RESET,
       })
-//    ).toEqual(new AuthState());
+      //    ).toEqual(new AuthState());
     ).toEqual({
       uid: '',
       emailVerified: false,
@@ -134,5 +136,4 @@ describe('auth reducer', () => {
       user: {},
     });
   });
-
 });
