@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   inputStyle: {
-//    flex: 0.8,
+    //    flex: 0.8,
     height: 40,
     width: '100%',
     borderColor: 'gray',
@@ -186,7 +186,12 @@ class SignUpScreen extends Component {
           <View style={styles.space} />
 
           <View style={styles.btnContainer}>
-            <Button title="Sign up with Facebook" style={styles.btnStyle} color={COLORS.facebookBlue} onPress={this.handleFacebookSignUp}/>
+            <Button
+              title="Sign up with Facebook"
+              style={styles.btnStyle}
+              color={COLORS.facebookBlue}
+              onPress={this.handleFacebookSignUp}
+            />
           </View>
           <View style={styles.subtextContainer}>
             <Text style={styles.subtext}>Already have an account?</Text>

@@ -213,18 +213,20 @@ export function dbUpdateProfile(formData) {
   };
 }
 
-export function dbIncrementConsumption() {
+export function dbIncrementConsumption(drinkValue, locationEnabled) {
   return async (dispatch, getState) => {
     dispatch(authLoading());
 
     try {
       const user = await Firebase.auth().currentUser;
 
-      await authService.incrementConsumption(user.uid);
+      if (user) {
+        await authService.incrementConsumption(drinkValue, locationEnabled, user.uid);
 
-      const userData = await userService.getUserData(user.email);
+        const userData = await userService.getUserData(user.email);
 
-      dispatch(updateProfile(userData));
+        dispatch(updateProfile(userData));
+      }
     } catch (error) {
       dispatch(authError(error.message));
     }
