@@ -11,5 +11,5 @@ const App = () => {
 };
 
 export default App;
-
+console.ignoredYellowBox = ['Warning:'];
 AppRegistry.registerComponent('CupSave', () => App, false);
