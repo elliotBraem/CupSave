@@ -1,4 +1,4 @@
-import {authReducer, AuthState} from '../src/store/reducers/auth';
+import {authReducer} from '../src/store/reducers/auth';
 import TYPES from '../src/constants/auth';
 
 describe('auth reducer', () => {
