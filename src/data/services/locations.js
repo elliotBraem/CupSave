@@ -1,11 +1,11 @@
-import {FirestoreRef} from '../index';
+import {FBFirestore} from '../index';
 import ErrorMessages from '../../constants/errors';
 
 export class LocationsService {
   getAllLocations = () => {
     return new Promise((resolve, reject) => {
       // TODO: !!! CHANGE THIS to match current users city or something similar
-      const locationRef = FirestoreRef.collection('locations').limit(10);
+      const locationRef = FBFirestore.collection('locations').limit(10);
 
       return locationRef
         .get()

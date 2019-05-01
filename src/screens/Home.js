@@ -78,9 +78,9 @@ class HomeScreen extends Component {
     const {auth, incrementConsumption} = this.props;
     const {isModalVisible} = this.state;
 
-    if (!auth.isLoaded) {
-      return <Loading />;
-    }
+    // if (!auth.isLoaded) {
+    //   return <Loading />;
+    // }
 
     return (
       <View style={styles.container}>
@@ -114,8 +114,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state, ownProps) => {
   const auth = state.auth || {};
-
-  console.log(auth.isLoaded);
 
   return {
     auth,

@@ -1,10 +1,10 @@
-import {FirestoreRef} from '../index';
+import {FBFirestore} from '../index';
 import ErrorMessages from '../../constants/errors';
 
 export class BadgesService {
   getAllBadges = () => {
     return new Promise((resolve, reject) => {
-      const badgeRef = FirestoreRef.collection('badges');
+      const badgeRef = FBFirestore.collection('badges');
 
       return badgeRef
         .get()

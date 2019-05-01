@@ -13,12 +13,7 @@ export const locationsReducer = (state = new LocationsState(), action) => {
   switch (action.type) {
     case 'LOCATIONS_UPDATE': {
       return produce(state, draft => {
-        const newLocations = [...state.locationList, ...payload];
-
-        draft.locationList = newLocations.filter(
-          (locations, index, self) => index === self.findIndex(c => c._id === locations._id)
-        );
-
+        draft.locationList = payload;
         draft.isLoaded = true;
       });
     }

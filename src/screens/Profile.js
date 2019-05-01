@@ -5,12 +5,12 @@ import {connect} from 'react-redux';
 import CustomHeader from '../components/CustomHeader';
 import StatsOverview from '../components/StatsOverview';
 import ProfileStats from '../components/ProfileStats';
-import Loading from '../components/Loading';
 import * as authActions from '../store/actions/auth';
 import * as badgesActions from '../store/actions/badges';
 import COLORS from '../constants/colors';
+import {FBStorage} from '../data';
 
-const profileImage = require('../assets/images/profileicon.png');
+const profileImage = '../assets/images/profileicon.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -54,8 +54,11 @@ class ProfileScreen extends Component {
       error: PropTypes.string,
       badgeList: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
-    user: PropTypes.object.isRequired,
-    userIsLoaded: PropTypes.bool.isRequired,
+    auth: PropTypes.shape({
+      isLoaded: PropTypes.bool.isRequired,
+      user: PropTypes.object.isRequired,
+      uid: PropTypes.string.isRequired,
+    }).isRequired,
     fetchAuthData: PropTypes.func.isRequired,
     fetchBadges: PropTypes.func.isRequired,
   };
@@ -63,34 +66,54 @@ class ProfileScreen extends Component {
   constructor(props) {
     super(props);
 
-    const {badges, user, fetchBadges, fetchAuthData, userIsLoaded} = props;
+    const {badges, auth, fetchBadges, fetchAuthData} = props;
 
-    if (!userIsLoaded || !user || Object.keys(user).length === 0) {
+    if (!auth.isLoaded || Object.keys(auth.user).length === 0) {
       fetchAuthData();
     }
 
     if (!badges.isLoaded) {
       fetchBadges();
     }
+
+    this.state = {
+      avatar: profileImage,
+    };
+  }
+
+  componentDidMount() {
+    const {auth} = this.props;
+
+    FBStorage.ref()
+      .child(`profilePictures/${auth.uid}`)
+      .getDownloadURL()
+      .then(image => {console.log(image); this.setState({avatar: image})})
+      .catch(error => console.log(error.message));
   }
 
   render() {
-    const {navigation, user, badges, userIsLoaded} = this.props;
+    const {navigation, auth, badges} = this.props;
+    const {avatar} = this.state;
 
-    if (!userIsLoaded || !badges.isLoaded) {
-      return <Loading />;
-    }
+    // if (!auth.isLoaded || !badges.isLoaded) {
+    //   return <Loading />;
+    // }
+    console.log(avatar);
 
     return (
       <View style={styles.container}>
         <CustomHeader title="Profile" />
         <ScrollView contentContainerStyle={styles.inner}>
           <View style={styles.circle}>
-            <Image source={profileImage} style={styles.image} />
+            <Image source={{uri: avatar}} style={styles.image} />
           </View>
-          <StatsOverview totalCupsSaved={user.consumption.total} level={user.level} drinkSize={user.cup_volume_oz} />
+          <StatsOverview
+            totalCupsSaved={auth.user.consumption.total}
+            level={auth.user.level}
+            drinkSize={auth.user.cup_volume_oz}
+          />
           <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
-          <ProfileStats totalCupsSaved={user.consumption.total} badges={badges} />
+          <ProfileStats totalCupsSaved={auth.user.consumption.total} badges={badges} />
         </ScrollView>
       </View>
     );
@@ -105,13 +128,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const user = state.auth.user || {};
-  const userIsLoaded = state.auth.isLoaded || false;
+  const auth = state.auth || {};
   const badges = state.badges || {};
 
   return {
-    user,
-    userIsLoaded,
+    auth,
     badges,
   };
 };

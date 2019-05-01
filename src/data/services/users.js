@@ -1,10 +1,10 @@
-import {FirestoreRef} from '..';
+import {FBFirestore} from '..';
 import ErrorMessages from '../../constants/errors';
 
 export class UsersService {
   getUserData = email => {
     return new Promise((resolve, reject) => {
-      const userProfileRef = FirestoreRef.collection('users').where('email', '==', email);
+      const userProfileRef = FBFirestore.collection('users').where('email', '==', email);
 
       userProfileRef
         .get()

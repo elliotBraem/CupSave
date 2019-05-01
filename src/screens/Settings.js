@@ -5,6 +5,7 @@ import ChangePassword from '../components/ChangePassword';
 import ChangeEmail from '../components/ChangeEmail';
 import ChangeCupSize from '../components/ChangeCupSize';
 import COLORS from '../constants/colors';
+import ChangeProfilePicture from '../components/ChangeProfilePicture';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,6 +23,7 @@ const SettingsScreen = () => {
     <View style={styles.container}>
       <CustomHeader title="Settings" />
       <ScrollView contentContainerStyle={styles.inner}>
+        <ChangeProfilePicture />
         <ChangeCupSize />
         <ChangePassword />
         <ChangeEmail />
