@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import Logout from '../assets/images/drawer-icons/logout-icon.svg';
 import COLORS from '../constants/colors';
 import * as authActions from '../store/actions/auth';
+import {FBStorage} from '../data';
 
 const profileImage = require('../assets/images/profileicon.png');
 
@@ -56,7 +57,26 @@ class CustomDrawer extends Component {
     logout: PropTypes.func.isRequired,
   };
 
-  state = {errorMessage: null};
+  state = {
+    avatar: profileImage,
+    custom: false,
+    errorMessage: null,
+  };
+
+  componentDidMount() {
+    const {auth} = this.props;
+
+    FBStorage.ref()
+      .child(`profilePictures/${auth.uid}`)
+      .getDownloadURL()
+      .then(image =>
+        this.setState({
+          avatar: image,
+          custom: true,
+        })
+      )
+      .catch(error => console.log(error.message));
+  }
 
   handleLogout = async () => {
     const {logout, navigation} = this.props;
@@ -70,10 +90,16 @@ class CustomDrawer extends Component {
 
   render() {
     const {logout, auth, ...props} = this.props;
+    const {custom, avatar} = this.state;
+
     return (
       <SafeAreaView style={styles.container} forceInset={{top: 'always', horizontal: 'never'}}>
         <View style={styles.headerContainer}>
-          <Image source={profileImage} style={styles.profileImage} />
+          {custom === false ? (
+            <Image source={avatar} style={styles.profileImage} />
+          ) : (
+            <Image source={{uri: avatar}} style={styles.profileImage} />
+          )}
           <Text style={styles.headerText}>{auth.user.email}</Text>
         </View>
         <View>

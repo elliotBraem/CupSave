@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, ScrollView, View, Image, Button, Platform} from 'react-native';
+import {StyleSheet, ScrollView, View, Image, Button, Platform, Text} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import CustomHeader from '../components/CustomHeader';

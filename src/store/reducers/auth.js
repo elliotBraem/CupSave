@@ -11,7 +11,7 @@ export const AuthState = {
   isAuthenticated: false,
   error: null,
   isLoaded: false,
-  user: null,
+  user: {},
 };
 
 export const authReducer = (state = AuthState, action) => {
@@ -19,30 +19,32 @@ export const authReducer = (state = AuthState, action) => {
     const {payload} = action;
     switch (action.type) {
       case 'AUTH_LOGIN': {
+        draft.error = null;
         draft.uid = payload.uid;
         draft.providerId = payload.providerId;
         draft.displayName = payload.displayName;
         draft.email = payload.email;
         draft.isAuthenticated = true;
         draft.isLoaded = true;
-        draft.user = {};
         break;
       }
 
-      case 'AUTH_DETAILS_UPDATE': {
+      case 'AUTH_USER_UPDATE': {
         draft.user = Object.assign({}, state.user, payload);
+        draft.error = null;
         draft.isLoaded = true;
         break;
       }
 
-      case 'AUTH_DETAILS_SET': {
-        draft.user = Object.assign({}, payload);
+      case 'AUTH_USER_SET': {
+        draft.user = Object.assign({}, {...payload});
+        draft.error = null;
         draft.isLoaded = true;
         break;
       }
 
       case 'AUTH_ERROR': {
-        draft.error = Object.assign({}, payload);
+        draft.error = payload;
         draft.isLoaded = true;
         break;
       }

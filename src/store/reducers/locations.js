@@ -12,6 +12,7 @@ export const locationsReducer = (state = LocationsState, action) => {
     switch (action.type) {
       case 'LOCATIONS_UPDATE': {
         draft.locationList = payload;
+        draft.error = null;
         draft.isLoaded = true;
         break;
       }

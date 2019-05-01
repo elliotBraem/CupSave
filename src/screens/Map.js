@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {MapView, Permissions, Location} from 'expo';
 import CustomHeader from '../components/CustomHeader';
@@ -35,7 +35,7 @@ const deltas = {
   longitudeDelta: 0.0421,
 };
 
-const Marker = MapView.Marker;
+const {Marker} = MapView;
 
 class MapScreen extends Component {
   static propTypes = {
@@ -55,39 +55,18 @@ class MapScreen extends Component {
     region: null,
   };
 
-  constructor(props) {
-    super(props);
-    const {fetchLocations, locations} = props;
-
-    if (!locations.isLoaded) {
-      fetchLocations();
-    }
-  }
-
   async componentDidMount() {
+    const {fetchLocations} = this.props;
+
     await Permissions.askAsync(Permissions.LOCATION);
-    this.getUserLocation();
+    await this.getUserLocation().then(coords => fetchLocations(coords.latitude, coords.longitude));
   }
 
   renderMarkers = () => {
     const {locations} = this.props;
 
-    console.log(locations.map((location, i) => <li>{location.name}</li>));
-
-    // const test = locations.map(location => (
-    //   <Marker
-    //     key={location._id}
-    //     title={location.name || ''}
-    //     coordinate={{latitude: location.latitude, longitude: location.longitude}}
-    //   />
-    // ));
-
-    //console.log(test);
-
-    return <MapView.Marker key="1" title="test" coordinate={{latitude: 50, longitude: 50}} />;
-
-    if (locations) {
-      return locations.map(location => (
+    if (locations.isLoaded) {
+      return locations.locationList.map(location => (
         <MapView.Marker
           key={location._id}
           title={location.name || ''}
@@ -95,18 +74,21 @@ class MapScreen extends Component {
         />
       ));
     }
+    return null;
   };
 
   getUserLocation = async () => {
-    const location = await Location.getCurrentPositionAsync({});
+    const userCurrentLocation = await Location.getCurrentPositionAsync({});
 
     const region = {
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
+      latitude: userCurrentLocation.coords.latitude,
+      longitude: userCurrentLocation.coords.longitude,
       ...deltas,
     };
 
     await this.setState({region});
+
+    return {latitude: region.latitude, longitude: region.longitude};
   };
 
   render() {
@@ -116,8 +98,7 @@ class MapScreen extends Component {
     const initialRegion = {
       latitude: 37.78825,
       longitude: -122.4324,
-      latitudeDelta: 0.015,
-      longitudeDelta: 0.0121,
+      ...deltas,
     };
 
     if (!locations.isLoaded) {
@@ -127,6 +108,7 @@ class MapScreen extends Component {
     return (
       <View style={styles.container}>
         <CustomHeader title="Map" style={styles.header} />
+        {locations.error !== null && <Text style={{color: 'red'}}>{locations.error}</Text>}
         <MapView
           style={styles.map}
           customMapStyle={mapStyle}
@@ -134,7 +116,7 @@ class MapScreen extends Component {
           initialRegion={{...initialRegion, ...deltas}}
           showsUserLocation
           showsMyLocationButton>
-          {this.renderMarkers()}
+          {region !== null && this.renderMarkers()}
         </MapView>
       </View>
     );
@@ -143,7 +125,7 @@ class MapScreen extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchLocations: () => dispatch(locationsActions.dbGetLocations()),
+    fetchLocations: (latitude, longitude) => dispatch(locationsActions.dbGetLocations(latitude, longitude)),
   };
 };
 

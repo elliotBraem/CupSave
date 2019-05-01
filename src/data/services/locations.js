@@ -1,13 +1,30 @@
+/* global isNaN */
 import {FBFirestore} from '../index';
 import ErrorMessages from '../../constants/errors';
+import {getGeometricBoundingBox} from '../../utils/geoCalculations';
 
 export class LocationsService {
-  getAllLocations = () => {
+  getSurroundingLocations = (latitude, longitude) => {
     return new Promise((resolve, reject) => {
-      // TODO: !!! CHANGE THIS to match current users city or something similar
-      const locationRef = FBFirestore.collection('locations').limit(10);
+      const locationRef = FBFirestore.collection('locations');
 
-      return locationRef
+      const bounds = getGeometricBoundingBox(latitude, longitude, 50);
+
+      if (
+        isNaN(bounds.latitudeMin) ||
+        isNaN(bounds.latitudeMax) ||
+        isNaN(bounds.longitudeMin) ||
+        isNaN(bounds.longitudeMax)
+      ) {
+        return reject(new Error(ErrorMessages.default));
+      }
+
+      // Bounds checking for Latitude
+      const queryForNearbyLocations = locationRef
+        .where('latitude', '>=', bounds.latitudeMin)
+        .where('latitude', '<=', bounds.latitudeMax);
+
+      return queryForNearbyLocations
         .get()
         .then(querySnapshot => {
           if (!querySnapshot.empty) {
@@ -16,13 +33,14 @@ export class LocationsService {
             querySnapshot.forEach(doc => {
               const location = doc.data() || {};
 
-              if (doc.exists) {
+              // Bounds checking for Longitude
+              if (location.longitude >= bounds.longitudeMin && location.longitude <= bounds.longitudeMax) {
                 locations.push({
                   _id: doc.id,
                   address: location.address || '',
                   city: location.city || '',
-                  latitude: location.latitude || 0,
-                  longitude: location.longitude || 0,
+                  latitude: location.latitude,
+                  longitude: location.longitude,
                   name: location.name || '',
                   postalCode: location.postalCode || '',
                   state: location.state || '',
@@ -35,8 +53,10 @@ export class LocationsService {
           return reject(new Error(ErrorMessages.default));
         })
         .catch(error => {
-          throw error;
+          return reject(new Error(ErrorMessages.default));
         });
+    }).catch(error => {
+      throw error;
     });
   };
 }

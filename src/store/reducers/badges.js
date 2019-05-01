@@ -12,6 +12,7 @@ export const badgesReducer = (state = BadgesState, action) => {
     switch (action.type) {
       case 'BADGES_UPDATE': {
         draft.badgeList = payload;
+        draft.error = null;
         draft.isLoaded = true;
         break;
       }

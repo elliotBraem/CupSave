@@ -1,27 +1,25 @@
 import {applyMiddleware, createStore} from 'redux';
 import {composeWithDevTools} from 'remote-redux-devtools';
-import {persistCombineReducers, persistStore} from 'redux-persist';
+import {persistReducer, persistStore} from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // default: AsyncStorage
 import thunk from 'redux-thunk';
-import reducers from './reducers';
+import rootReducer from './reducers';
+
+// Redux Persist config
+const config = {
+  key: 'root',
+  storage,
+};
 
 export default function configureStore(initialState = {}) {
-  // Redux Persist config
-  const config = {
-    key: 'root',
-    storage,
-    // blacklist: ['locations'], // Too many locations for AsyncStorage
-  };
-
   // Middleware configuration
   const middleware = [thunk];
 
   // Store enhancers
-  const enhancers = [];
-  const composedEnhancers = composeWithDevTools(applyMiddleware(...middleware), ...enhancers);
+  const composedEnhancers = composeWithDevTools(applyMiddleware(...middleware));
 
   // Store initialization
-  const persistedReducer = persistCombineReducers(config, reducers);
+  const persistedReducer = persistReducer(config, rootReducer);
 
   const store = createStore(persistedReducer, initialState, composedEnhancers);
 

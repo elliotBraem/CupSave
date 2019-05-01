@@ -11,7 +11,8 @@ export const usersReducer = (state = UsersState, action) => {
   return produce(state, draft => {
     switch (action.type) {
       case 'USERS_UPDATE': {
-        draft.userMap[payload.email] = payload.user;
+        draft.userMap[payload.email] = Object.assign({}, {...payload.user});
+        draft.error = null;
         draft.isLoaded = true;
         break;
       }
