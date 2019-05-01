@@ -15,6 +15,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: COLORS.secondary,
   },
+  wasteText: {
+    fontSize: 18,
+    color: COLORS.secondary,
+  },
   statSubtext: {
     fontFamily: 'open-sans-light',
     fontSize: 12,
@@ -69,6 +73,10 @@ export const StatText = props => {
 
 export const StatSubtext = props => {
   return <Text style={styles.statSubtext}>{props.children}</Text>;
+};
+
+export const WasteText = props => {
+  return <Text style={styles.wasteText}>{props.children}</Text>;
 };
 
 export const TitleText = props => {
