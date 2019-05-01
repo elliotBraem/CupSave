@@ -61,6 +61,8 @@ class ChangeProfilePicture extends Component {
 
   state = {
     avatar: '',
+    newAvatar: false,
+    fetchedAvatar: false,
     errorMessage: null,
   };
 
@@ -70,7 +72,7 @@ class ChangeProfilePicture extends Component {
     FBStorage.ref()
       .child(`profilePictures/${auth.uid}`)
       .getDownloadURL()
-      .then(image => this.setState({avatar: image}))
+      .then(image => this.setState({avatar: image, fetchedAvatar: true}))
       .catch(error => console.log(error.message));
   }
 
@@ -82,7 +84,8 @@ class ChangeProfilePicture extends Component {
 
     if (!result.cancelled) {
       this.setState({
-        avatar: result,
+        avatar: result.uri,
+        newAvatar: true,
       });
     }
   };
@@ -95,19 +98,19 @@ class ChangeProfilePicture extends Component {
   };
 
   render() {
-    const {errorMessage, avatar} = this.state;
+    const {errorMessage, avatar, newAvatar, fetchedAvatar} = this.state;
+
+    let profileAvatar = <Image source={profileImage} style={styles.image} />;
+
+    if (newAvatar || fetchedAvatar) {
+      profileAvatar = <Image source={{uri: avatar}} style={styles.image} />;
+    }
 
     return (
       <View style={styles.container}>
         {errorMessage !== null && <Text style={{color: 'red'}}>{errorMessage}</Text>}
 
-        <View style={styles.circle}>
-          {avatar !== null ? (
-            <Image source={{uri: avatar.uri}} style={styles.image} />
-          ) : (
-            <Image source={profileImage} style={styles.image} />
-          )}
-        </View>
+        <View style={styles.circle}>{profileAvatar}</View>
 
         <TouchableOpacity style={styles.btnStyle} onPress={this.handleChooseProfilePictureChange}>
           <Text>Choose Profile Picture</Text>

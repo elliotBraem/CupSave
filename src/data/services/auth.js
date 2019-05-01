@@ -251,7 +251,7 @@ export class AuthService {
                 reject(new TypeError('Network request failed'));
               };
               xhr.responseType = 'blob';
-              xhr.open('GET', avatar.uri, true);
+              xhr.open('GET', avatar, true);
               xhr.send(null);
             });
 
