@@ -14,13 +14,11 @@ import Loading from '../components/Loading';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    flexDirection: 'column',
-    alignItems: 'center',
     backgroundColor: COLORS.primary,
   },
   inner: {
     paddingTop: Platform.OS === 'ios' ? 100 : 100 - 24,
+    alignItems: 'center',
   },
   modalContainer: {
     alignSelf: 'center',
@@ -39,15 +37,6 @@ const styles = StyleSheet.create({
     height: 239,
     marginTop: 40,
   },
-  // worldCounterText: {
-  //   marginTop: 20,
-  // },
-  // saveACupText: {
-  //   paddingRight: 20,
-  // },
-  // saveTheWorldText: {
-  //   paddingLeft: 20,
-  // },
 });
 
 export class HomeScreen extends Component {
@@ -55,6 +44,11 @@ export class HomeScreen extends Component {
     incrementConsumption: PropTypes.func.isRequired,
     auth: PropTypes.shape({
       isAuthenticated: PropTypes.bool.isRequired,
+      user: PropTypes.shape({
+        consumption: PropTypes.shape({
+          history: PropTypes.object.isRequired,
+        }).isRequired,
+      }).isRequired,
     }).isRequired,
     fetchAuthData: PropTypes.func.isRequired,
   };
@@ -78,19 +72,16 @@ export class HomeScreen extends Component {
     const {auth, incrementConsumption} = this.props;
     const {isModalVisible} = this.state;
 
-    if (!auth.isLoaded) {
-      return <Loading />;
-    }
+    // if (!auth.isLoaded) {
+    //   return <Loading />;
+    // }
 
     return (
       <View style={styles.container}>
         <Header title="Home" />
         <View style={styles.inner}>
-          <SaveCupForm
-            onSaveCupFormSubmit={incrementConsumption}
-            handleModal={this._toggleModal}
-            animationOutTiming={1000}
-          />
+          <SaveCupForm onSaveCupFormSubmit={incrementConsumption} handleModal={this._toggleModal} />
+          <LiveFeed feedContent={auth.user.consumption.history} />
         </View>
         <Modal style={styles.modalContainer} isVisible={isModalVisible}>
           <TouchableOpacity style={styles.modal} onPress={this._toggleModal}>
@@ -107,7 +98,8 @@ export class HomeScreen extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    incrementConsumption: () => dispatch(authActions.dbIncrementConsumption()),
+    incrementConsumption: (drinkValue, locationEnabled) =>
+      dispatch(authActions.dbIncrementConsumption(drinkValue, locationEnabled)),
     fetchAuthData: () => dispatch(authActions.dbOnAuthorizeStateChange()),
   };
 };

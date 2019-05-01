@@ -167,7 +167,7 @@ export function dbLogout() {
     dispatch(authLoading());
 
     try {
-      authService.logout();
+      await authService.logout();
       dispatch(logout());
     } catch (error) {
       dispatch(authError(error.message));
@@ -180,13 +180,13 @@ export function dbLogout() {
  */
 export function dbResetPassword(email) {
   return async (dispatch, getState) => {
-    await dispatch(authLoading());
+    dispatch(authLoading());
 
     try {
       await authService.resetPassword(email);
-      return dispatch(resetPassword());
+      dispatch(resetPassword());
     } catch (error) {
-      return dispatch(authError(error.message));
+      dispatch(authError(error.message));
     }
   };
 }
@@ -200,7 +200,8 @@ export function dbUpdateProfile(formData) {
 
     try {
       const user = await Firebase.auth().currentUser;
-      authService.updateProfile(formData, user.uid);
+
+      await authService.updateProfile(formData, user.uid);
 
       dispatch(updateProfile({...formData}));
 
@@ -213,18 +214,20 @@ export function dbUpdateProfile(formData) {
   };
 }
 
-export function dbIncrementConsumption() {
+export function dbIncrementConsumption(drinkValue, locationEnabled) {
   return async (dispatch, getState) => {
     dispatch(authLoading());
 
     try {
       const user = await Firebase.auth().currentUser;
 
-      await authService.incrementConsumption(user.uid);
+      if (user) {
+        await authService.incrementConsumption(drinkValue, locationEnabled, user.uid);
 
-      const userData = await userService.getUserData(user.email);
+        const userData = await userService.getUserData(user.email);
 
-      dispatch(updateProfile(userData));
+        dispatch(updateProfile(userData));
+      }
     } catch (error) {
       dispatch(authError(error.message));
     }

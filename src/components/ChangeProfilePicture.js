@@ -7,7 +7,7 @@ import * as authActions from '../store/actions/auth';
 import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
 
-const profileImage = '../assets/images/profileicon.png';
+const profileImage = require('../assets/images/profileicon.png');
 
 const styles = StyleSheet.create({
   container: {
@@ -64,7 +64,9 @@ class ChangeProfilePicture extends Component {
   };
 
   state = {
-    avatar: profileImage,
+    avatar: '',
+    newAvatar: false,
+    fetchedAvatar: false,
     errorMessage: null,
   };
 
@@ -74,7 +76,7 @@ class ChangeProfilePicture extends Component {
     FBStorage.ref()
       .child(`profilePictures/${auth.uid}`)
       .getDownloadURL()
-      .then(image => this.setState({avatar: image}))
+      .then(image => this.setState({avatar: image, fetchedAvatar: true}))
       .catch(error => console.log(error.message));
   }
 
@@ -85,14 +87,15 @@ class ChangeProfilePicture extends Component {
         mediaType: 'photo',
         allowsEditing: true,
       });
+
       if (!result.cancelled) {
-        console.log(result);
         this.setState({
-          avatar: result,
+          avatar: result.uri,
+          newAvatar: true,
         });
+      } else {
+        this.setState({errorMessage: 'Location permission not granted'});
       }
-    } else {
-      throw new Error('Location permission not granted');
     }
   };
 
@@ -104,19 +107,19 @@ class ChangeProfilePicture extends Component {
   };
 
   render() {
-    const {errorMessage, avatar} = this.state;
+    const {errorMessage, avatar, newAvatar, fetchedAvatar} = this.state;
+
+    let profileAvatar = <Image source={profileImage} style={styles.image} />;
+
+    if (newAvatar || fetchedAvatar) {
+      profileAvatar = <Image source={{uri: avatar}} style={styles.image} />;
+    }
 
     return (
       <View style={styles.container}>
         {errorMessage !== null && <Text style={{color: 'red'}}>{errorMessage}</Text>}
 
-        <View style={styles.circle}>
-          {avatar !== null ? (
-            <Image source={{uri: avatar}} style={styles.image} />
-          ) : (
-            <Image source={profileImage} style={styles.image} />
-          )}
-        </View>
+        <View style={styles.circle}>{profileAvatar}</View>
 
         <TouchableOpacity style={styles.btnStyle} onPress={this.handleChooseProfilePictureChange}>
           <Text>Choose Profile Picture</Text>
