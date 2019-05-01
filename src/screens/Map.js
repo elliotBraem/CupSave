@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {StyleSheet, View} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {connect} from 'react-redux';
-import CustomHeader from '../components/CustomHeader';
+import Header from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import * as locationsActions from '../store/actions/locations';
 import Loading from '../components/Loading';
@@ -29,18 +29,10 @@ const styles = StyleSheet.create({
   },
 });
 
-class MapScreen extends Component {
+export class MapScreen extends Component {
   static propTypes = {
-    navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
     fetchLocations: PropTypes.func.isRequired,
     locations: PropTypes.object.isRequired,
-  };
-
-  static navigationOptions = {
-    // title: 'Map',
   };
 
   state = {
@@ -108,10 +100,7 @@ class MapScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <CustomHeader title="Map" style={styles.header} />
-        {/* <Text style={styles.header}>Map</Text>
-        <Button title="Menu" onPress={() => navigation.openDrawer()} style={styles.btnStyle} />
-        <Button title="Get Location" onPress={() => this.getUserLocation()} style={styles.btnStyle} /> */}
+        <Header title="Map" style={styles.header} />
         <UserMap />
       </View>
     );

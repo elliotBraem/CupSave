@@ -1,0 +1,734 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App test against snapshot 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "flexDirection": "column",
+      "justifyContent": "center",
+    }
+  }
+>
+  <ActivityIndicator
+    animating={true}
+    color="#79db85"
+    hidesWhenStopped={true}
+    size="large"
+  />
+</View>
+`;
+
+exports[`Loading test against snapshot 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <Text>
+    Loading
+  </Text>
+  <ActivityIndicator
+    animating={true}
+    color="#999999"
+    hidesWhenStopped={true}
+    size="large"
+  />
+</View>
+`;
+
+exports[`Login test against snapshot 1`] = `
+<View
+  enable={true}
+  onLayout={[Function]}
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "borderTopColor": "#ffffff",
+        "borderTopWidth": 50,
+        "flex": 1,
+        "flexDirection": "column",
+        "justifyContent": "flex-start",
+      },
+      Object {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#1A1A1A",
+        "borderRadius": 40,
+        "borderWidth": 2,
+        "flex": 0.6,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginHorizontal": "10%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1.5,
+          "marginLeft": "5%",
+        }
+      }
+    >
+      <Image
+        source={1}
+        style={
+          Object {
+            "flex": 1,
+            "height": null,
+            "resizeMode": "contain",
+            "width": null,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "space-around",
+          "margin": "5%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#79db85",
+            "fontSize": 22,
+            "textAlign": "center",
+          }
+        }
+      >
+         Save a cup 
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#ffffff",
+            "fontSize": 22,
+            "fontStyle": "italic",
+            "textAlign": "center",
+          }
+        }
+      >
+         Save the world 
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 0.1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "alignSelf": "center",
+        }
+      }
+    >
+      Let's get started
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "center",
+        "flex": 0.8,
+        "justifyContent": "space-between",
+        "width": "80%",
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Email"
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#ffffff",
+          "borderColor": "gray",
+          "borderWidth": 1,
+          "height": 40,
+          "marginBottom": "2%",
+          "textAlign": "center",
+          "width": "100%",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Password"
+      secureTextEntry={true}
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#ffffff",
+          "borderColor": "gray",
+          "borderWidth": 1,
+          "height": 40,
+          "marginBottom": "2%",
+          "textAlign": "center",
+          "width": "100%",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <View
+      style={
+        Object {
+          "flex": 0.5,
+          "height": 40,
+        }
+      }
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#79db85",
+                },
+              ]
+            }
+          >
+            Login
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "height": 40,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "flex": 0.5,
+          "height": 40,
+        }
+      }
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#3b5998",
+                },
+              ]
+            }
+          >
+            Login with Facebook
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "marginTop": "2%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "alignSelf": "center",
+            "margin": 15,
+          }
+        }
+      >
+        Don't have an account?
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 0.5,
+          "height": 40,
+        }
+      }
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#79db85",
+                },
+              ]
+            }
+          >
+            Sign Up
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`QRScanner test against snapshot 1`] = `
+<Text>
+  Requesting for camera permission
+</Text>
+`;
+
+exports[`SignUp test against snapshot 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "borderTopColor": "#ffffff",
+        "borderTopWidth": 50,
+        "flex": 1,
+        "flexDirection": "column",
+        "justifyContent": "flex-start",
+      },
+      Object {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#1A1A1A",
+        "borderRadius": 40,
+        "borderWidth": 2,
+        "flex": 0.5,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginHorizontal": "10%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1.5,
+          "marginLeft": "5%",
+        }
+      }
+    >
+      <Image
+        source={1}
+        style={
+          Object {
+            "flex": 1,
+            "height": null,
+            "resizeMode": "contain",
+            "width": null,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "space-around",
+          "margin": "5%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#79db85",
+            "fontSize": 22,
+            "textAlign": "center",
+          }
+        }
+      >
+         Welcome to CupSave! 
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 0.05,
+        "justifyContent": "center",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignSelf": "center",
+        "flex": 0.8,
+        "justifyContent": "space-between",
+        "width": "80%",
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Email"
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#ffffff",
+          "borderColor": "gray",
+          "borderWidth": 1,
+          "height": 40,
+          "marginBottom": "2%",
+          "textAlign": "center",
+          "width": "100%",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Password"
+      secureTextEntry={true}
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#ffffff",
+          "borderColor": "gray",
+          "borderWidth": 1,
+          "height": 40,
+          "marginBottom": "2%",
+          "textAlign": "center",
+          "width": "100%",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Confirm Password"
+      secureTextEntry={true}
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "backgroundColor": "#ffffff",
+          "borderColor": "gray",
+          "borderWidth": 1,
+          "height": 40,
+          "marginBottom": "2%",
+          "textAlign": "center",
+          "width": "100%",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <View
+      style={
+        Object {
+          "flex": 0.5,
+          "height": 40,
+        }
+      }
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#79db85",
+                },
+              ]
+            }
+          >
+            Sign Up
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "height": 40,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "flex": 0.5,
+          "height": 40,
+        }
+      }
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#3b5998",
+                },
+              ]
+            }
+          >
+            Sign up with Facebook
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 0.3,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "alignSelf": "center",
+          }
+        }
+      >
+        Already have an account?
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 0.5,
+          "height": 40,
+        }
+      }
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+                Object {
+                  "color": "#79db85",
+                },
+              ]
+            }
+          >
+            Back to login
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

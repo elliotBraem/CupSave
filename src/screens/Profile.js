@@ -3,7 +3,7 @@ import {StyleSheet, ScrollView, View, Image, Button, Platform} from 'react-nativ
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import COLORS from '../constants/colors';
-import CustomHeader from '../components/CustomHeader';
+import Header from '../components/CustomHeader';
 import StatsOverview from '../components/StatsOverview';
 import ProfileStats from '../components/ProfileStats';
 import Loading from '../components/Loading';
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ProfileScreen extends PureComponent {
+export class ProfileScreen extends PureComponent {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
@@ -88,7 +88,7 @@ class ProfileScreen extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <CustomHeader title="Profile" />
+        <Header title="Profile" />
         <ScrollView contentContainerStyle={styles.inner}>
           <View style={styles.circle}>
             <Image source={profileImage} style={styles.image} />

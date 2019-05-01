@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class CustomDrawer extends Component {
+export class CustomDrawer extends Component {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
