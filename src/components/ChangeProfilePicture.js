@@ -7,7 +7,7 @@ import * as authActions from '../store/actions/auth';
 import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
 
-const profileImage = '../assets/images/profileicon.png';
+const profileImage = require('../assets/images/profileicon.png');
 
 const styles = StyleSheet.create({
   container: {
@@ -83,10 +83,11 @@ class ChangeProfilePicture extends Component {
   handleChooseProfilePictureChange = async () => {
     const {status} = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status === 'granted') {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaType: 'photo',
-      allowsEditing: true,
-    });
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaType: 'photo',
+        allowsEditing: true,
+      });
+    }
 
     if (!result.cancelled) {
       this.setState({
