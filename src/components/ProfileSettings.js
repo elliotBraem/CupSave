@@ -105,7 +105,6 @@ class ChangeProfilePicture extends Component {
         <TouchableOpacity style={styles.btnStyle} onPress={() => navigation.navigate('Settings')}>
           <Text>Settings</Text>
         </TouchableOpacity>
-
       </View>
     );
   }

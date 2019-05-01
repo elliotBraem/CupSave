@@ -24,13 +24,13 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   authorContainer: {
-    flex: .25,
+    flex: 0.25,
   },
   spacer1: {
-    flex: .01,
+    flex: 0.01,
   },
   spacer2: {
-    flex: .25,
+    flex: 0.25,
   },
 });
 

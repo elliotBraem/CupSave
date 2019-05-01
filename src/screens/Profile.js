@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flex: 2,
     width: '95%',
-//    height: 90,
+    //    height: 90,
     backgroundColor: COLORS.white,
     borderRadius: 12,
     shadowColor: COLORS.secondary,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   settingsContainer: {
-    flex: .5,
+    flex: 0.5,
   },
   profileStatsContainer: {
     flex: 1,
@@ -126,7 +126,7 @@ class ProfileScreen extends Component {
 
   render() {
     const {navigation, auth, badges} = this.props;
-    const adjustedCups = auth.user.consumption.total * auth.user.cup_volume_size / 12;
+    const adjustedCups = (auth.user.consumption.total * auth.user.cup_volume_size) / 12;
     const {avatar, custom} = this.state;
 
     if (!auth.isLoaded || !badges.isLoaded) {
@@ -137,7 +137,7 @@ class ProfileScreen extends Component {
       <View style={styles.container}>
         <CustomHeader title="Profile" color={COLORS.primary} />
         <ScrollView contentContainerStyle={styles.inner}>
-          <ProfileSettings navigation={navigation}/>
+          <ProfileSettings navigation={navigation} />
           <StatsOverview
             totalCupsSaved={auth.user.consumption.total}
             level={auth.user.level}

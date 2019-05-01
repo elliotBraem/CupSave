@@ -66,6 +66,6 @@ class SaveCupForm extends PureComponent {
       </View>
     );
   }
-};
+}
 
 export default SaveCupForm;
