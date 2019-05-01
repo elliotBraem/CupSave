@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
   logoContainer: {
-    flex: 1.5,
+    flex: 1.2,
     marginLeft: '5%',
   },
   logo: {

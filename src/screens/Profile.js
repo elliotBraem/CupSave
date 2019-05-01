@@ -10,18 +10,37 @@ import * as badgesActions from '../store/actions/badges';
 import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
 import LoadingComponent from '../components/Loading';
+import ProfileSettings from '../components/ProfileSettings';
 
 const profileImage = '../assets/images/profileicon.png';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'space-between',
     backgroundColor: COLORS.primary,
   },
   inner: {
     alignItems: 'center',
+    justifyContent: 'space-between',
     paddingTop: Platform.OS === 'ios' ? 100 : 100 - 24,
+  },
+  containerSpacer: {
+    flex: 1,
+  },
+  profileSettingsContainer: {
+    justifyContent: 'space-between',
+    flex: 2,
+    width: '95%',
+//    height: 90,
+    backgroundColor: COLORS.white,
+    borderRadius: 12,
+    shadowColor: COLORS.secondary,
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
   },
   circle: {
     width: 160,
@@ -42,6 +61,15 @@ const styles = StyleSheet.create({
   image: {
     width: 160,
     height: 160,
+  },
+  statsOverviewContainer: {
+    flex: 1,
+  },
+  settingsContainer: {
+    flex: .5,
+  },
+  profileStatsContainer: {
+    flex: 1,
   },
 });
 
@@ -104,21 +132,14 @@ class ProfileScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <CustomHeader title="Profile" />
+        <CustomHeader title="Profile" color={COLORS.primary} />
         <ScrollView contentContainerStyle={styles.inner}>
-          <View style={styles.circle}>
-            {custom === false ? (
-              <Image source={avatar} style={styles.image} />
-            ) : (
-              <Image source={{uri: avatar}} style={styles.image} />
-            )}
-          </View>
+          <ProfileSettings navigation={navigation}/>
           <StatsOverview
             totalCupsSaved={auth.user.consumption.total}
             level={auth.user.level}
             drinkSize={auth.user.cup_volume_oz}
           />
-          <Button onPress={() => navigation.navigate('Settings')} style={styles.button} title="Settings" />
           <ProfileStats totalCupsSaved={auth.user.consumption.total} badges={badges} />
         </ScrollView>
       </View>

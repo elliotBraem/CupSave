@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 12,
+    marginTop: 10,
     marginBottom: 20,
   },
   btnStyle: {

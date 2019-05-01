@@ -7,7 +7,7 @@ import COLORS from '../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('window').width,
+    width: '90%',
     height: '100%',
     backgroundColor: COLORS.white,
     borderRadius: 24,
