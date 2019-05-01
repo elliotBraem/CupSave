@@ -87,15 +87,14 @@ class ChangeProfilePicture extends Component {
         mediaType: 'photo',
         allowsEditing: true,
       });
-    }
-
-    if (!result.cancelled) {
-      this.setState({
-        avatar: result.uri,
-        newAvatar: true,
-      });
-    } else {
-      this.setState({errorMessage: 'Location permission not granted'});
+      if (!result.cancelled) {
+        this.setState({
+          avatar: result.uri,
+          newAvatar: true,
+        });
+      } else {
+        this.setState({errorMessage: 'Location permission not granted'});
+      }
     }
   };
 
