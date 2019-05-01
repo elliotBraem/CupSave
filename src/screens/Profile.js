@@ -54,8 +54,11 @@ class ProfileScreen extends Component {
       error: PropTypes.string,
       badgeList: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
-    auth: PropTypes.object.isRequired,
-    userIsLoaded: PropTypes.bool.isRequired,
+    auth: PropTypes.shape({
+      isLoaded: PropTypes.bool.isRequired,
+      user: PropTypes.object.isRequired,
+      uid: PropTypes.string.isRequired,
+    }).isRequired,
     fetchAuthData: PropTypes.func.isRequired,
     fetchBadges: PropTypes.func.isRequired,
   };
