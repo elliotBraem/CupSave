@@ -35,9 +35,7 @@ export class AuthService {
                 consumption: {
                   total: 0,
                   most_recent_consumption: currentTimeInUnixEpoch,
-                  history: {
-                    [currentTimeInUnixEpoch]: 0,
-                  },
+                  history: {},
                 },
                 city: '',
                 level: 0,
