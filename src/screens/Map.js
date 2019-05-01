@@ -84,7 +84,7 @@ class MapScreen extends Component {
 
     //console.log(test);
 
-    return <MapView.Marker key="1" title="test" coordinate={{latitude: 50, longitude: 50}} />
+    return <MapView.Marker key="1" title="test" coordinate={{latitude: 50, longitude: 50}} />;
 
     if (locations) {
       return locations.map(location => (
