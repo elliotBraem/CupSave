@@ -7,6 +7,8 @@ import StatsOverview from '../components/StatsOverview';
 import ProfileStats from '../components/ProfileStats';
 import * as authActions from '../store/actions/auth';
 import * as badgesActions from '../store/actions/badges';
+import WasteOverview from '../components/WasteOverview';
+import MaterialsContainer from '../components/MaterialsContainer';
 import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
 import LoadingComponent from '../components/Loading';
@@ -124,6 +126,7 @@ class ProfileScreen extends Component {
 
   render() {
     const {navigation, auth, badges} = this.props;
+    const adjustedCups = auth.user.consumption.total * auth.user.cup_volume_size / 12;
     const {avatar, custom} = this.state;
 
     if (!auth.isLoaded || !badges.isLoaded) {
@@ -141,6 +144,7 @@ class ProfileScreen extends Component {
             drinkSize={auth.user.cup_volume_oz}
           />
           <ProfileStats totalCupsSaved={auth.user.consumption.total} badges={badges} />
+          <MaterialsContainer totalCupsSaved={adjustedCups} />
         </ScrollView>
       </View>
     );
