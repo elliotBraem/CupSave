@@ -4,6 +4,7 @@ import Modal from 'react-native-modal';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import SaveCupForm from '../components/SaveCupForm';
+import LiveFeed from '../components/LiveFeed';
 import Header from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import * as authActions from '../store/actions/auth';
