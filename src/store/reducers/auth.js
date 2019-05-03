@@ -3,7 +3,7 @@ import produce from 'immer';
 export const AuthState = {
   uid: '',
   emailVerified: false,
-  providerI: '',
+  providerId: '',
   displayName: '',
   email: '',
   avatarURL: '',

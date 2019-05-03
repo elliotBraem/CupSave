@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {MapView, Permissions, Location} from 'expo';
-import CustomHeader from '../components/CustomHeader';
+import Header from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import * as locationsActions from '../store/actions/locations';
 import LoadingComponent from '../components/Loading';
@@ -37,12 +37,8 @@ const deltas = {
 
 const {Marker} = MapView;
 
-class MapScreen extends Component {
+export class MapScreen extends Component {
   static propTypes = {
-    navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
     fetchLocations: PropTypes.func.isRequired,
     locations: PropTypes.object.isRequired,
   };
@@ -103,7 +99,7 @@ class MapScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <CustomHeader title="Map" style={styles.header} />
+        <Header title="Map" style={styles.header} />
         {locations.error !== null && <Text style={{color: 'red'}}>{locations.error}</Text>}
         <MapView
           style={styles.map}

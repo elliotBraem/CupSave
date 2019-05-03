@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class QRScannerScreen extends Component {
+export class QRScannerScreen extends Component {
   static propTypes = {
     incrementConsumption: PropTypes.func.isRequired,
     auth: PropTypes.shape({

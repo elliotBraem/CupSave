@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, ScrollView, View, Image, Button, Platform, Text} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import CustomHeader from '../components/CustomHeader';
+import Header from '../components/CustomHeader';
 import StatsOverview from '../components/StatsOverview';
 import ProfileStats from '../components/ProfileStats';
 import * as authActions from '../store/actions/auth';
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ProfileScreen extends Component {
+export class ProfileScreen extends Component {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
@@ -107,7 +107,7 @@ class ProfileScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <CustomHeader title="Profile" />
+        <Header title="Profile" />
         <ScrollView contentContainerStyle={styles.inner}>
           <View style={styles.circle}>
             {custom === false ? (

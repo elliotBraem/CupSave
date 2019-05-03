@@ -4,8 +4,7 @@ import Modal from 'react-native-modal';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import SaveCupForm from '../components/SaveCupForm';
-import LiveFeed from '../components/LiveFeed';
-import CustomHeader from '../components/CustomHeader';
+import Header from '../components/CustomHeader';
 import COLORS from '../constants/colors';
 import * as authActions from '../store/actions/auth';
 import Logo from '../assets/images/logo.png';
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class HomeScreen extends Component {
+export class HomeScreen extends Component {
   static propTypes = {
     incrementConsumption: PropTypes.func.isRequired,
     auth: PropTypes.shape({
@@ -79,7 +78,7 @@ class HomeScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <CustomHeader title="Home" />
+        <Header title="Home" />
         <View style={styles.inner}>
           <SaveCupForm onSaveCupFormSubmit={incrementConsumption} handleModal={this._toggleModal} />
           <LiveFeed feedContent={auth.user.consumption.history} />
