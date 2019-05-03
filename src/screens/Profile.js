@@ -7,7 +7,6 @@ import StatsOverview from '../components/StatsOverview';
 import ProfileStats from '../components/ProfileStats';
 import * as authActions from '../store/actions/auth';
 import * as badgesActions from '../store/actions/badges';
-import WasteOverview from '../components/WasteOverview';
 import MaterialsContainer from '../components/MaterialsContainer';
 import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
@@ -57,7 +56,11 @@ export class ProfileScreen extends Component {
       error: PropTypes.string,
       badgeList: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
-    auth: PropTypes.object.isRequired,
+    auth: PropTypes.shape({
+      isLoaded: PropTypes.func.isRequired,
+      user: PropTypes.object.isRequired,
+      uid: PropTypes.string.isRequired,
+    }).isRequired,
     fetchAuthData: PropTypes.func.isRequired,
     fetchBadges: PropTypes.func.isRequired,
   };
@@ -98,7 +101,7 @@ export class ProfileScreen extends Component {
 
   render() {
     const {navigation, auth, badges} = this.props;
-    const adjustedCups = auth.user.consumption.total * auth.user.cup_volume_size / 12;
+    const adjustedCups = (auth.user.consumption.total * auth.user.cup_volume_size) / 12;
     const {avatar, custom} = this.state;
 
     if (!auth.isLoaded || !badges.isLoaded) {
