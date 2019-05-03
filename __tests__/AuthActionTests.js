@@ -19,7 +19,7 @@ describe('actions', () => {
     const user = {};
     const expectedAction = {
       payload: user,
-      type: TYPES.AUTH_DETAILS_UPDATE,
+      type: TYPES.AUTH_USERS_UPDATE,
     };
     expect(ACTIONS.updateProfile(user)).toEqual(expectedAction);
   });
@@ -51,7 +51,7 @@ describe('actions', () => {
     const user = {};
     const expectedAction = {
       payload: user,
-      type: TYPES.AUTH_DETAILS_SET,
+      type: TYPES.AUTH_USER_SET,
     };
     expect(ACTIONS.getUserData(user)).toEqual(expectedAction);
   });

@@ -87,6 +87,7 @@ class ChangeProfilePicture extends Component {
         mediaType: 'photo',
         allowsEditing: true,
       });
+
       if (!result.cancelled) {
         this.setState({
           avatar: result.uri,
