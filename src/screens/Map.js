@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-import CustomHeader from '../components/CustomHeader';
+import {StyleSheet, Text, View} from 'react-native';
+import {connect} from 'react-redux';
+import {MapView, Permissions, Location} from 'expo';
+import Header from '../components/CustomHeader';
 import COLORS from '../constants/colors';
+import * as locationsActions from '../store/actions/locations';
+import LoadingComponent from '../components/Loading';
+import mapStyle from '../constants/mapStyle';
 
 const styles = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
   container: {
     flex: 1,
     justifyContent: 'space-between',
@@ -21,83 +30,106 @@ const styles = StyleSheet.create({
   },
 });
 
-const UserMap = ({userLocation}) => {
-  let userLocationMarker = null;
-
-  if (userLocation) {
-    userLocationMarker = <MapView.Marker coordinate={userLocation} />;
-  }
-
-  return (
-    <View style={styles.mapContainer}>
-      <MapView
-        style={styles.map}
-        provider={PROVIDER_GOOGLE}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
-        }}
-        region={userLocation}>
-        {userLocationMarker}
-      </MapView>
-    </View>
-  );
+const deltas = {
+  latitudeDelta: 0.0622,
+  longitudeDelta: 0.0421,
 };
 
-class MapScreen extends Component {
-  constructor(props) {
-    super(props);
+const {Marker} = MapView;
 
-    this.state = {
-      userLocation: null,
-    };
-  }
-
-  static navigationOptions = {
-    // title: 'Map',
-  };
-
+export class MapScreen extends Component {
   static propTypes = {
-    navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
+    fetchLocations: PropTypes.func.isRequired,
+    locations: PropTypes.object.isRequired,
   };
 
-  componentWillMount() {
-    this.getUserLocation();
+  state = {
+    region: null,
+  };
+
+  async componentDidMount() {
+    const {fetchLocations} = this.props;
+
+    await Permissions.askAsync(Permissions.LOCATION);
+    await this.getUserLocation().then(coords => fetchLocations(coords.latitude, coords.longitude));
   }
 
-  getUserLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        this.setState({
-          userLocation: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            latitudeDelta: 0.0622,
-            longitudeDelta: 0.0421,
-          },
-        });
-      },
-      err => console.log(err)
-    );
+  renderMarkers = () => {
+    const {locations} = this.props;
+
+    if (locations.isLoaded) {
+      return locations.locationList.map(location => (
+        <MapView.Marker
+          key={location._id}
+          title={location.name || ''}
+          coordinate={{latitude: location.latitude, longitude: location.longitude}}
+        />
+      ));
+    }
+    return null;
+  };
+
+  getUserLocation = async () => {
+    const userCurrentLocation = await Location.getCurrentPositionAsync({});
+
+    const region = {
+      latitude: userCurrentLocation.coords.latitude,
+      longitude: userCurrentLocation.coords.longitude,
+      ...deltas,
+    };
+
+    await this.setState({region});
+
+    return {latitude: region.latitude, longitude: region.longitude};
   };
 
   render() {
-    const {userLocation} = this.state;
+    const {locations} = this.props;
+    const {region} = this.state;
+
+    const initialRegion = {
+      latitude: 37.78825,
+      longitude: -122.4324,
+      ...deltas,
+    };
+
+    if (!locations.isLoaded) {
+      return <LoadingComponent />;
+    }
+
     return (
       <View style={styles.container}>
-        <CustomHeader title="Map" />
-        {/* <Text style={styles.header}>Map</Text>
-        <Button title="Menu" onPress={() => navigation.openDrawer()} style={styles.btnStyle} />
-        <Button title="Get Location" onPress={() => this.getUserLocation()} style={styles.btnStyle} /> */}
-        <UserMap style={styles.map} userLocation={userLocation} />
+        <Header title="Map" style={styles.header} />
+        {locations.error !== null && <Text style={{color: 'red'}}>{locations.error}</Text>}
+        <MapView
+          style={styles.map}
+          customMapStyle={mapStyle}
+          region={region}
+          initialRegion={{...initialRegion, ...deltas}}
+          showsUserLocation
+          showsMyLocationButton>
+          {region !== null && this.renderMarkers()}
+        </MapView>
       </View>
     );
   }
 }
 
-export default MapScreen;
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    fetchLocations: (latitude, longitude) => dispatch(locationsActions.dbGetLocations(latitude, longitude)),
+  };
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const locations = state.locations || {};
+
+  return {
+    locations,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MapScreen);

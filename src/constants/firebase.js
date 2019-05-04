@@ -1,19 +1,14 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {API_KEY, AUTH_DOMAIN, DATABASE_URL, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID} from 'react-native-dotenv';
+
 // Firebase creds got from console.firebase.google.com
-export const firebaseConfig = {
-  apiKey: 'AIzaSyCKHQbALlbnESV0U3hSA8kQXLFyBLvMFFk',
-  authDomain: 'cupsave-e9b32.firebaseapp.com',
-  databaseURL: 'https://cupsave-e9b32.firebaseio.com',
-  projectId: 'cupsave-e9b32',
-  storageBucket: 'cupsave-e9b32.appspot.com',
-  messagingSenderId: '1058030936457',
+const firebaseConfig = {
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  databaseURL: DATABASE_URL,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
 };
 
-export const reactReduxFirebaseConfig = {
-  userProfile: 'users', // root that user profiles are written to
-  useFirestoreForProfile: true,
-  useFirestoreForStorageMeta: true,
-  enableRedirectHandling: false,
-  enableLogging: false,
-};
-
-export default {firebaseConfig, reactReduxFirebaseConfig};
+export default firebaseConfig;

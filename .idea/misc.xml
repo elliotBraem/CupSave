@@ -24,16 +24,8 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="JSX" />
   </component>
-  <component name="MacroExpansionManager">
-    <option name="directoryName" value="KqtMEVVw" />
-  </component>
-  <component name="ProjectRootManager">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" default="false">
     <output url="file://$PROJECT_DIR$/out" />
-  </component>
-  <component name="ReactNativePackager" nodePath="project" reactNativePackagePath="$PROJECT_DIR$/node_modules/react-native" workingDirectory="$PROJECT_DIR$">
-    <scripts>
-      <item value="start" />
-    </scripts>
   </component>
   <component name="designer2.settings">
     <option name="autodetectServerAddress" value="true" />

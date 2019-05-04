@@ -7,11 +7,12 @@ export default {
   white: '#ffffff',
   tabIconDefault: '#ccc',
   tabIconSelected: tintColor,
-  tabBar: '#fefefe',
+  lightGray: '#d4d4d4',
   errorBackground: 'red',
   errorText: '#fff',
   warningBackground: '#EAEB5E',
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
+  facebookBlue: '#3b5998',
 };

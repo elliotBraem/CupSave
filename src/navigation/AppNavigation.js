@@ -1,5 +1,4 @@
 import React from 'react';
-import {_} from 'lodash';
 import {StyleSheet} from 'react-native';
 import {createSwitchNavigator, createDrawerNavigator, createAppContainer} from 'react-navigation';
 import HomeScreen from '../screens/Home';
@@ -18,6 +17,7 @@ import ProfileIcon from '../assets/images/drawer-icons/profile-icon.svg';
 import QRScannerIcon from '../assets/images/drawer-icons/qr-scanner-icon.svg';
 import MapIcon from '../assets/images/drawer-icons/map-icon.svg';
 import AboutIcon from '../assets/images/drawer-icons/about-icon.svg';
+import Header from '../components/CustomHeader';
 
 const styles = StyleSheet.create({
   icon: {

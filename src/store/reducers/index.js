@@ -1,33 +1,12 @@
 import {combineReducers} from 'redux';
-import {firebaseReducer} from 'react-redux-firebase';
-import {persistReducer} from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to AsyncStorage for react-native
-import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
+import {authReducer} from './auth';
+import {badgesReducer} from './badges';
+import {locationsReducer} from './locations';
+import {usersReducer} from './users';
 
-// Reducers
-import status from './status';
-
-const rehydrated = (state = false, action) => {
-  switch (action.type) {
-    case 'persist/REHYDRATE':
-      return true;
-    default:
-      return state;
-  }
-};
-
-export default function createRootReducer() {
-  return combineReducers({
-    // Add sync reducers here
-    rehydrated,
-    firebase: persistReducer(
-      {
-        key: 'firebasepersist',
-        storage,
-        stateReconciler: hardSet,
-      },
-      firebaseReducer
-    ),
-    status,
-  });
-}
+export default combineReducers({
+  auth: authReducer,
+  badges: badgesReducer,
+  locations: locationsReducer,
+  users: usersReducer,
+});
