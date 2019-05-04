@@ -61,6 +61,18 @@ const styles = StyleSheet.create({
     fontSize: 48,
     paddingLeft: 40,
   },
+  aboutUsText: {
+    fontFamily: 'open-sans',
+    color: COLORS.white,
+    fontSize: 20,
+    paddingLeft: 10,
+  },
+  aboutUsAuthorText: {
+    fontFamily: 'open-sans-italic',
+    color: COLORS.secondary,
+    fontSize: 14,
+    paddingLeft: 10,
+  },
 });
 
 export const AppText = props => {
@@ -105,4 +117,12 @@ export const SaveACupText = props => {
 
 export const SaveTheWorldText = props => {
   return <Text style={styles.saveTheWorldText}>{props.children}</Text>;
+};
+
+export const AboutUsText = props => {
+  return <Text style={styles.aboutUsText}>{props.children}</Text>;
+};
+
+export const AboutUsAuthorText = props => {
+  return <Text style={styles.aboutUsAuthorText}>{props.children}</Text>;
 };

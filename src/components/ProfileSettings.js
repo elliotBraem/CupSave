@@ -7,7 +7,7 @@ import * as authActions from '../store/actions/auth';
 import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
 
-const profileImage = require('../assets/images/profileicon.png');
+const profileImage = '../assets/images/profileicon.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -65,9 +65,7 @@ class ChangeProfilePicture extends Component {
   };
 
   state = {
-    avatar: '',
-    newAvatar: false,
-    fetchedAvatar: false,
+    avatar: profileImage,
     errorMessage: null,
   };
 
@@ -77,28 +75,9 @@ class ChangeProfilePicture extends Component {
     FBStorage.ref()
       .child(`profilePictures/${auth.uid}`)
       .getDownloadURL()
-      .then(image => this.setState({avatar: image, fetchedAvatar: true}))
+      .then(image => this.setState({avatar: image}))
       .catch(error => console.log(error.message));
   }
-
-  handleChooseProfilePictureChange = async () => {
-    const {status} = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status === 'granted') {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaType: 'photo',
-        allowsEditing: true,
-      });
-
-      if (!result.cancelled) {
-        this.setState({
-          avatar: result.uri,
-          newAvatar: true,
-        });
-      } else {
-        this.setState({errorMessage: 'Location permission not granted'});
-      }
-    }
-  };
 
   handleChooseProfilePictureSubmit = () => {
     const {updateProfile, auth} = this.props;
@@ -108,26 +87,23 @@ class ChangeProfilePicture extends Component {
   };
 
   render() {
-    const {errorMessage, avatar, newAvatar, fetchedAvatar} = this.state;
-
-    let profileAvatar = <Image source={profileImage} style={styles.image} />;
-
-    if (newAvatar || fetchedAvatar) {
-      profileAvatar = <Image source={{uri: avatar}} style={styles.image} />;
-    }
+    const {errorMessage, avatar} = this.state;
+    const {navigation} = this.props;
 
     return (
       <View style={styles.container}>
         {errorMessage !== null && <Text style={{color: 'red'}}>{errorMessage}</Text>}
 
-        <View style={styles.circle}>{profileAvatar}</View>
+        <View style={styles.circle}>
+          {avatar !== null ? (
+            <Image source={{uri: avatar}} style={styles.image} />
+          ) : (
+            <Image source={profileImage} style={styles.image} />
+          )}
+        </View>
 
-        <TouchableOpacity style={styles.btnStyle} onPress={this.handleChooseProfilePictureChange}>
-          <Text>Choose Profile Picture</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.btnStyle} onPress={this.handleChooseProfilePictureSubmit}>
-          <Text>Submit Profile Picture</Text>
+        <TouchableOpacity style={styles.btnStyle} onPress={() => navigation.navigate('Settings')}>
+          <Text>Settings</Text>
         </TouchableOpacity>
       </View>
     );
