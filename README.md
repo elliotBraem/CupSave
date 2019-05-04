@@ -1,4 +1,4 @@
-# CupShare
+# CupSave
 
 An application that tracks a user’s ecological footprint of disposable coffee cups saved by purchasing drinks with a personal mug.
 
@@ -13,8 +13,17 @@ npm run testWithCoverage
 1. Clone the repository to your system using git clone
 2. In an active shell, navigate to the project folder.
 3. Run 'npm install' to install all necessary packages.
-4. After packages have been installed, run 'npm run android' to launch the application on an emulator.
-5. A server will start in your browser and begin bundling the Javascript. This may take awhile. After bundling, the application should be active on your emulated device.
+4. Ensure you have a .env file in the root directory with the following contents: 
+```
+API_KEY=AIzaSyCKHQbALlbnESV0U3hSA8kQXLFyBLvMFFk
+AUTH_DOMAIN=cupsave-e9b32.firebaseapp.com
+DATABASE_URL=https://cupsave-e9b32.firebaseio.com
+PROJECT_ID=cupsave-e9b32
+STORAGE_BUCKET=cupsave-e9b32.appspot.com
+MESSAGING_SENDER_ID=1058030936457
+```
+5. After packages have been installed, run 'npm run start' to launch the application on an emulator.
+6. A server will start in your browser and begin bundling the Javascript. This may take awhile. After bundling, the application should be active on your emulated device.
 
 ## Commit style guidelines:
 
