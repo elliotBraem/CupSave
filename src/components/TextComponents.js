@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
 import COLORS from '../constants/colors';
@@ -9,6 +11,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
   },
   statText: {
+    fontFamily: 'open-sans-regular',
     fontSize: 24,
     color: COLORS.secondary,
   },
@@ -17,14 +20,27 @@ const styles = StyleSheet.create({
     color: COLORS.secondary,
   },
   statSubtext: {
+    fontFamily: 'open-sans-light',
     fontSize: 12,
   },
   titleText: {
+    fontFamily: 'open-sans-semibold',
     fontSize: 16,
   },
   headerTitle: {
     fontSize: 20,
+    fontFamily: 'open-sans-semibold',
     color: COLORS.white,
+  },
+  labelText: {
+    fontSize: 8,
+    fontFamily: 'open-sans-regular',
+    color: COLORS.secondary,
+  },
+  feedText: {
+    fontSize: 12,
+    fontFamily: 'open-sans-regular',
+    color: COLORS.secondary,
   },
   worldCounterText: {
     fontFamily: 'open-sans-italic',
@@ -81,6 +97,14 @@ export const TitleText = props => {
 
 export const HeaderTitle = props => {
   return <Text style={styles.headerTitle}>{props.children}</Text>;
+};
+
+export const LabelText = props => {
+  return <Text style={styles.labelText}>{props.children}</Text>;
+};
+
+export const FeedText = props => {
+  return <Text style={styles.feedText}>{props.children}</Text>;
 };
 
 export const WorldCounterText = props => {

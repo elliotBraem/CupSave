@@ -34,14 +34,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class AboutUsScreen extends PureComponent {
-  static propTypes = {
-    navigation: PropTypes.shape({
-      openDrawer: PropTypes.func.isRequired,
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
-  };
-
+export class AboutUsScreen extends PureComponent {
   render() {
     return (
       <View style={styles.container}>

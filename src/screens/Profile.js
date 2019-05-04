@@ -2,19 +2,18 @@ import React, {Component} from 'react';
 import {StyleSheet, ScrollView, View, Image, Button, Platform, Text} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import CustomHeader from '../components/CustomHeader';
+import Header from '../components/CustomHeader';
 import StatsOverview from '../components/StatsOverview';
 import ProfileStats from '../components/ProfileStats';
 import * as authActions from '../store/actions/auth';
 import * as badgesActions from '../store/actions/badges';
-import WasteOverview from '../components/WasteOverview';
 import MaterialsContainer from '../components/MaterialsContainer';
 import COLORS from '../constants/colors';
 import {FBStorage} from '../data';
 import LoadingComponent from '../components/Loading';
 import ProfileSettings from '../components/ProfileSettings';
 
-const profileImage = '../assets/images/profileicon.png';
+const profileImage = require('../assets/images/profileicon.png');
 
 const styles = StyleSheet.create({
   container: {
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ProfileScreen extends Component {
+export class ProfileScreen extends Component {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
@@ -85,7 +84,11 @@ class ProfileScreen extends Component {
       error: PropTypes.string,
       badgeList: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
-    auth: PropTypes.object.isRequired,
+    auth: PropTypes.shape({
+      isLoaded: PropTypes.func.isRequired,
+      user: PropTypes.object.isRequired,
+      uid: PropTypes.string.isRequired,
+    }).isRequired,
     fetchAuthData: PropTypes.func.isRequired,
     fetchBadges: PropTypes.func.isRequired,
   };

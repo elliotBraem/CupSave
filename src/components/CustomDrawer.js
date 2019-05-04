@@ -9,7 +9,7 @@ import COLORS from '../constants/colors';
 import * as authActions from '../store/actions/auth';
 import {FBStorage} from '../data';
 
-const profileImage = '../assets/images/profileicon.png';
+const profileImage = require('../assets/images/profileicon.png');
 
 const styles = StyleSheet.create({
   container: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class CustomDrawer extends Component {
+export class CustomDrawer extends Component {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,

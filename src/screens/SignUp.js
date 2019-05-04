@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class SignUpScreen extends Component {
+export class SignUpScreen extends Component {
   static propTypes = {
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
