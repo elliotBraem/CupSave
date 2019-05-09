@@ -6,7 +6,7 @@ import StatItem from './StatItem';
 
 const styles = StyleSheet.create({
   container: {
-    width: '95%',
+    width: '90%',
     height: 90,
     backgroundColor: COLORS.white,
     borderRadius: 12,
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 12,
+    marginBottom: 20,
   },
   divider: {
     height: 70,

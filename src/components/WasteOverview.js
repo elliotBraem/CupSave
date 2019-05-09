@@ -39,14 +39,14 @@ const WasteOverview = ({paper, plastic, cardboard}) => (
         marginHorizontal: 20,
       }}
       data={{
-        labels: ['Paper saved', 'Cardboard saved', 'Plastic saved'],
+        labels: ['Paper', 'Cardboard', 'Plastic'],
         datasets: [
           {
             data: [`${paper}`, `${plastic}`, cardboard],
           },
         ],
       }}
-      width={Dimensions.get('window').width - 18}
+      width={Dimensions.get('window').width * 0.8}
       height={400}
       yAxisLabel={'lbs: '}
       chartConfig={{
