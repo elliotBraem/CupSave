@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
   },
   aboutUsText: {
-    fontFamily: 'open-sans',
+    fontFamily: 'open-sans-regular',
     color: COLORS.white,
     fontSize: 20,
     paddingLeft: 10,

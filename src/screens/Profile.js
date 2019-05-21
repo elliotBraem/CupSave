@@ -138,7 +138,7 @@ export class ProfileScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <CustomHeader title="Profile" color={COLORS.primary} />
+        <Header title="Profile" color={COLORS.primary} />
         <ScrollView contentContainerStyle={styles.inner}>
           <ProfileSettings navigation={navigation} />
           <StatsOverview
